@@ -8,6 +8,24 @@
     <string name="statistics">Statistics</string>
     <string name="settings">Settings</string>
     <string name="logout">Log Out</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="last_5_star">Last 5 Star</string>
+    <string name="placeholder_counter_history_num">75</string>
+    <string name="placeholder_unit_name">Mavuika</string>
+    <string name="current_progress">Current Progress</string>
+    <string name="placeholder_counter_num">70</string>
+    <string name="status_50_50">Status of the 50/50 Guaranteed</string>
+    <string name="guaranteed">Guaranteed:</string>
+    <string name="plus_one">+1</string>
+    <string name="plus_x">+X</string>
+    <string name="plus_ten">+10</string>
+    <string name="till_soft_pity">Pulls Till Soft Pity</string>
+    <string name="reached_soft_pity">Reached Soft Pity!</string>
+    <string name="past_soft_pity">Pulls Past Soft Pity</string>
+    <string name="currency_till_soft_pity">In Game Currency Till Soft Pity</string>
+    <string name="total_currency_spent">Total Currency Spent</string>
+    <string name="confirm_5_star">Confirm 5 Star</string>
+
+
+
 </resources>

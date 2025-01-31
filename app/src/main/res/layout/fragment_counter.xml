@@ -1,14 +1,509 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintCounter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.CounterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/txtCounterHistoryDescription"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Counter" />
+        android:layout_height="0dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="40sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/last_5_star"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineCounterTop1"
+        />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterTop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterTop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCounterHistory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="@color/light_purple"
+        app:cardCornerRadius="14sp"
+        app:cardElevation="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineCounterTop2"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineCounterTop1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintCounterHistory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterHistoryLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.22" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterHistoryRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.78" />
+
+            <TextView
+                android:id="@+id/txtCounterHistoryNumber"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="60sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/placeholder_counter_history_num"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guidelineCounterHistoryLeft"
+                />
+
+            <TextView
+                android:id="@+id/txtCounterHistoryUnit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="60sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/placeholder_unit_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/guidelineCounterHistoryLeft"
+                app:layout_constraintRight_toLeftOf="@id/guidelineCounterHistoryRight"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterMid1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <TextView
+        android:id="@+id/txtCounterProgressDescription"
+        android:layout_marginTop="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/current_progress"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterTop2"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterMid1"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterMid2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCounterProgress"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="14sp"
+        app:cardElevation="14sp"
+        app:cardBackgroundColor="@color/light_purple"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterMid1"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterMid2"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintCounterProgress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterProgressVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.65" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterProgressHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.25" />
+
+            <TextView
+                android:id="@+id/txtCounterProgressNumber"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/placeholder_counter_num"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guidelineCounterProgressVertical"
+                />
+
+            <TextView
+                android:id="@+id/txtCounterProgressGuaranteedDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="40sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/guaranteed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guidelineCounterProgressHorizontal"
+                app:layout_constraintLeft_toRightOf="@id/guidelineCounterProgressVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <ImageView
+                android:id="@+id/imgCounterProgressGuaranteedDescription"
+                android:layout_margin="8dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/ic_checkmark_green"
+                android:contentDescription="@string/status_50_50"
+                app:layout_constraintTop_toBottomOf="@id/guidelineCounterProgressHorizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/guidelineCounterProgressVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterVertical1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterVertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterBottom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterButtonTop1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.48"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterButtonBottom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.57"
+        />
+
+    <Button
+        android:id="@+id/btnCounterPlusOne"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/plus_one"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterButtonTop2"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterButtonBottom2"
+        app:layout_constraintRight_toLeftOf="@id/guidelineCounterVertical1"
+        />
+
+    <Button
+        android:id="@+id/btnCounterPlusX"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/plus_x"
+        app:layout_constraintLeft_toRightOf="@id/guidelineCounterVertical1"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterButtonTop2"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterButtonBottom2"
+        app:layout_constraintRight_toLeftOf="@id/guidelineCounterVertical2"
+        />
+
+    <Button
+        android:id="@+id/btnCounterPlusTen"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/plus_ten"
+        app:layout_constraintLeft_toRightOf="@id/guidelineCounterVertical2"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterButtonTop2"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterButtonBottom2"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterBottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.82"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCounterSpent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="14sp"
+        app:cardElevation="14sp"
+        app:cardBackgroundColor="@color/light_purple"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterBottom1"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterBottom2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintCounterSpent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterSpentHorizontalTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.33"
+                />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterSpentHorizontalBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.66"
+                />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineCounterSpentVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3"
+                />
+
+            <TextView
+                android:id="@+id/txtCounterSpentTillJackpot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/placeholder_counter_num"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guidelineCounterSpentHorizontalTop"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guidelineCounterSpentVertical"
+                />
+
+            <TextView
+                android:id="@+id/txtCounterSpentTillJackpotCurrency"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="1600"
+                app:layout_constraintTop_toBottomOf="@id/guidelineCounterSpentHorizontalTop"
+                app:layout_constraintBottom_toTopOf="@id/guidelineCounterSpentHorizontalBottom"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guidelineCounterSpentVertical"
+                />
+            <TextView
+                android:id="@+id/txtCounterSpentTillJackpotTotal"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="10000"
+                app:layout_constraintTop_toBottomOf="@id/guidelineCounterSpentHorizontalBottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/guidelineCounterSpentVertical"
+                />
+            <TextView
+                android:id="@+id/txtCounterSpentTillJackpotDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/till_soft_pity"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/guidelineCounterSpentHorizontalTop"
+                app:layout_constraintLeft_toRightOf="@id/guidelineCounterSpentVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/txtCounterSpentTillJackpotCurrencyDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/currency_till_soft_pity"
+                app:layout_constraintTop_toBottomOf="@id/guidelineCounterSpentHorizontalTop"
+                app:layout_constraintBottom_toTopOf="@id/guidelineCounterSpentHorizontalBottom"
+                app:layout_constraintLeft_toRightOf="@id/guidelineCounterSpentVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/txtCounterSpentTillJackpotTotalDescription"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:text="@string/total_currency_spent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineCounterSpentHorizontalBottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/guidelineCounterSpentVertical"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterButtonTop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCounterButtonBottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.94"
+        />
+
+    <Button
+        android:id="@+id/btnCounterConfirm"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/confirm_5_star"
+        app:layout_constraintTop_toBottomOf="@id/guidelineCounterButtonTop1"
+        app:layout_constraintBottom_toTopOf="@id/guidelineCounterButtonBottom1"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
