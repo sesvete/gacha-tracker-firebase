@@ -1,4 +1,4 @@
-package com.example.gachaframework.fragment;
+package com.sesvete.gachaframework.fragment;
 
 import android.os.Bundle;
 
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.gachaframework.R;
+import com.sesvete.gachaframework.R;
 
 /**
  * A simple {@link Fragment} subclass.

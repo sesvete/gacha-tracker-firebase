@@ -1,4 +1,4 @@
-package com.example.gachaframework;
+package com.sesvete.gachaframework;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.gachaframework;
+package com.sesvete.gachaframework;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,8 +11,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.gachaframework.fragment.CounterFragment;
-import com.example.gachaframework.fragment.GamesFragment;
+import com.sesvete.gachaframework.fragment.CounterFragment;
+import com.sesvete.gachaframework.fragment.GamesFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
