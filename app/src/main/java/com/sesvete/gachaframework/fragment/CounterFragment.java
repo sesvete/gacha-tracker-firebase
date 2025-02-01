@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.R;
 
 /**
@@ -15,6 +17,9 @@ import com.sesvete.gachaframework.R;
  * Use the {@link CounterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+// bomo še pogruntali pol katere začetne argumente bomo dali notri
+
 public class CounterFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -25,6 +30,10 @@ public class CounterFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private int counterProgressNumber = 0;
+    private TextView txtCounterProgressNumber;
+    private MaterialButton btnCounterPlusOne;
+    private MaterialButton btnCounterPlusTen;
 
     public CounterFragment() {
         // Required empty public constructor
@@ -60,7 +69,39 @@ public class CounterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_counter, container, false);
+        View view = inflater.inflate(R.layout.fragment_counter, container, false);
+        TextView txtCounterProgressNumber;
+        MaterialButton btnCounterPlusOne;
+        txtCounterProgressNumber = view.findViewById(R.id.txtCounterProgressNumber);
+
+        btnCounterPlusOne = view.findViewById(R.id.btnCounterPlusOne);
+        btnCounterPlusTen = view.findViewById(R.id.btnCounterPlusTen);
+        btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                counterPlusOne(txtCounterProgressNumber);
+            }
+        });
+        btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                counterPlusTen(txtCounterProgressNumber);
+            }
+        });
+
+        return view;
+    }
+    private void counterPlusOne(TextView txtCounter){
+        String stringCounter = txtCounter.getText().toString();
+        int numCounter = Integer.parseInt(stringCounter);
+        numCounter++;
+        txtCounter.setText(String.valueOf(numCounter));
+    }
+
+    private void counterPlusTen(TextView txtCounter){
+        String stringCounter = txtCounter.getText().toString();
+        int numCounter = Integer.parseInt(stringCounter);
+        numCounter = numCounter + 10;
+        txtCounter.setText(String.valueOf(numCounter));
     }
 }

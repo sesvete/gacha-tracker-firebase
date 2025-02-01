@@ -189,7 +189,7 @@
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeStepGranularity="2sp"
-                android:text="@string/placeholder_counter_num"
+                android:text="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -268,7 +268,7 @@
         app:layout_constraintGuide_percent="0.57"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCounterPlusOne"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -285,7 +285,7 @@
         app:layout_constraintRight_toLeftOf="@id/guidelineCounterVertical1"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCounterPlusX"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -302,7 +302,7 @@
         app:layout_constraintRight_toLeftOf="@id/guidelineCounterVertical2"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCounterPlusTen"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -489,7 +489,7 @@
         app:layout_constraintGuide_percent="0.94"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCounterConfirm"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
