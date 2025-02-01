@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.R;
+import com.sesvete.gachaframework.helper.CounterHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +35,7 @@ public class CounterFragment extends Fragment {
     private TextView txtCounterProgressNumber;
     private MaterialButton btnCounterPlusOne;
     private MaterialButton btnCounterPlusTen;
+    private CounterHelper counterHelper;
 
     public CounterFragment() {
         // Required empty public constructor
@@ -69,6 +71,7 @@ public class CounterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        counterHelper = new CounterHelper();
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
         TextView txtCounterProgressNumber;
         MaterialButton btnCounterPlusOne;
@@ -79,18 +82,23 @@ public class CounterFragment extends Fragment {
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counterPlusOne(txtCounterProgressNumber);
+                int newCount = counterHelper.counterPlusOne(txtCounterProgressNumber.getText().toString());
+                txtCounterProgressNumber.setText(String.valueOf(newCount));
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counterPlusTen(txtCounterProgressNumber);
+                int newCount = counterHelper.counterPlusTen(txtCounterProgressNumber.getText().toString());
+                txtCounterProgressNumber.setText(String.valueOf(newCount));
             }
         });
 
         return view;
     }
+
+    //primer če hočeš dat direkt v texview
+    /*
     private void counterPlusOne(TextView txtCounter){
         String stringCounter = txtCounter.getText().toString();
         int numCounter = Integer.parseInt(stringCounter);
@@ -104,4 +112,5 @@ public class CounterFragment extends Fragment {
         numCounter = numCounter + 10;
         txtCounter.setText(String.valueOf(numCounter));
     }
+     */
 }
