@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
 
 import com.sesvete.gachaframework.fragment.CounterFragment;
 import com.sesvete.gachaframework.fragment.GamesFragment;
@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,31 +33,28 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        fragmentManager = getSupportFragmentManager();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         if (savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CounterFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragment_container, CounterFragment.class, null).setReorderingAllowed(true).commit();
             navigationView.setCheckedItem(R.id.nav_counter);
         }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 int id = item.getItemId();
-
                 if (id == R.id.nav_counter){
                     toolbar.setTitle(R.string.counter);
-                    transaction.replace(R.id.fragment_container, new CounterFragment());
-                    transaction.commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, CounterFragment.class, null).setReorderingAllowed(true).commit();
                 }
                 else if (id == R.id.nav_games){
                     toolbar.setTitle(R.string.games);
-                    transaction.replace(R.id.fragment_container, new GamesFragment());
-                    transaction.commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, GamesFragment.class, null).setReorderingAllowed(true).commit();
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
