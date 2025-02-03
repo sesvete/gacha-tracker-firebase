@@ -22,9 +22,12 @@
     <string name="till_soft_pity">Pulls Till Soft Pity</string>
     <string name="reached_soft_pity">Reached Soft Pity!</string>
     <string name="past_soft_pity">Pulls Past Soft Pity</string>
-    <string name="currency_till_soft_pity">In Game Currency Till Soft Pity</string>
-    <string name="total_currency_spent">Total Currency Spent</string>
+    <string name="currency_till_soft_pity">Till Soft Pity</string>
+    <string name="currency_past_soft_pity">Past Soft Pity</string>
+    <string name="total_currency_spent">Spent</string>
     <string name="confirm_5_star">Confirm 5 Star</string>
+    <string name="primogens">Primogens</string>
+    <string name="stellar_jades">Stellar Jades</string>
 
 
 

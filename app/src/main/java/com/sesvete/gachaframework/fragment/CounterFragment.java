@@ -19,7 +19,10 @@ import com.sesvete.gachaframework.helper.CounterHelper;
  * create an instance of this fragment.
  */
 
-// bomo še pogruntali pol katere začetne argumente bomo dali notri
+// bomo še pogruntali pol katere začetne argumente bomo dali notr
+
+    //TODO: popup on +X
+    //TODO: popup on confirm 5 star to confirm choice in input into database
 
 public class CounterFragment extends Fragment {
 
@@ -33,6 +36,12 @@ public class CounterFragment extends Fragment {
     private String mParam2;
     private int counterProgressNumber = 0;
     private TextView txtCounterProgressNumber;
+    private TextView txtCounterSpentTillJackpot;
+    private TextView txtCounterSpentTillJackpotCurrency;
+    private TextView txtCounterSpentTillJackpotTotal;
+    private TextView txtCounterSpentTillJackpotDescription;
+    private TextView txtCounterSpentTillJackpotCurrencyDescription;
+    private TextView txtCounterSpentTillJackpotTotalDescription;
     private MaterialButton btnCounterPlusOne;
     private MaterialButton btnCounterPlusTen;
     private CounterHelper counterHelper;
@@ -72,18 +81,27 @@ public class CounterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         counterHelper = new CounterHelper();
+        int softPity = 75;
+        int wishValue = 160;
+        String currencyType = getString(R.string.primogens);
+
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
-        TextView txtCounterProgressNumber;
-        MaterialButton btnCounterPlusOne;
         txtCounterProgressNumber = view.findViewById(R.id.txtCounterProgressNumber);
 
         btnCounterPlusOne = view.findViewById(R.id.btnCounterPlusOne);
         btnCounterPlusTen = view.findViewById(R.id.btnCounterPlusTen);
+        txtCounterSpentTillJackpot = view.findViewById((R.id.txtCounterSpentTillJackpot));
+        txtCounterSpentTillJackpotDescription = view.findViewById(R.id.txtCounterSpentTillJackpotDescription);
+        txtCounterSpentTillJackpotCurrency = view.findViewById(R.id.txtCounterSpentTillJackpotCurrency);
+        txtCounterSpentTillJackpotCurrencyDescription = view.findViewById(R.id.txtCounterSpentTillJackpotCurrencyDescription);
+        txtCounterSpentTillJackpotTotal = view.findViewById(R.id.txtCounterSpentTillJackpotTotal);
+        txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txtCounterSpentTillJackpotTotalDescription);
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int newCount = counterHelper.counterPlusOne(txtCounterProgressNumber.getText().toString());
                 txtCounterProgressNumber.setText(String.valueOf(newCount));
+                counterHelper.updateSoftPityTracker(getResources(), newCount, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +109,7 @@ public class CounterFragment extends Fragment {
             public void onClick(View v) {
                 int newCount = counterHelper.counterPlusTen(txtCounterProgressNumber.getText().toString());
                 txtCounterProgressNumber.setText(String.valueOf(newCount));
+                counterHelper.updateSoftPityTracker(getResources(), newCount, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
 
