@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +50,8 @@ public class CounterFragment extends Fragment {
     private TextView txtCounterSpentTillJackpotDescription;
     private TextView txtCounterSpentTillJackpotCurrencyDescription;
     private TextView txtCounterSpentTillJackpotTotalDescription;
+    private TextView txtCounterHistoryNumber;
+    private TextView txtCounterHistoryUnit;
     private MaterialButton btnCounterPlusOne;
     private MaterialButton btnCounterPlusX;
     private MaterialButton btnCounterPlusTen;
@@ -98,6 +99,9 @@ public class CounterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
         txtCounterProgressNumber = view.findViewById(R.id.txtCounterProgressNumber);
+        txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
+        txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
+        txtCounterHistoryUnit = view.findViewById(R.id.txtCounterHistoryUnit);
 
         btnCounterPlusOne = view.findViewById(R.id.btnCounterPlusOne);
         btnCounterPlusTen = view.findViewById(R.id.btnCounterPlusTen);
@@ -134,7 +138,7 @@ public class CounterFragment extends Fragment {
                 builder.setView(dialogView);
 
                 EditText inputXCounter = dialogView.findViewById(R.id.inputXCounter);
-                MaterialButton btnXConfrim = dialogView.findViewById(R.id.btnXConfrim);
+                MaterialButton btnXConfirm = dialogView.findViewById(R.id.btnXConfrim);
                 MaterialButton btnXCancel = dialogView.findViewById(R.id.btnXCancel);
 
                 AlertDialog dialog = builder.create();
@@ -149,7 +153,7 @@ public class CounterFragment extends Fragment {
                     lp.width = (int) (displayMetrics.widthPixels * 0.8);
                     window.setAttributes(lp);
                 }
-                btnXConfrim.setOnClickListener(new View.OnClickListener() {
+                btnXConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String inputString = inputXCounter.getText().toString();
@@ -179,6 +183,49 @@ public class CounterFragment extends Fragment {
         btnCounterConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                LayoutInflater dialogInflater = getLayoutInflater();
+                View dialogView = dialogInflater.inflate(R.layout.confirm_unit_dialog, null);
+                builder.setView(dialogView);
+
+                EditText inputConfirmCounter = dialogView.findViewById(R.id.inputConfirmCounter);
+                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfrim);
+                MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                Window window = dialog.getWindow();
+                if (window != null) {
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
+                    lp.copyFrom(window.getAttributes());
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    lp.width = (int) (displayMetrics.widthPixels * 0.8);
+                    window.setAttributes(lp);
+                }
+                btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String inputString = inputConfirmCounter.getText().toString();
+                        if (inputString.isEmpty()){
+                            Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
+                        } else {
+                            String stringCounterNumber = txtCounterProgressNumber.getText().toString();
+                            txtCounterHistoryNumber.setText(stringCounterNumber);
+                            txtCounterHistoryUnit.setText(inputString);
+                            txtCounterProgressNumber.setText(String.valueOf(0));
+                            counterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                btnConfirmCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
             }
         });
