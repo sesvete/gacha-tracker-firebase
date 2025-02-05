@@ -32,6 +32,8 @@ import com.sesvete.gachaframework.helper.CounterHelper;
     //TODO: popup on confirm 5 star to confirm choice in input into database
     //TODO: če se ti da, custom alert dialog box, sicer lahko uporabiš privzetega
 
+    //TODO: incorporate won lost pity in the counter
+
 public class CounterFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
