@@ -174,66 +174,12 @@ public class CounterFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
-
-                /*
-                EditText inputCounter = new EditText(getContext());
-                inputCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
-                inputCounter.setHint("Enter number of wishes");
-                builder.setView(inputCounter);
-                builder.setTitle("Custom Number");
-
-                builder.setPositiveButton("CONFIRM", (dialog, which) -> {
-                    String inputString = inputCounter.getText().toString();
-                    if (inputString.isEmpty()){
-                        Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
-                    } else {
-                        int numCustomWishes = Integer.parseInt(inputString);
-                        if (numCustomWishes <= 0) {
-                            Toast.makeText(getContext(), "Number of wishes must be greater than zero", Toast.LENGTH_SHORT).show();
-                        } else {
-                            counterProgressNumber = counterHelper.counterPlusX(txtCounterProgressNumber.getText().toString(), numCustomWishes);
-                            txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                            counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                        }
-                    }
-                });
-                builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
-                AlertDialog dialog = builder.create();
-                dialog.show();
-
-                 */
             }
         });
         btnCounterConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                LayoutInflater inflater = getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.plus_x_dialog, null); // dialog_custom_input.xml
-                builder.setView(dialogView);
-                EditText inputCounter = dialogView.findViewById(R.id.inputXCounter);
-                AlertDialog dialog = builder.create();
-                dialog.show(); // Important: Call show() before getting the window
 
-                Window window = dialog.getWindow();
-                if (window != null) {
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(window.getAttributes());
-
-                    // Option 1: Match parent width (but constrain height if needed)
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    // lp.height = WindowManager.LayoutParams.WRAP_CONTENT; // If you need to constrain height
-                    // Option 2: Set a specific width as a fraction of screen width
-                    // DisplayMetrics displayMetrics = new DisplayMetrics();
-                    // getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    // lp.width = (int) (displayMetrics.widthPixels * 0.8); // 80% of screen width
-                    window.setAttributes(lp);
-                }
-                // za zdaj se bo le posodobilo history
-                // sicer pa se bo to shrai+nilo v podatkovno bazo
-
-                 */
             }
         });
 
