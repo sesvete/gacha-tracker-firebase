@@ -17,6 +17,11 @@ public class CounterHelper {
         return numCounter + 10;
     }
 
+    public int counterPlusX(String currentCount, int amountToAdd){
+        int currentCountInt = Integer.parseInt(currentCount);
+        return currentCountInt + amountToAdd;
+    }
+
     public void updateSoftPityTracker(Resources resources, int counter, int softPity, int wishValue, String currencyType, TextView txtNumToSoftPity, TextView txtToSoftPity, TextView txtNumCurrencyToSoftPity, TextView txtCurrencyToSoftPity, TextView txtNumTotalSpent, TextView txtTotalSpent){
         String stringNumToSoftPity;
         String stringToSoftPity;

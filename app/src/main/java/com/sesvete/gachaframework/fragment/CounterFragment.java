@@ -1,13 +1,17 @@
 package com.sesvete.gachaframework.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.R;
@@ -23,6 +27,7 @@ import com.sesvete.gachaframework.helper.CounterHelper;
 
     //TODO: popup on +X
     //TODO: popup on confirm 5 star to confirm choice in input into database
+    //TODO: če se ti da, custom alert dialog box, sicer lahko uporabiš privzetega
 
 public class CounterFragment extends Fragment {
 
@@ -34,7 +39,7 @@ public class CounterFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private int counterProgressNumber = 0;
+    private int counterProgressNumber;
     private TextView txtCounterProgressNumber;
     private TextView txtCounterSpentTillJackpot;
     private TextView txtCounterSpentTillJackpotCurrency;
@@ -43,6 +48,7 @@ public class CounterFragment extends Fragment {
     private TextView txtCounterSpentTillJackpotCurrencyDescription;
     private TextView txtCounterSpentTillJackpotTotalDescription;
     private MaterialButton btnCounterPlusOne;
+    private MaterialButton btnCounterPlusX;
     private MaterialButton btnCounterPlusTen;
     private CounterHelper counterHelper;
 
@@ -90,6 +96,7 @@ public class CounterFragment extends Fragment {
 
         btnCounterPlusOne = view.findViewById(R.id.btnCounterPlusOne);
         btnCounterPlusTen = view.findViewById(R.id.btnCounterPlusTen);
+        btnCounterPlusX = view.findViewById(R.id.btnCounterPlusX);
         txtCounterSpentTillJackpot = view.findViewById((R.id.txtCounterSpentTillJackpot));
         txtCounterSpentTillJackpotDescription = view.findViewById(R.id.txtCounterSpentTillJackpotDescription);
         txtCounterSpentTillJackpotCurrency = view.findViewById(R.id.txtCounterSpentTillJackpotCurrency);
@@ -99,20 +106,49 @@ public class CounterFragment extends Fragment {
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newCount = counterHelper.counterPlusOne(txtCounterProgressNumber.getText().toString());
-                txtCounterProgressNumber.setText(String.valueOf(newCount));
-                counterHelper.updateSoftPityTracker(getResources(), newCount, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                counterProgressNumber = counterHelper.counterPlusOne(txtCounterProgressNumber.getText().toString());
+                txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+                counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int newCount = counterHelper.counterPlusTen(txtCounterProgressNumber.getText().toString());
-                txtCounterProgressNumber.setText(String.valueOf(newCount));
-                counterHelper.updateSoftPityTracker(getResources(), newCount, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                counterProgressNumber = counterHelper.counterPlusTen(txtCounterProgressNumber.getText().toString());
+                txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+                counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
+        btnCounterPlusX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                EditText inputCounter = new EditText(getContext());
+                inputCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
+                inputCounter.setHint("Enter number of wishes");
+                builder.setView(inputCounter);
+                builder.setTitle("Custom Number");
 
+                builder.setPositiveButton("CONFIRM", (dialog, which) -> {
+                    String inputString = inputCounter.getText().toString();
+                    if (inputString.isEmpty()){
+                        Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
+                    } else {
+                        int numCustomWishes = Integer.parseInt(inputString);
+                        if (numCustomWishes <= 0) {
+                            Toast.makeText(getContext(), "Number of wishes must be greater than zero", Toast.LENGTH_SHORT).show();
+                        } else {
+                            counterProgressNumber = counterHelper.counterPlusX(txtCounterProgressNumber.getText().toString(), numCustomWishes);
+                            txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+                            counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                        }
+                    }
+                });
+                builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
         return view;
     }
 
