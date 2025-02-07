@@ -1,11 +1,14 @@
 package com.sesvete.gachaframework.fragment;
 
 import android.app.AlertDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +16,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.helper.CounterHelper;
 
@@ -28,11 +35,7 @@ import com.sesvete.gachaframework.helper.CounterHelper;
 
 // bomo še pogruntali pol katere začetne argumente bomo dali notr
 
-    //TODO: popup on +X
-    //TODO: popup on confirm 5 star to confirm choice in input into database
     //TODO: če se ti da, custom alert dialog box, sicer lahko uporabiš privzetega
-
-    //TODO: incorporate won lost pity in the counter
 
 public class CounterFragment extends Fragment {
 
@@ -59,6 +62,13 @@ public class CounterFragment extends Fragment {
     private MaterialButton btnCounterPlusTen;
     private MaterialButton btnCounterConfirm;
     private CounterHelper counterHelper;
+    private CardView cardCounterProgress;
+    private ImageView imgCounterProgressGuaranteedDescription;
+    private ShapeableImageView imgCounterHistoryFeaturedUnitStatus;
+    private boolean featuredUnitStatus;
+
+    // to se bo še pobral iz podatkovne baze
+    private boolean guaranteed;
 
     public CounterFragment() {
         // Required empty public constructor
@@ -104,6 +114,9 @@ public class CounterFragment extends Fragment {
         txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
         txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
         txtCounterHistoryUnit = view.findViewById(R.id.txtCounterHistoryUnit);
+        cardCounterProgress = view.findViewById(R.id.cardCounterProgress);
+        imgCounterProgressGuaranteedDescription = view.findViewById(R.id.imgCounterProgressGuaranteedDescription);
+        imgCounterHistoryFeaturedUnitStatus = view.findViewById(R.id.imgCounterHistoryFeaturedUnitStatus);
 
         btnCounterPlusOne = view.findViewById(R.id.btnCounterPlusOne);
         btnCounterPlusTen = view.findViewById(R.id.btnCounterPlusTen);
@@ -115,6 +128,19 @@ public class CounterFragment extends Fragment {
         txtCounterSpentTillJackpotCurrencyDescription = view.findViewById(R.id.txtCounterSpentTillJackpotCurrencyDescription);
         txtCounterSpentTillJackpotTotal = view.findViewById(R.id.txtCounterSpentTillJackpotTotal);
         txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txtCounterSpentTillJackpotTotalDescription);
+
+        // začasno se preveri, če ima player guaranteed
+        // TODO: to se bo preverlo iz podatkovne baze
+        Drawable currentDrawable = imgCounterProgressGuaranteedDescription.getDrawable();
+        Drawable checkmarkDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_checkmark_green);
+        if (currentDrawable != null && checkmarkDrawable != null &&
+                currentDrawable.getConstantState() != null && checkmarkDrawable.getConstantState() != null &&
+                currentDrawable.getConstantState().equals(checkmarkDrawable.getConstantState())) {
+            guaranteed = true;
+        } else {
+            guaranteed = false;
+        }
+
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +219,11 @@ public class CounterFragment extends Fragment {
                 EditText inputConfirmCounter = dialogView.findViewById(R.id.inputConfirmCounter);
                 MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfrim);
                 MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
-
+                RadioGroup rGrConfirm = dialogView.findViewById(R.id.rGrConfirm);
+                if (guaranteed){
+                    rGrConfirm.setVisibility(View.GONE);
+                    featuredUnitStatus = true;
+                }
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 Window window = dialog.getWindow();
@@ -206,6 +236,7 @@ public class CounterFragment extends Fragment {
                     lp.width = (int) (displayMetrics.widthPixels * 0.8);
                     window.setAttributes(lp);
                 }
+                radioFunction(rGrConfirm);
                 btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -218,6 +249,17 @@ public class CounterFragment extends Fragment {
                             txtCounterHistoryUnit.setText(inputString);
                             txtCounterProgressNumber.setText(String.valueOf(0));
                             counterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                            if (featuredUnitStatus){
+                                guaranteed = false;
+                                imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                                imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
+                            } else if (!featuredUnitStatus) {
+                                guaranteed = true;
+                                imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
+                                imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
+                            } else {
+                                Toast.makeText(getContext(), "Please select a radio choice", Toast.LENGTH_SHORT).show();
+                            }
                             dialog.dismiss();
                         }
                     }
@@ -231,8 +273,100 @@ public class CounterFragment extends Fragment {
 
             }
         });
+        cardCounterProgress.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                LayoutInflater dialogInflater = getLayoutInflater();
+                View dialogView = dialogInflater.inflate(R.layout.confirm_unit_dialog, null);
+                builder.setView(dialogView);
 
+                RadioGroup rGrConfirm = dialogView.findViewById(R.id.rGrConfirm);
+                TextView txtConfirmTitle = dialogView.findViewById(R.id.txtConfirmTitle);
+                RadioButton wonRadioButton = dialogView.findViewById(R.id.wonRadioButton);
+                RadioButton lostRadioButton = dialogView.findViewById(R.id.lostRadioButton);
+
+                txtConfirmTitle.setText(R.string.update_counter);
+                wonRadioButton.setText("G");
+                lostRadioButton.setText("N");
+
+                EditText inputUpdateCounter = dialogView.findViewById(R.id.inputConfirmCounter);
+                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfrim);
+                MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
+                inputUpdateCounter.setHint("Enter Counter Number:");
+                inputUpdateCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                Window window = dialog.getWindow();
+                if (window != null) {
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
+                    lp.copyFrom(window.getAttributes());
+                    DisplayMetrics displayMetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                    lp.width = (int) (displayMetrics.widthPixels * 0.8);
+                    window.setAttributes(lp);
+                }
+
+                radioFunction(rGrConfirm);
+
+                btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String inputString = inputUpdateCounter.getText().toString();
+                        if (inputString.isEmpty()){
+                            Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
+                        } else {
+                            int numCustomWishes = Integer.parseInt(inputString);
+                            if (numCustomWishes <= 0) {
+                                Toast.makeText(getContext(), "Number of wishes must be greater than zero", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (featuredUnitStatus) {
+                                    guaranteed = true;
+                                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
+                                } else if (!featuredUnitStatus) {
+                                    guaranteed = false;
+                                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                                } else {
+                                    Toast.makeText(getContext(), "Please select a radio choice", Toast.LENGTH_SHORT).show();
+                                }
+                                txtCounterProgressNumber.setText(String.valueOf(numCustomWishes));
+                                counterHelper.updateSoftPityTracker(getResources(), numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                dialog.dismiss();
+                            }
+                        }
+                    }
+                });
+                btnConfirmCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                return true;
+            }
+        });
         return view;
+    }
+
+    private void radioFunction(RadioGroup rGrConfirm){
+        int checkedChoice = rGrConfirm.getCheckedRadioButtonId();
+        if (checkedChoice == R.id.wonRadioButton){
+            featuredUnitStatus = true;
+        } else if (checkedChoice == R.id.lostRadioButton){
+            featuredUnitStatus = false;
+        }
+        rGrConfirm.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.wonRadioButton){
+                    featuredUnitStatus = true;
+                } else if (checkedId == R.id.lostRadioButton){
+                    featuredUnitStatus = false;
+                }
+            }
+        });
     }
 
     //primer če hočeš dat direkt v texview
