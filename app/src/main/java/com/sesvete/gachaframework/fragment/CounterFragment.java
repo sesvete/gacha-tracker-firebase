@@ -27,6 +27,10 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.helper.CounterHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CounterFragment#newInstance} factory method to
@@ -66,6 +70,9 @@ public class CounterFragment extends Fragment {
     private ImageView imgCounterProgressGuaranteedDescription;
     private ShapeableImageView imgCounterHistoryFeaturedUnitStatus;
     private boolean featuredUnitStatus;
+    private Calendar calendar;
+    private SimpleDateFormat dateFormatter;
+    private String formatedDate;
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
@@ -244,6 +251,11 @@ public class CounterFragment extends Fragment {
                         if (inputString.isEmpty()){
                             Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
                         } else {
+                            // Datum se bo shranil v obliki "yyyy-MM-dd" v podatkovno bazo
+                            calendar = Calendar.getInstance();
+                            dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            formatedDate = dateFormatter.format(calendar.getTime());
+                            Toast.makeText(getContext(), formatedDate, Toast.LENGTH_SHORT).show();
                             String stringCounterNumber = txtCounterProgressNumber.getText().toString();
                             txtCounterHistoryNumber.setText(stringCounterNumber);
                             txtCounterHistoryUnit.setText(inputString);
