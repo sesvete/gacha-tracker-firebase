@@ -31,8 +31,10 @@
     <string name="featured_unit">Featured Unit</string>
     <string name="update_counter">Update Counter</string>
     <string name="not_guaranteed">Not Guaranteed</string>
-
-
+    <string name="num_pulls">Num of Pulls</string>
+    <string name="unit_name">Character Name</string>
+    <string name="from_banner">From Banner</string>
+    <string name="date">Date</string>
 
 
 </resources>

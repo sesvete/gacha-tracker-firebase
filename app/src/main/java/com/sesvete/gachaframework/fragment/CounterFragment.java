@@ -111,12 +111,14 @@ public class CounterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_counter, container, false);
+
         counterHelper = new CounterHelper();
         int softPity = 75;
         int wishValue = 160;
         String currencyType = getString(R.string.primogens);
 
-        View view = inflater.inflate(R.layout.fragment_counter, container, false);
         txtCounterProgressNumber = view.findViewById(R.id.txtCounterProgressNumber);
         txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
         txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
