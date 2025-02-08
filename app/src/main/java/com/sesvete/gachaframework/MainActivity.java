@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import com.sesvete.gachaframework.fragment.CounterFragment;
 import com.sesvete.gachaframework.fragment.GamesFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.sesvete.gachaframework.fragment.HistoryFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
                 if (id == R.id.nav_counter){
                     toolbar.setTitle(R.string.counter);
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, CounterFragment.class, null).setReorderingAllowed(true).commit();
+                }
+                else if (id == R.id.nav_history){
+                    toolbar.setTitle(R.string.history);
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, HistoryFragment.class, null).setReorderingAllowed(true).commit();
                 }
                 else if (id == R.id.nav_games){
                     toolbar.setTitle(R.string.games);
