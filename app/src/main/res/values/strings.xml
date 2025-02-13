@@ -35,6 +35,10 @@
     <string name="unit_name">Character Name</string>
     <string name="from_banner">From Banner</string>
     <string name="date">Date</string>
+    <string name="personal">Personal</string>
+    <string name="global">Global</string>
+    <string name="personal_stats">Personal Stats</string>
+    <string name="global_stats">Global Stats</string>
 
 
 </resources>

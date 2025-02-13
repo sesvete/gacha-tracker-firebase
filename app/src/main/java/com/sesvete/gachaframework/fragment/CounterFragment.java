@@ -250,6 +250,7 @@ public class CounterFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String inputString = inputConfirmCounter.getText().toString();
+                        inputString = inputString.toUpperCase();
                         if (inputString.isEmpty()){
                             Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
                         } else {
