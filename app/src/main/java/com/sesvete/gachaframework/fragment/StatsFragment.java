@@ -3,12 +3,20 @@ package com.sesvete.gachaframework.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.R;
+import com.sesvete.gachaframework.helper.StatsRecViewAdapter;
+import com.sesvete.gachaframework.model.Statistic;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +33,10 @@ public class StatsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private MaterialButton btnStatsPersonal;
+    private MaterialButton btnStatsGlobal;
+    private TextView txtStatsTitle;
+    private RecyclerView recyclerViewStats;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -60,7 +72,62 @@ public class StatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stats, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_stats, container, false);
+
+        btnStatsGlobal = view.findViewById(R.id.btnStatsGlobal);
+        btnStatsPersonal = view.findViewById(R.id.btnStatsPersonal);
+        txtStatsTitle = view.findViewById(R.id.txtStatsTitle);
+        recyclerViewStats = view.findViewById(R.id.recyclerViewStats);
+
+        // TODO: naredil se bo ločen helper, ki bo zasluže za sestavo lista
+        // ne pozabi najprej clearat list ob kliku na gumb
+
+        //initial Load Personal stats
+        btnStatsPersonal.setEnabled(false);
+        ArrayList<Statistic> statisticList = new ArrayList<>();
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+        statisticList.add(new Statistic("Total of pulled units", 2));
+
+        StatsRecViewAdapter adapter = new StatsRecViewAdapter(getContext());
+        adapter.setStatisticList(statisticList);
+        recyclerViewStats.setAdapter(adapter);
+        recyclerViewStats.setLayoutManager(new LinearLayoutManager(getContext()));
+        btnStatsGlobal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // za zdaj samo test
+                statisticList.clear();
+                statisticList.add(new Statistic("Total of pulled units", 3));
+                statisticList.add(new Statistic("Total of pulled units", 3));
+                adapter.setStatisticList(statisticList);
+                //recyclerViewStats.setAdapter(adapter);
+            }
+        });
+        return view;
     }
 }
