@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.model.PulledUnit;
 
@@ -39,9 +40,9 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         holder.txtHistoryDateName.setText(pulledUnits.get(position).getDate());
 
         if (pulledUnits.get(position).isFromBanner()){
-            holder.txtHistoryBannerName.setText("Y");
+            holder.imgHistoryBannerName.setImageResource(R.drawable.ic_checkmark_green);
         } else {
-            holder.txtHistoryBannerName.setText("N");
+            holder.imgHistoryBannerName.setImageResource(R.drawable.ic_block_red);
         }
     }
 
@@ -59,14 +60,14 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
 
         private TextView txtHistoryNumPulls;
         private TextView txtHistoryUnitName;
-        private TextView txtHistoryBannerName;
+        private ShapeableImageView imgHistoryBannerName;
         private TextView txtHistoryDateName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtHistoryNumPulls = itemView.findViewById(R.id.txtHistoryNumPulls);
             txtHistoryUnitName = itemView.findViewById(R.id.txtHistoryUnitName);
-            txtHistoryBannerName = itemView.findViewById(R.id.txtHistoryBannerName);
+            imgHistoryBannerName = itemView.findViewById(R.id.imgHistoryBannerName);
             txtHistoryDateName = itemView.findViewById(R.id.txtHistoryDateName);
         }
     }

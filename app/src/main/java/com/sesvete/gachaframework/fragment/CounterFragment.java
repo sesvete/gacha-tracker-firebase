@@ -39,8 +39,6 @@ import java.util.Locale;
 
 // bomo še pogruntali pol katere začetne argumente bomo dali notr
 
-    //TODO: če se ti da, custom alert dialog box, sicer lahko uporabiš privzetega
-
 public class CounterFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -250,6 +248,7 @@ public class CounterFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String inputString = inputConfirmCounter.getText().toString();
+                        inputString = inputString.toUpperCase();
                         if (inputString.isEmpty()){
                             Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
                         } else {

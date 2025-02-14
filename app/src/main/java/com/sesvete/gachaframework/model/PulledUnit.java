@@ -1,18 +1,23 @@
 package com.sesvete.gachaframework.model;
 
+// to se bo verjetno še spremenilo
+// ni nujno, da bosta obe aplikaciji imeli enak model
+
 public class PulledUnit {
     private int numOfPulls;
     private String unitName;
     private boolean fromBanner;
     private String date;
     private String game;
+    private String bannerType;
 
-    public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date, String game) {
+    public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date, String game, String bannerType) {
         this.numOfPulls = numOfPulls;
         this.unitName = unitName;
         this.fromBanner = fromBanner;
         this.date = date;
         this.game = game;
+        this.bannerType = bannerType;
     }
 
     public int getNumOfPulls() {
@@ -55,6 +60,14 @@ public class PulledUnit {
         this.game = game;
     }
 
+    public String getBannerType() {
+        return bannerType;
+    }
+
+    public void setBannerType(String bannerType) {
+        this.bannerType = bannerType;
+    }
+
     @Override
     public String toString() {
         return "PulledUnit{" +
@@ -63,6 +76,7 @@ public class PulledUnit {
                 ", fromBanner=" + fromBanner +
                 ", date='" + date + '\'' +
                 ", game='" + game + '\'' +
+                ", bannerType='" + bannerType + '\'' +
                 '}';
     }
 }

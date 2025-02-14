@@ -15,6 +15,13 @@ import com.sesvete.gachaframework.fragment.CounterFragment;
 import com.sesvete.gachaframework.fragment.GamesFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachaframework.fragment.HistoryFragment;
+import com.sesvete.gachaframework.fragment.StatsFragment;
+
+//TODO: navigation header
+//TODO: games fragment (game + banner type)
+//TODO: tracking active game and banner
+//TODO: light/night mode
+//TODO: sign in activity
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 else if (id == R.id.nav_history){
                     toolbar.setTitle(R.string.history);
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, HistoryFragment.class, null).setReorderingAllowed(true).commit();
+                }
+                else if (id == R.id.nav_statistics){
+                    toolbar.setTitle(R.string.statistics);
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, StatsFragment.class, null).setReorderingAllowed(true).commit();
                 }
                 else if (id == R.id.nav_games){
                     toolbar.setTitle(R.string.games);

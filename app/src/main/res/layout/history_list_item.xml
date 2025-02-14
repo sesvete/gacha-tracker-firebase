@@ -7,21 +7,21 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHistoryVertical1"
+        android:id="@+id/guidelineHistoryListVertical1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHistoryVertical2"
+        android:id="@+id/guidelineHistoryListVertical2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHistoryVertical3"
+        android:id="@+id/guidelineHistoryListVertical3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -41,12 +41,12 @@
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryVertical1" />
+        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryListVertical1" />
 
     <TextView
         android:id="@+id/txtHistoryUnitName"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
@@ -55,31 +55,28 @@
         android:text="Mavuika"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryVertical1"
-        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryVertical2"
+        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryListVertical1"
+        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryListVertical2"
         />
 
-    <TextView
-        android:id="@+id/txtHistoryBannerName"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgHistoryBannerName"
+        android:layout_marginTop="13dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Y"
-        android:textSize="20sp"
+        android:src="@drawable/ic_checkmark_green"
+        android:contentDescription="@string/status_50_50"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryVertical2"
-        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryVertical3"
-        />
+        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryListVertical2"
+        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryListVertical3"/>
 
     <TextView
         android:id="@+id/txtHistoryDateName"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
         android:layout_marginEnd="5dp"
+        android:paddingBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,8 +84,15 @@
         android:text="2025-02-08"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryVertical3"
+        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryListVertical3"
         app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
 
