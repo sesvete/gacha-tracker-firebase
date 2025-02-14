@@ -17,6 +17,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachaframework.fragment.HistoryFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
 
+//TODO: navigation header
+//TODO: games fragment (game + banner type)
+//TODO: tracking active game and banner
+//TODO: light/night mode
+//TODO: sign in activity
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;

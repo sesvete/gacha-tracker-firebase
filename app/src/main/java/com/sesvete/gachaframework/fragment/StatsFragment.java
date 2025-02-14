@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.R;
+import com.sesvete.gachaframework.helper.StatsHelper;
 import com.sesvete.gachaframework.helper.StatsRecViewAdapter;
 import com.sesvete.gachaframework.model.Statistic;
 
@@ -37,6 +38,7 @@ public class StatsFragment extends Fragment {
     private MaterialButton btnStatsGlobal;
     private TextView txtStatsTitle;
     private RecyclerView recyclerViewStats;
+    private StatsHelper statsHelper;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -75,6 +77,8 @@ public class StatsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_stats, container, false);
 
+        statsHelper = new StatsHelper();
+
         btnStatsGlobal = view.findViewById(R.id.btnStatsGlobal);
         btnStatsPersonal = view.findViewById(R.id.btnStatsPersonal);
         txtStatsTitle = view.findViewById(R.id.txtStatsTitle);
@@ -84,43 +88,26 @@ public class StatsFragment extends Fragment {
         // ne pozabi najprej clearat list ob kliku na gumb
 
         //initial Load Personal stats
-        btnStatsPersonal.setEnabled(false);
-        ArrayList<Statistic> statisticList = new ArrayList<>();
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
-        statisticList.add(new Statistic("Total of pulled units", 2));
+        onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
 
+        ArrayList<Statistic> statisticList = new ArrayList<>();
+        statsHelper.statsCalculator(getResources(), statisticList);
         StatsRecViewAdapter adapter = new StatsRecViewAdapter(getContext());
         adapter.setStatisticList(statisticList);
         recyclerViewStats.setAdapter(adapter);
         recyclerViewStats.setLayoutManager(new LinearLayoutManager(getContext()));
+        btnStatsPersonal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
+                statsHelper.statsCalculator(getResources(), statisticList);
+                adapter.setStatisticList(statisticList);
+            }
+        });
         btnStatsGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // za zdaj samo test
+                onGlobalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
                 statisticList.clear();
                 statisticList.add(new Statistic("Total of pulled units", 3));
                 statisticList.add(new Statistic("Total of pulled units", 3));
@@ -129,5 +116,16 @@ public class StatsFragment extends Fragment {
             }
         });
         return view;
+    }
+    private void onPersonalPress(TextView txtStatsTitle, MaterialButton btnStatsPersonal, MaterialButton btnStatsGlobal){
+        txtStatsTitle.setText(R.string.personal_stats);
+        btnStatsPersonal.setEnabled(false);
+        btnStatsGlobal.setEnabled(true);
+    }
+
+    private void onGlobalPress(TextView txtStatsTitle, MaterialButton btnStatsPersonal, MaterialButton btnStatsGlobal){
+        txtStatsTitle.setText(R.string.global_stats);
+        btnStatsPersonal.setEnabled(true);
+        btnStatsGlobal.setEnabled(false);
     }
 }

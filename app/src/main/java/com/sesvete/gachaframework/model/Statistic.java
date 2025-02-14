@@ -2,9 +2,9 @@ package com.sesvete.gachaframework.model;
 
 public class Statistic {
     private String statisticDescription;
-    private int statisticNumber;
+    private double statisticNumber;
 
-    public Statistic(String statisticDescription, int statisticNumber) {
+    public Statistic(String statisticDescription, double statisticNumber) {
         this.statisticDescription = statisticDescription;
         this.statisticNumber = statisticNumber;
     }
@@ -17,11 +17,11 @@ public class Statistic {
         this.statisticDescription = statisticDescription;
     }
 
-    public int getStatisticNumber() {
+    public double getStatisticNumber() {
         return statisticNumber;
     }
 
-    public void setStatisticNumber(int statisticNumber) {
+    public void setStatisticNumber(double statisticNumber) {
         this.statisticNumber = statisticNumber;
     }
 

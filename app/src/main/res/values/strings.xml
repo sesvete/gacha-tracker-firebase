@@ -39,6 +39,12 @@
     <string name="global">Global</string>
     <string name="personal_stats">Personal Stats</string>
     <string name="global_stats">Global Stats</string>
-
+    <string name="percentage_fifty_fifty">Percentage of won 50/50</string>
+    <string name="total_won_fifty_fifty">Total number of won 50/50</string>
+    <string name="total_lost_fifty_fifty">Total number of lost 50/50</string>
+    <string name="avg_for_five_star">Average number of pulls for 5 star unit</string>
+    <string name="total_num_pulls">Total number of pulls</string>
+    <string name="avg_currency_five_star">Avg. No. of in-game currency for 5-star</string>
+    <string name="total_currency_five_star">Total number of in-game currency spent</string>
 
 </resources>

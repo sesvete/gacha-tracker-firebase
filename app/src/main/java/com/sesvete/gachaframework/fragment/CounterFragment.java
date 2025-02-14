@@ -39,8 +39,6 @@ import java.util.Locale;
 
 // bomo še pogruntali pol katere začetne argumente bomo dali notr
 
-    //TODO: če se ti da, custom alert dialog box, sicer lahko uporabiš privzetega
-
 public class CounterFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
