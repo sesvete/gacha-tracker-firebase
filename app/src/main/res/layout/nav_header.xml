@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:padding="16dp"
+    android:gravity="bottom"
+    android:background="@drawable/nav_header"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    >
+    <TextView
+        android:id="@+id/txtNavHeaderUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Simon Svetec"
+        />
+    <TextView
+        android:id="@+id/txtNavHeaderGame"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Genshin Impact"
+        />
+    <TextView
+        android:id="@+id/txtNavHeaderBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limited"
+        android:textSize="18sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="40dp"
+        />
+</LinearLayout>
