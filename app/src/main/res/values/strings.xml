@@ -46,5 +46,7 @@
     <string name="total_num_pulls">Total number of pulls</string>
     <string name="avg_currency_five_star">Avg. No. of in-game currency for 5-star</string>
     <string name="total_currency_five_star">Total number of in-game currency spent</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="light_mode">Light Mode</string>
 
 </resources>
