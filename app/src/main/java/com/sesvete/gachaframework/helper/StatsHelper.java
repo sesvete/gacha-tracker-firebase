@@ -57,16 +57,23 @@ public class StatsHelper {
     }
 
     private double percentageFiftyFifty(int numWon, int numLost){
-        return (double) (numWon) /(numWon + numLost);
+        if (numWon + numLost == 0){
+            return 0.0; // v primeru, da delimo z 0
+        }
+        return (double) (numWon)/(numWon + numLost);
     }
 
 
     private double avgNumPulls(int[] pullsFor5Star){
         int total = 0;
-        for (int i: pullsFor5Star) {
-            total = total + i;
+        if (pullsFor5Star.length == 0){
+            return 0.0;
+        } else {
+            for (int i: pullsFor5Star) {
+                total = total + i;
+            }
+            return (double) total/pullsFor5Star.length;
         }
-        return (double) total /pullsFor5Star.length;
     }
 
     private int totalNumPulls(int[] pullsFor5Star){

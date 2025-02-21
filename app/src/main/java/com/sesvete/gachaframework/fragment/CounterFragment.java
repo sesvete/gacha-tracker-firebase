@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,8 @@ public class CounterFragment extends Fragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormatter;
     private String formatedDate;
+    private String stringCounterProgressNumber;
+    private int intCounterProgressNumber;
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
@@ -151,17 +154,29 @@ public class CounterFragment extends Fragment {
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counterProgressNumber = counterHelper.counterPlusOne(txtCounterProgressNumber.getText().toString());
-                txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
+                try {
+                    intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
+                    counterProgressNumber = counterHelper.counterPlusOne(intCounterProgressNumber);
+                    txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+                    counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                }catch (Exception e){
+                    Log.e("bntCounterPlusOne", "An error occurred: " + e.getMessage(), e);
+                }
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counterProgressNumber = counterHelper.counterPlusTen(txtCounterProgressNumber.getText().toString());
-                txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
+                try {
+                    intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
+                    counterProgressNumber = counterHelper.counterPlusTen(intCounterProgressNumber);
+                    txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+                    counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                } catch (Exception e){
+                    Log.e("bntCounterPlusTen", "An error occurred: " + e.getMessage(), e);
+                }
             }
         });
         btnCounterPlusX.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +188,7 @@ public class CounterFragment extends Fragment {
                 builder.setView(dialogView);
 
                 EditText inputXCounter = dialogView.findViewById(R.id.inputXCounter);
-                MaterialButton btnXConfirm = dialogView.findViewById(R.id.btnXConfrim);
+                MaterialButton btnXConfirm = dialogView.findViewById(R.id.btnXConfirm);
                 MaterialButton btnXCancel = dialogView.findViewById(R.id.btnXCancel);
 
                 AlertDialog dialog = builder.create();
@@ -193,16 +208,26 @@ public class CounterFragment extends Fragment {
                     public void onClick(View v) {
                         String inputString = inputXCounter.getText().toString();
                         if (inputString.isEmpty()){
-                            Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.enter_a_number_error, Toast.LENGTH_SHORT).show();
                         } else {
-                            int numCustomWishes = Integer.parseInt(inputString);
-                            if (numCustomWishes <= 0) {
-                                Toast.makeText(getContext(), "Number of wishes must be greater than zero", Toast.LENGTH_SHORT).show();
-                            } else {
-                                counterProgressNumber = counterHelper.counterPlusX(txtCounterProgressNumber.getText().toString(), numCustomWishes);
-                                txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                                counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                                dialog.dismiss();
+                            try{
+                                int numCustomWishes = Integer.parseInt(inputString);
+                                if (numCustomWishes <= 0) {
+                                    Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
+                                    try {
+                                        intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
+                                        counterProgressNumber = counterHelper.counterPlusX(intCounterProgressNumber, numCustomWishes);
+                                        txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+                                        counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                        dialog.dismiss();
+                                    } catch (Exception e) {
+                                        Log.e("bntXConfirm", "An error occurred: " + e.getMessage(), e);
+                                    }
+                                }
+                            } catch (Exception e) {
+                                Log.e("bntXConfirm", "An error occurred: " + e.getMessage(), e);
                             }
                         }
                     }
@@ -218,72 +243,82 @@ public class CounterFragment extends Fragment {
         btnCounterConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                LayoutInflater dialogInflater = getLayoutInflater();
-                View dialogView = dialogInflater.inflate(R.layout.confirm_unit_dialog, null);
-                builder.setView(dialogView);
+                String stringCounterNumber = txtCounterProgressNumber.getText().toString();
+                try {
+                    int intCounterNumber = Integer.parseInt(stringCounterNumber);
+                    if (intCounterNumber <= 0) {
+                        Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        LayoutInflater dialogInflater = getLayoutInflater();
+                        View dialogView = dialogInflater.inflate(R.layout.confirm_unit_dialog, null);
+                        builder.setView(dialogView);
 
-                EditText inputConfirmCounter = dialogView.findViewById(R.id.inputConfirmCounter);
-                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfrim);
-                MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
-                RadioGroup rGrConfirm = dialogView.findViewById(R.id.rGrConfirm);
-                if (guaranteed){
-                    rGrConfirm.setVisibility(View.GONE);
-                    featuredUnitStatus = true;
-                }
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                Window window = dialog.getWindow();
-                if (window != null) {
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
-                    lp.copyFrom(window.getAttributes());
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    lp.width = (int) (displayMetrics.widthPixels * 0.8);
-                    window.setAttributes(lp);
-                }
-                radioFunction(rGrConfirm);
-                btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String inputString = inputConfirmCounter.getText().toString();
-                        inputString = inputString.toUpperCase();
-                        if (inputString.isEmpty()){
-                            Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Datum se bo shranil v obliki "yyyy-MM-dd" v podatkovno bazo
-                            calendar = Calendar.getInstance();
-                            dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            formatedDate = dateFormatter.format(calendar.getTime());
-                            Toast.makeText(getContext(), formatedDate, Toast.LENGTH_SHORT).show();
-                            String stringCounterNumber = txtCounterProgressNumber.getText().toString();
-                            txtCounterHistoryNumber.setText(stringCounterNumber);
-                            txtCounterHistoryUnit.setText(inputString);
-                            txtCounterProgressNumber.setText(String.valueOf(0));
-                            counterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                            if (featuredUnitStatus){
-                                guaranteed = false;
-                                imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
-                                imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
-                            } else if (!featuredUnitStatus) {
-                                guaranteed = true;
-                                imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
-                                imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
-                            } else {
-                                Toast.makeText(getContext(), "Please select a radio choice", Toast.LENGTH_SHORT).show();
-                            }
-                            dialog.dismiss();
+                        EditText inputConfirmCounter = dialogView.findViewById(R.id.inputConfirmCounter);
+                        MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfirm);
+                        MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
+                        RadioGroup rGrConfirm = dialogView.findViewById(R.id.rGrConfirm);
+                        if (guaranteed){
+                            rGrConfirm.setVisibility(View.GONE);
+                            featuredUnitStatus = true;
+                            rGrConfirm.check(R.id.wonRadioButton);
                         }
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                        Window window = dialog.getWindow();
+                        if (window != null) {
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
+                            lp.copyFrom(window.getAttributes());
+                            DisplayMetrics displayMetrics = new DisplayMetrics();
+                            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                            lp.width = (int) (displayMetrics.widthPixels * 0.8);
+                            window.setAttributes(lp);
+                        }
+                        radioFunction(rGrConfirm);
+                        btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String inputString = inputConfirmCounter.getText().toString();
+                                inputString = inputString.toUpperCase();
+                                if (inputString.isEmpty()){
+                                    Toast.makeText(getContext(), R.string.enter_received_unit_error, Toast.LENGTH_SHORT).show();
+                                }
+                                else if (rGrConfirm.getCheckedRadioButtonId() == -1) {
+                                    Toast.makeText(getContext(), R.string.select_radio_choice_error, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // Datum se bo shranil v obliki "yyyy-MM-dd" v podatkovno bazo
+                                    calendar = Calendar.getInstance();
+                                    dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    formatedDate = dateFormatter.format(calendar.getTime());
+                                    Toast.makeText(getContext(), formatedDate, Toast.LENGTH_SHORT).show();
+                                    txtCounterHistoryNumber.setText(stringCounterNumber);
+                                    txtCounterHistoryUnit.setText(inputString);
+                                    txtCounterProgressNumber.setText(String.valueOf(0));
+                                    counterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                    if (featuredUnitStatus){
+                                        guaranteed = false;
+                                        imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                                        imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
+                                    } else {
+                                        guaranteed = true;
+                                        imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
+                                        imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
+                                    }
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
+                        btnConfirmCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
                     }
-                });
-                btnConfirmCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
+                } catch (Exception e) {
+                    Log.e("bntCounterConfirm", "An error occurred: " + e.getMessage(), e);
+                }
             }
         });
         cardCounterProgress.setOnLongClickListener(new View.OnLongClickListener() {
@@ -304,9 +339,9 @@ public class CounterFragment extends Fragment {
                 lostRadioButton.setText("N");
 
                 EditText inputUpdateCounter = dialogView.findViewById(R.id.inputConfirmCounter);
-                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfrim);
+                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfirm);
                 MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
-                inputUpdateCounter.setHint("Enter Counter Number:");
+                inputUpdateCounter.setHint(R.string.enter_counter_number_hint);
                 inputUpdateCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                 AlertDialog dialog = builder.create();
@@ -329,24 +364,28 @@ public class CounterFragment extends Fragment {
                     public void onClick(View v) {
                         String inputString = inputUpdateCounter.getText().toString();
                         if (inputString.isEmpty()){
-                            Toast.makeText(getContext(), "Please enter a number", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.enter_a_number_error, Toast.LENGTH_SHORT).show();
+                        } else if (rGrConfirm.getCheckedRadioButtonId() == -1) {
+                            Toast.makeText(getContext(), R.string.select_radio_choice_error, Toast.LENGTH_SHORT).show();
                         } else {
-                            int numCustomWishes = Integer.parseInt(inputString);
-                            if (numCustomWishes <= 0) {
-                                Toast.makeText(getContext(), "Number of wishes must be greater than zero", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (featuredUnitStatus) {
-                                    guaranteed = true;
-                                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
-                                } else if (!featuredUnitStatus) {
-                                    guaranteed = false;
-                                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                            try {
+                                int numCustomWishes = Integer.parseInt(inputString);
+                                if (numCustomWishes <= 0) {
+                                    Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(getContext(), "Please select a radio choice", Toast.LENGTH_SHORT).show();
+                                    if (featuredUnitStatus) {
+                                        guaranteed = true;
+                                        imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
+                                    } else {
+                                        guaranteed = false;
+                                        imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                                    }
+                                    txtCounterProgressNumber.setText(String.valueOf(numCustomWishes));
+                                    counterHelper.updateSoftPityTracker(getResources(), numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                    dialog.dismiss();
                                 }
-                                txtCounterProgressNumber.setText(String.valueOf(numCustomWishes));
-                                counterHelper.updateSoftPityTracker(getResources(), numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                                dialog.dismiss();
+                            } catch (Exception e){
+                                Log.e("bntCounterProgress", "An error occurred: " + e.getMessage(), e);
                             }
                         }
                     }

@@ -7,19 +7,16 @@ import android.widget.TextView;
 import com.sesvete.gachaframework.R;
 
 public class CounterHelper {
-    public int counterPlusOne(String currentCount){
-        int numCounter = Integer.parseInt(currentCount);
-        return numCounter + 1;
+    public int counterPlusOne(int currentCount){
+        return currentCount + 1;
     }
 
-    public int counterPlusTen(String currentCount){
-        int numCounter = Integer.parseInt(currentCount);
-        return numCounter + 10;
+    public int counterPlusTen(int currentCount){
+        return currentCount + 10;
     }
 
-    public int counterPlusX(String currentCount, int amountToAdd){
-        int currentCountInt = Integer.parseInt(currentCount);
-        return currentCountInt + amountToAdd;
+    public int counterPlusX(int currentCount, int amountToAdd){
+        return currentCount + amountToAdd;
     }
 
     public void updateSoftPityTracker(Resources resources, int counter, int softPity, int wishValue, String currencyType, TextView txtNumToSoftPity, TextView txtToSoftPity, TextView txtNumCurrencyToSoftPity, TextView txtCurrencyToSoftPity, TextView txtNumTotalSpent, TextView txtTotalSpent){

@@ -48,5 +48,17 @@
     <string name="total_currency_five_star">Total number of in-game currency spent</string>
     <string name="dark_mode">Dark Mode</string>
     <string name="light_mode">Light Mode</string>
+    <string name="num_wishes_grater_0_error">Number of wishes must be grater than 0</string>
+    <string name="enter_received_unit_error">Please enter the name of the received unit</string>
+    <string name="select_radio_choice_error">Please select a radio choice</string>
+    <string name="enter_a_number_error">Please enter a number</string>
+    <string name="enter_counter_number_hint">Enter the counter number:</string>
+    <string name="input_custom_number">Input custom number</string>
+    <string name="input_character_name">Input character name</string>
+    <string name="enter_character_name">Enter character name</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="won">Won</string>
+    <string name="lost">Lost</string>
 
 </resources>

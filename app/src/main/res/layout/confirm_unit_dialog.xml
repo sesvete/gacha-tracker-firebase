@@ -19,7 +19,7 @@
         android:id="@+id/txtConfirmTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Input Character Name"
+        android:text="@string/input_character_name"
         android:layout_margin="10dp"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
         android:layout_margin="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter character name"
+        android:hint="@string/enter_character_name"
         app:layout_constraintTop_toBottomOf="@id/txtConfirmTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -54,7 +54,7 @@
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Won"
+            android:text="@string/won"
             android:checked="true"
             />
 
@@ -64,17 +64,17 @@
             android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lost"
+            android:text="@string/lost"
             />
 
     </RadioGroup>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnConfirmConfrim"
+        android:id="@+id/btnConfirmConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Confirm"
+        android:text="@string/confirm"
         app:layout_constraintTop_toBottomOf="@id/rGrConfirm"
         app:layout_constraintLeft_toRightOf="@id/guidelineVerticalConfirm"
         app:layout_constraintRight_toRightOf="parent"
@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="Cancel"
+        android:text="@string/cancel"
         app:layout_constraintTop_toBottomOf="@id/rGrConfirm"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guidelineVerticalConfirm"
