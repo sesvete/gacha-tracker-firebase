@@ -1,7 +1,11 @@
 package com.sesvete.gachaframework.helper;
 
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.os.Handler;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sesvete.gachaframework.R;
@@ -70,5 +74,21 @@ public class CounterHelper {
         txtCurrencyToSoftPity.setText(stringCombinedCurrencyToSoftPity);
         txtNumTotalSpent.setText(stringTotalSpent);
         txtTotalSpent.setText(stringCombinedTotalSpent);
+    }
+
+    // delay 100 ms, lahko ga prilagodiš
+    public void openKeyboard(EditText editText, Context context){
+        if (editText != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    editText.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                    }
+                }
+            }, 100);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.sesvete.gachaframework.fragment;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -192,6 +193,14 @@ public class CounterFragment extends Fragment {
                 MaterialButton btnXCancel = dialogView.findViewById(R.id.btnXCancel);
 
                 AlertDialog dialog = builder.create();
+
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        counterHelper.openKeyboard(inputXCounter, getContext());
+                    }
+                });
+
                 dialog.show();
                 Window window = dialog.getWindow();
                 if (window != null) {
@@ -264,6 +273,14 @@ public class CounterFragment extends Fragment {
                             rGrConfirm.check(R.id.wonRadioButton);
                         }
                         AlertDialog dialog = builder.create();
+
+                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialog) {
+                                counterHelper.openKeyboard(inputConfirmCounter, getContext());
+                            }
+                        });
+
                         dialog.show();
                         Window window = dialog.getWindow();
                         if (window != null) {
@@ -345,6 +362,15 @@ public class CounterFragment extends Fragment {
                 inputUpdateCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                 AlertDialog dialog = builder.create();
+
+                // da se keyboard odpre šele ko se dialog popolnoma zgradi
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        counterHelper.openKeyboard(inputUpdateCounter, getContext());
+                    }
+                });
+
                 dialog.show();
                 Window window = dialog.getWindow();
                 if (window != null) {
