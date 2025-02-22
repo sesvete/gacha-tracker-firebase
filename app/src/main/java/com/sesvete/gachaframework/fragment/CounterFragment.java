@@ -177,24 +177,8 @@ public class CounterFragment extends Fragment {
 
                 AlertDialog dialog = builder.create();
 
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        counterHelper.openKeyboard(inputXCounter, getContext());
-                    }
-                });
+                buildAlertDialogWindow(dialog, inputXCounter);
 
-                dialog.show();
-                Window window = dialog.getWindow();
-                if (window != null) {
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
-                    lp.copyFrom(window.getAttributes());
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    lp.width = (int) (displayMetrics.widthPixels * 0.8);
-                    window.setAttributes(lp);
-                }
                 btnXConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -249,24 +233,8 @@ public class CounterFragment extends Fragment {
                         }
                         AlertDialog dialog = builder.create();
 
-                        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                            @Override
-                            public void onShow(DialogInterface dialog) {
-                                counterHelper.openKeyboard(inputConfirmCounter, getContext());
-                            }
-                        });
+                        buildAlertDialogWindow(dialog, inputConfirmCounter);
 
-                        dialog.show();
-                        Window window = dialog.getWindow();
-                        if (window != null) {
-                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                            window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
-                            lp.copyFrom(window.getAttributes());
-                            DisplayMetrics displayMetrics = new DisplayMetrics();
-                            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                            lp.width = (int) (displayMetrics.widthPixels * 0.8);
-                            window.setAttributes(lp);
-                        }
                         radioFunction(rGrConfirm);
                         btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -339,24 +307,7 @@ public class CounterFragment extends Fragment {
                 AlertDialog dialog = builder.create();
 
                 // da se keyboard odpre šele ko se dialog popolnoma zgradi
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        counterHelper.openKeyboard(inputUpdateCounter, getContext());
-                    }
-                });
-
-                dialog.show();
-                Window window = dialog.getWindow();
-                if (window != null) {
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
-                    lp.copyFrom(window.getAttributes());
-                    DisplayMetrics displayMetrics = new DisplayMetrics();
-                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                    lp.width = (int) (displayMetrics.widthPixels * 0.8);
-                    window.setAttributes(lp);
-                }
+                buildAlertDialogWindow(dialog, inputUpdateCounter);
 
                 radioFunction(rGrConfirm);
 
@@ -420,6 +371,29 @@ public class CounterFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void buildAlertDialogWindow(AlertDialog dialog, EditText editText){
+        // da se keyboard odpre šele ko se dialog popolnoma zgradi
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                counterHelper.openKeyboard(editText, getContext());
+            }
+        });
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
+            lp.copyFrom(window.getAttributes());
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            lp.width = (int) (displayMetrics.widthPixels * 0.8);
+            window.setAttributes(lp);
+        }
     }
 
     //primer če hočeš dat direkt v texview
