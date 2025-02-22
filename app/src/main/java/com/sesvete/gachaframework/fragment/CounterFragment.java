@@ -51,7 +51,8 @@ public class CounterFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private int counterProgressNumber;
+
+    //od tle dalje so moje spremenljivke
     private TextView txtCounterProgressNumber;
     private TextView txtCounterSpentTillJackpot;
     private TextView txtCounterSpentTillJackpotCurrency;
@@ -73,8 +74,6 @@ public class CounterFragment extends Fragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormatter;
     private String formatedDate;
-    private String stringCounterProgressNumber;
-    private int intCounterProgressNumber;
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
@@ -155,29 +154,13 @@ public class CounterFragment extends Fragment {
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
-                try {
-                    intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
-                    counterProgressNumber = counterHelper.counterPlusOne(intCounterProgressNumber);
-                    txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                    counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                }catch (Exception e){
-                    Log.e("bntCounterPlusOne", "An error occurred: " + e.getMessage(), e);
-                }
+                counterHelper.updateCounter(getResources(), txtCounterProgressNumber, 1, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
-                try {
-                    intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
-                    counterProgressNumber = counterHelper.counterPlusTen(intCounterProgressNumber);
-                    txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                    counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                } catch (Exception e){
-                    Log.e("bntCounterPlusTen", "An error occurred: " + e.getMessage(), e);
-                }
+                counterHelper.updateCounter(getResources(), txtCounterProgressNumber, 10, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
         btnCounterPlusX.setOnClickListener(new View.OnClickListener() {
@@ -224,16 +207,8 @@ public class CounterFragment extends Fragment {
                                 if (numCustomWishes <= 0) {
                                     Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
-                                    try {
-                                        intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
-                                        counterProgressNumber = counterHelper.counterPlusX(intCounterProgressNumber, numCustomWishes);
-                                        txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
-                                        counterHelper.updateSoftPityTracker(getResources(), counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                                        dialog.dismiss();
-                                    } catch (Exception e) {
-                                        Log.e("bntXConfirm", "An error occurred: " + e.getMessage(), e);
-                                    }
+                                    counterHelper.updateCounter(getResources(), txtCounterProgressNumber, numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                    dialog.dismiss();
                                 }
                             } catch (Exception e) {
                                 Log.e("bntXConfirm", "An error occurred: " + e.getMessage(), e);

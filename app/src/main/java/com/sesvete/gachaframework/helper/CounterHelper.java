@@ -4,6 +4,7 @@ package com.sesvete.gachaframework.helper;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Handler;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,15 +12,20 @@ import android.widget.TextView;
 import com.sesvete.gachaframework.R;
 
 public class CounterHelper {
-    public int counterPlusOne(int currentCount){
-        return currentCount + 1;
+
+    public void updateCounter(Resources resources, TextView txtCounterProgressNumber, int amountToAdd, int softPity, int wishValue, String currencyType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotDescription, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotal, TextView txtCounterSpentTillJackpotTotalDescription){
+        String stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
+        try {
+            int intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
+            int counterProgressNumber = counterPlusX(intCounterProgressNumber, amountToAdd);
+            txtCounterProgressNumber.setText(String.valueOf(counterProgressNumber));
+            updateSoftPityTracker(resources, counterProgressNumber, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+        }catch (Exception e){
+            Log.e("updateCounter", "An error occurred: " + e.getMessage(), e);
+        }
     }
 
-    public int counterPlusTen(int currentCount){
-        return currentCount + 10;
-    }
-
-    public int counterPlusX(int currentCount, int amountToAdd){
+    private int counterPlusX(int currentCount, int amountToAdd){
         return currentCount + amountToAdd;
     }
 
@@ -88,7 +94,7 @@ public class CounterHelper {
                         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
                     }
                 }
-            }, 100);
+            }, 70);
         }
     }
 }
