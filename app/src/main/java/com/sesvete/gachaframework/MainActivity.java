@@ -20,11 +20,10 @@ import com.sesvete.gachaframework.fragment.SettingsFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
 import com.sesvete.gachaframework.helper.SettingsHelper;
 
-//TODO: navigation header
-//TODO: games fragment (game + banner type)
-//TODO: tracking active game and banner
 //TODO: light/night mode
+//TODO: translations ENG/SLO
 //TODO: sign in activity
+//TODO: loading/splash screen
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        updateNavHeaderUser(navigationView);
         updateNavHeader(navigationView);
     }
 
@@ -91,11 +91,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateNavHeader(NavigationView navigationView){
+    private void updateNavHeaderUser(NavigationView navigationView){
+        if (navigationView != null) {
+            View navHeaderView = navigationView.getHeaderView(0);
+            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txtNavHeaderUserName);
+            txtNavHeaderUserName.setText("Simon Svetec");
+        }
+    }
+
+    public void updateNavHeader(NavigationView navigationView){
         if (navigationView != null) {
             SettingsHelper settingsHelper = new SettingsHelper();
             View navHeaderView = navigationView.getHeaderView(0);
-            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txtNavHeaderUserName);
             TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txtNavHeaderGame);
             TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txtNavHeaderBanner);
 

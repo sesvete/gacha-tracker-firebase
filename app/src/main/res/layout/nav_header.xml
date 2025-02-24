@@ -17,7 +17,7 @@
         android:layout_marginBottom="10dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="Simon Svetec"
+        android:text="Test Test"
         />
     <TextView
         android:id="@+id/txtNavHeaderGame"
@@ -26,13 +26,13 @@
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Genshin Impact"
+        android:text="Test Test"
         />
     <TextView
         android:id="@+id/txtNavHeaderBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Limited"
+        android:text="Test"
         android:textSize="18sp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="40dp"
