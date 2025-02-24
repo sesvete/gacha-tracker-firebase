@@ -60,5 +60,13 @@
     <string name="cancel">Cancel</string>
     <string name="won">Won</string>
     <string name="lost">Lost</string>
+    <string name="num_wishes_at_least_0">Number of wishes must be at least 0</string>
 
+    <string name="general_settings">General Settings</string>
+    <string name="game_settings">Game Settings</string>
+    <string name="game">Game</string>
+    <string name="banner">Banner</string>
+
+    <string name="banner_type">Banner type</string>
+    <string name="language">Language</string>
 </resources>

@@ -23,18 +23,12 @@
             android:title="@string/statistics"
             />
         <item
-            android:id="@+id/nav_games"
-            android:title="@string/games"
+            android:id="@+id/nav_settings"
+            android:title="@string/settings"
             />
-
         <!-- Razmisli o uporabi switch material ali switch compat za dark mode toggle -->
         <!-- glej switch compat in navigation drawer tutoriale ali kaj podobnega -->
 
-        <item android:title=""/>
-        <item
-            android:id="@+id/dark_mode_toggle"
-            android:title="@string/dark_mode"
-            />
     </group>
     <item android:title="">
         <menu>
