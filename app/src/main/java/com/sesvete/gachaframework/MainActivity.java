@@ -12,9 +12,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.sesvete.gachaframework.fragment.CounterFragment;
-import com.sesvete.gachaframework.fragment.GamesFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachaframework.fragment.HistoryFragment;
+import com.sesvete.gachaframework.fragment.SettingsFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
 
 //TODO: navigation header
@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.setTitle(R.string.statistics);
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, StatsFragment.class, null).setReorderingAllowed(true).commit();
                 }
-                else if (id == R.id.nav_games){
-                    toolbar.setTitle(R.string.games);
-                    fragmentManager.beginTransaction().replace(R.id.fragment_container, GamesFragment.class, null).setReorderingAllowed(true).commit();
+                else if (id == R.id.nav_settings){
+                    toolbar.setTitle(R.string.settings);
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment.class, null).setReorderingAllowed(true).commit();
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

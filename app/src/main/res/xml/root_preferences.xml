@@ -1,0 +1,40 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/game_settings">
+
+        <ListPreference
+            app:defaultValue="genshin"
+            app:entries="@array/game_entries"
+            app:entryValues="@array/game_values"
+            app:key="game"
+            app:title="@string/game"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="limited"
+            app:entries="@array/banner_entries"
+            app:entryValues="@array/banner_values"
+            app:key="banner"
+            app:title="@string/banner_type"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/general_settings">
+
+        <ListPreference
+            app:defaultValue="eng"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:key="language"
+            app:title="@string/language"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/dark_mode" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
