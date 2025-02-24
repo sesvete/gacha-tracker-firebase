@@ -2,6 +2,8 @@ package com.sesvete.gachaframework;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachaframework.fragment.HistoryFragment;
 import com.sesvete.gachaframework.fragment.SettingsFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
+import com.sesvete.gachaframework.helper.SettingsHelper;
 
 //TODO: navigation header
 //TODO: games fragment (game + banner type)
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        updateNavHeader(navigationView);
     }
 
     @Override
@@ -84,6 +88,19 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    private void updateNavHeader(NavigationView navigationView){
+        if (navigationView != null) {
+            SettingsHelper settingsHelper = new SettingsHelper();
+            View navHeaderView = navigationView.getHeaderView(0);
+            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txtNavHeaderUserName);
+            TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txtNavHeaderGame);
+            TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txtNavHeaderBanner);
+
+            txtNavHeaderGame.setText(settingsHelper.getEntryFromValue(this, "game", "genshin"));
+            txtNavHeaderBanner.setText(settingsHelper.getEntryFromValue(this, "banner", "limited"));
         }
     }
 }
