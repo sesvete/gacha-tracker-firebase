@@ -322,8 +322,8 @@ public class CounterFragment extends Fragment {
                         } else {
                             try {
                                 int numCustomWishes = Integer.parseInt(inputString);
-                                if (numCustomWishes <= 0) {
-                                    Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
+                                if (numCustomWishes < 0) {
+                                    Toast.makeText(getContext(), R.string.num_wishes_at_least_0, Toast.LENGTH_SHORT).show();
                                 } else {
                                     if (featuredUnitStatus) {
                                         guaranteed = true;

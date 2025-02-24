@@ -60,5 +60,6 @@
     <string name="cancel">Cancel</string>
     <string name="won">Won</string>
     <string name="lost">Lost</string>
+    <string name="num_wishes_at_least_0">Number of wishes must be at least 0</string>
 
 </resources>
