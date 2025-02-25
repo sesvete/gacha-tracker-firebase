@@ -8,6 +8,7 @@
             app:entryValues="@array/game_values"
             app:key="game"
             app:title="@string/game"
+            app:negativeButtonText="@string/cancel"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
@@ -16,6 +17,7 @@
             app:entryValues="@array/banner_values"
             app:key="banner"
             app:title="@string/banner_type"
+            app:negativeButtonText="@string/cancel"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
@@ -28,6 +30,7 @@
             app:entryValues="@array/language_values"
             app:key="language"
             app:title="@string/language"
+            app:negativeButtonText="@string/cancel"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat

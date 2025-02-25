@@ -385,6 +385,7 @@ public class CounterFragment extends Fragment {
         Window window = dialog.getWindow();
         if (window != null) {
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            // prevents white background of the drawable
             window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
             lp.copyFrom(window.getAttributes());
             DisplayMetrics displayMetrics = new DisplayMetrics();
