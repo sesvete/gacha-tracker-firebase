@@ -10,7 +10,7 @@ import com.sesvete.gachaframework.R;
 
 public class SettingsHelper {
 
-    public String getEntryFromValue(Context context, String key, String defaultValue) {
+    public static String getEntryFromValue(Context context, String key, String defaultValue) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String value = prefs.getString(key, defaultValue);
 
@@ -28,7 +28,7 @@ public class SettingsHelper {
         return defaultValue; // Return default if not found
     }
 
-    private int getEntriesResourceId(String key){
+    private static int getEntriesResourceId(String key){
         if(key.equals("game")){
             return R.array.game_entries;
         } else if (key.equals("banner")){

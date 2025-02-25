@@ -34,7 +34,7 @@ public class StatsHelper {
         statisticList.add(new Statistic(resources.getString(R.string.avg_currency_five_star), intTotalNumPulls * currencyValue));
     }
 
-    private int numWonFiftyFifty(boolean[] won5050){
+    private static int numWonFiftyFifty(boolean[] won5050){
         int won = 0;
         for (boolean i: won5050
              ) {
@@ -45,7 +45,7 @@ public class StatsHelper {
         return won;
     }
 
-    private int numLostFiftyFifty(boolean[] won5050){
+    private static int numLostFiftyFifty(boolean[] won5050){
         int lost = 0;
         for (boolean i: won5050
         ) {
@@ -56,7 +56,7 @@ public class StatsHelper {
         return lost;
     }
 
-    private double percentageFiftyFifty(int numWon, int numLost){
+    private static double percentageFiftyFifty(int numWon, int numLost){
         if (numWon + numLost == 0){
             return 0.0; // v primeru, da delimo z 0
         }
@@ -64,7 +64,7 @@ public class StatsHelper {
     }
 
 
-    private double avgNumPulls(int[] pullsFor5Star){
+    private static double avgNumPulls(int[] pullsFor5Star){
         int total = 0;
         if (pullsFor5Star.length == 0){
             return 0.0;
@@ -76,7 +76,7 @@ public class StatsHelper {
         }
     }
 
-    private int totalNumPulls(int[] pullsFor5Star){
+    private static int totalNumPulls(int[] pullsFor5Star){
         int total = 0;
         for (int i: pullsFor5Star) {
             total = total + i;

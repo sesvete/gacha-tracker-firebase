@@ -66,7 +66,6 @@ public class CounterFragment extends Fragment {
     private MaterialButton btnCounterPlusX;
     private MaterialButton btnCounterPlusTen;
     private MaterialButton btnCounterConfirm;
-    private CounterHelper counterHelper;
     private CardView cardCounterProgress;
     private ImageView imgCounterProgressGuaranteedDescription;
     private ShapeableImageView imgCounterHistoryFeaturedUnitStatus;
@@ -115,7 +114,6 @@ public class CounterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
 
-        counterHelper = new CounterHelper();
         int softPity = 75;
         int wishValue = 160;
         String currencyType = getString(R.string.primogens);
@@ -154,13 +152,13 @@ public class CounterFragment extends Fragment {
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counterHelper.updateCounter(getResources(), txtCounterProgressNumber, 1, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, 1, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counterHelper.updateCounter(getResources(), txtCounterProgressNumber, 10, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, 10, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
             }
         });
         btnCounterPlusX.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +189,7 @@ public class CounterFragment extends Fragment {
                                 if (numCustomWishes <= 0) {
                                     Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    counterHelper.updateCounter(getResources(), txtCounterProgressNumber, numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                    CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
                                     dialog.dismiss();
                                 }
                             } catch (Exception e) {
@@ -255,7 +253,7 @@ public class CounterFragment extends Fragment {
                                     txtCounterHistoryNumber.setText(stringCounterNumber);
                                     txtCounterHistoryUnit.setText(inputString);
                                     txtCounterProgressNumber.setText(String.valueOf(0));
-                                    counterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                    CounterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
                                     if (featuredUnitStatus){
                                         guaranteed = false;
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
@@ -333,7 +331,7 @@ public class CounterFragment extends Fragment {
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
                                     }
                                     txtCounterProgressNumber.setText(String.valueOf(numCustomWishes));
-                                    counterHelper.updateSoftPityTracker(getResources(), numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                                    CounterHelper.updateSoftPityTracker(getResources(), numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
                                     dialog.dismiss();
                                 }
                             } catch (Exception e){
@@ -379,7 +377,7 @@ public class CounterFragment extends Fragment {
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                counterHelper.openKeyboard(editText, getContext());
+                CounterHelper.openKeyboard(editText, getContext());
             }
         });
 

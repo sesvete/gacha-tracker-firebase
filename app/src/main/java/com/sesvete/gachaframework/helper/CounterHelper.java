@@ -13,7 +13,7 @@ import com.sesvete.gachaframework.R;
 
 public class CounterHelper {
 
-    public void updateCounter(Resources resources, TextView txtCounterProgressNumber, int amountToAdd, int softPity, int wishValue, String currencyType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotDescription, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotal, TextView txtCounterSpentTillJackpotTotalDescription){
+    public static void updateCounter(Resources resources, TextView txtCounterProgressNumber, int amountToAdd, int softPity, int wishValue, String currencyType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotDescription, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotal, TextView txtCounterSpentTillJackpotTotalDescription){
         String stringCounterProgressNumber = txtCounterProgressNumber.getText().toString();
         try {
             int intCounterProgressNumber = Integer.parseInt(stringCounterProgressNumber);
@@ -25,11 +25,11 @@ public class CounterHelper {
         }
     }
 
-    private int counterPlusX(int currentCount, int amountToAdd){
+    private static int counterPlusX(int currentCount, int amountToAdd){
         return currentCount + amountToAdd;
     }
 
-    public void updateSoftPityTracker(Resources resources, int counter, int softPity, int wishValue, String currencyType, TextView txtNumToSoftPity, TextView txtToSoftPity, TextView txtNumCurrencyToSoftPity, TextView txtCurrencyToSoftPity, TextView txtNumTotalSpent, TextView txtTotalSpent){
+    public static void updateSoftPityTracker(Resources resources, int counter, int softPity, int wishValue, String currencyType, TextView txtNumToSoftPity, TextView txtToSoftPity, TextView txtNumCurrencyToSoftPity, TextView txtCurrencyToSoftPity, TextView txtNumTotalSpent, TextView txtTotalSpent){
         String stringNumToSoftPity;
         String stringToSoftPity;
         String stringNumCurrencyToSoftPity;
@@ -73,7 +73,7 @@ public class CounterHelper {
             updateTextFields(txtNumToSoftPity, txtToSoftPity, txtNumCurrencyToSoftPity,txtCurrencyToSoftPity, txtNumTotalSpent, txtTotalSpent, stringNumToSoftPity, stringToSoftPity, stringNumCurrencyToSoftPity, stringCombinedCurrencyToSoftPity, stringTotalSpent, stringCombinedTotalSpent);
         }
     }
-    private void updateTextFields(TextView txtNumToSoftPity, TextView txtToSoftPity, TextView txtNumCurrencyToSoftPity, TextView txtCurrencyToSoftPity, TextView txtNumTotalSpent, TextView txtTotalSpent, String stringNumToSoftPity, String stringToSoftPity, String stringNumCurrencyToSoftPity, String stringCombinedCurrencyToSoftPity, String stringTotalSpent, String stringCombinedTotalSpent){
+    private static void updateTextFields(TextView txtNumToSoftPity, TextView txtToSoftPity, TextView txtNumCurrencyToSoftPity, TextView txtCurrencyToSoftPity, TextView txtNumTotalSpent, TextView txtTotalSpent, String stringNumToSoftPity, String stringToSoftPity, String stringNumCurrencyToSoftPity, String stringCombinedCurrencyToSoftPity, String stringTotalSpent, String stringCombinedTotalSpent){
         txtNumToSoftPity.setText(stringNumToSoftPity);
         txtToSoftPity.setText(stringToSoftPity);
         txtNumCurrencyToSoftPity.setText(stringNumCurrencyToSoftPity);
@@ -83,7 +83,7 @@ public class CounterHelper {
     }
 
     // delay 100 ms, lahko ga prilagodiš
-    public void openKeyboard(EditText editText, Context context){
+    public static void openKeyboard(EditText editText, Context context){
         if (editText != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override

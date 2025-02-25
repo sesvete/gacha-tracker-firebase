@@ -101,13 +101,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateNavHeader(NavigationView navigationView){
         if (navigationView != null) {
-            SettingsHelper settingsHelper = new SettingsHelper();
             View navHeaderView = navigationView.getHeaderView(0);
             TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txtNavHeaderGame);
             TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txtNavHeaderBanner);
 
-            txtNavHeaderGame.setText(settingsHelper.getEntryFromValue(this, "game", "genshin"));
-            txtNavHeaderBanner.setText(settingsHelper.getEntryFromValue(this, "banner", "limited"));
+            txtNavHeaderGame.setText(SettingsHelper.getEntryFromValue(this, "game", "genshin"));
+            txtNavHeaderBanner.setText(SettingsHelper.getEntryFromValue(this, "banner", "limited"));
         }
     }
 }
