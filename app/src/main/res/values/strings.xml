@@ -69,4 +69,7 @@
 
     <string name="banner_type">Banner type</string>
     <string name="language">Language</string>
+    <string name="weapon">Weapon</string>
+    <string name="light_cone">Light Cone</string>
+    <string name="w_engine">W-Engine</string>
 </resources>

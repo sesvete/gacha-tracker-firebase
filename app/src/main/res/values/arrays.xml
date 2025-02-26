@@ -13,11 +13,49 @@
 
     <string-array name="banner_entries">
         <item>Limited</item>
+        <item>Weapon</item>
         <item>Standard</item>
     </string-array>
 
     <string-array name="banner_values">
         <item>limited</item>
+        <item>weapon</item>
+        <item>standard</item>
+    </string-array>
+
+    <string-array name="genshin_banner_entries">
+        <item>Limited</item>
+        <item>Weapon</item>
+        <item>Standard</item>
+    </string-array>
+
+    <string-array name="genshin_banner_values">
+        <item>limited</item>
+        <item>weapon</item>
+        <item>standard</item>
+    </string-array>
+
+    <string-array name="hsr_banner_entries">
+        <item>Limited</item>
+        <item>Light Cone</item>
+        <item>Standard</item>
+    </string-array>
+
+    <string-array name="hsr_banner_values">
+        <item>limited</item>
+        <item>light_cone</item>
+        <item>standard</item>
+    </string-array>
+
+    <string-array name="zzz_banner_entries">
+        <item>Limited</item>
+        <item>W-Engine</item>
+        <item>Standard</item>
+    </string-array>
+
+    <string-array name="zzz_banner_values">
+        <item>limited</item>
+        <item>w_engine</item>
         <item>standard</item>
     </string-array>
 

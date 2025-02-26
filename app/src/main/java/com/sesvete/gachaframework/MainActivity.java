@@ -24,6 +24,8 @@ import com.sesvete.gachaframework.helper.SettingsHelper;
 //TODO: translations ENG/SLO
 //TODO: sign in activity
 //TODO: loading/splash screen
+//TODO: add confirm dialog for logout
+//TODO: remove guarantee when banner is standard
 
 public class MainActivity extends AppCompatActivity {
 
