@@ -42,6 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
         if (key.equals("game")) {
             SettingsHelper.updateBannerPreference(sharedPreferences.getString(key, "genshin"), findPreference("banner"));
+            bannerPreference.setValueIndex(0);
         }
         if (getActivity() instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) getActivity();
