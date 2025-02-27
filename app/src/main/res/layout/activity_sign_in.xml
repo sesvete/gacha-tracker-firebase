@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInHorizontal1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInHorizontal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInVertical1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInVertical2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85"
+        />
+
+    <TextView
+        android:id="@+id/txtSignInTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/gacha_app_framework"
+        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal1"
+        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical1"
+        app:layout_constraintBottom_toTopOf="@id/guidelineSignInHorizontal2"
+        app:layout_constraintRight_toLeftOf="@id/guidelineSignInVertical2"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInHorizontal3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInHorizontal4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55"
+        />
+
+    <TextView
+        android:id="@+id/txtSignInDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/sign_in_description"
+        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal3"
+        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical1"
+        app:layout_constraintBottom_toTopOf="@id/guidelineSignInHorizontal4"
+        app:layout_constraintRight_toLeftOf="@id/guidelineSignInVertical2"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInHorizontal5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSignInHorizontal6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="60sp"
+        android:autoSizeStepGranularity="2sp"
+        android:text="@string/sign_in"
+        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal5"
+        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical1"
+        app:layout_constraintBottom_toTopOf="@id/guidelineSignInHorizontal6"
+        app:layout_constraintRight_toLeftOf="@id/guidelineSignInVertical2"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

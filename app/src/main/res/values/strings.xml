@@ -72,4 +72,7 @@
     <string name="weapon">Weapon</string>
     <string name="light_cone">Light Cone</string>
     <string name="w_engine">W-Engine</string>
+    <string name="gacha_app_framework">Gacha App Framework</string>
+    <string name="sign_in_description">Your Very Own Gacha Wish Tracker</string>
+    <string name="sign_in">Sign In</string>
 </resources>
