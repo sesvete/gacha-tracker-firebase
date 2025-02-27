@@ -51,12 +51,14 @@
         <item>Limited</item>
         <item>W-Engine</item>
         <item>Standard</item>
+        <item>Bangboo</item>
     </string-array>
 
     <string-array name="zzz_banner_values">
         <item>limited</item>
         <item>w_engine</item>
         <item>standard</item>
+        <item>bangboo</item>
     </string-array>
 
     <string-array name="language_entries">
