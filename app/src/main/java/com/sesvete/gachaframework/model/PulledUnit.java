@@ -4,6 +4,9 @@ package com.sesvete.gachaframework.model;
 // ni nujno, da bosta obe aplikaciji imeli enak model
 
 public class PulledUnit {
+    // tu bo še int userId ali String userName
+    // tak bo definitivno za relational database
+    // za firebase bom še videl
     private int numOfPulls;
     private String unitName;
     private boolean fromBanner;
