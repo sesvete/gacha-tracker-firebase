@@ -75,4 +75,8 @@
     <string name="gacha_app_framework">Gacha App Framework</string>
     <string name="sign_in_description">Your Very Own Gacha Wish Tracker</string>
     <string name="sign_in">Sign In</string>
+    <string name="logout_confirmation">Are You Sure?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+
 </resources>

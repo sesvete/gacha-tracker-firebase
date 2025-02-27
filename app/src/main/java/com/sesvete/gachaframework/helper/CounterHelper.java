@@ -82,19 +82,4 @@ public class CounterHelper {
         txtTotalSpent.setText(stringCombinedTotalSpent);
     }
 
-    // delay 100 ms, lahko ga prilagodiš
-    public static void openKeyboard(EditText editText, Context context){
-        if (editText != null) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    editText.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-                    }
-                }
-            }, 70);
-        }
-    }
 }

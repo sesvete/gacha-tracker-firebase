@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
+//TODO: make sure you check for safer intents!!!!!
+//TODO: also check intent filters
+
 
 public class SignInActivity extends AppCompatActivity {
 

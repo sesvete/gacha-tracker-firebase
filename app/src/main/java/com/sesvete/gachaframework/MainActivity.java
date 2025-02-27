@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 else if (id == R.id.nav_settings){
                     toolbar.setTitle(R.string.settings);
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment.class, null).setReorderingAllowed(true).commit();
+                } else if (id == R.id.nav_logout) {
+                    Toast.makeText(MainActivity.this, "Logout", Toast.LENGTH_SHORT).show();
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         if (navigationView != null) {
             View navHeaderView = navigationView.getHeaderView(0);
             TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txtNavHeaderUserName);
+            // nav header user se bo pobral iz podatkovne baze
             txtNavHeaderUserName.setText("Simon Svetec");
         }
     }

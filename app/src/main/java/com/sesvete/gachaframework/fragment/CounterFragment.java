@@ -1,7 +1,6 @@
 package com.sesvete.gachaframework.fragment;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -10,13 +9,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -28,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.helper.CounterHelper;
+import com.sesvete.gachaframework.helper.DialogHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -175,7 +172,7 @@ public class CounterFragment extends Fragment {
 
                 AlertDialog dialog = builder.create();
 
-                buildAlertDialogWindow(dialog, inputXCounter);
+                DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputXCounter, getActivity());
 
                 btnXConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -231,7 +228,7 @@ public class CounterFragment extends Fragment {
                         }
                         AlertDialog dialog = builder.create();
 
-                        buildAlertDialogWindow(dialog, inputConfirmCounter);
+                        DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputConfirmCounter, getActivity());
 
                         radioFunction(rGrConfirm);
                         btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
@@ -304,8 +301,7 @@ public class CounterFragment extends Fragment {
 
                 AlertDialog dialog = builder.create();
 
-                // da se keyboard odpre šele ko se dialog popolnoma zgradi
-                buildAlertDialogWindow(dialog, inputUpdateCounter);
+                DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputUpdateCounter, getActivity());
 
                 radioFunction(rGrConfirm);
 
@@ -370,45 +366,4 @@ public class CounterFragment extends Fragment {
             }
         });
     }
-
-    private void buildAlertDialogWindow(AlertDialog dialog, EditText editText){
-        // da se keyboard odpre šele ko se dialog popolnoma zgradi
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                CounterHelper.openKeyboard(editText, getContext());
-            }
-        });
-
-        dialog.show();
-        Window window = dialog.getWindow();
-        if (window != null) {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            // prevents white background of the drawable
-            window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
-            lp.copyFrom(window.getAttributes());
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            lp.width = (int) (displayMetrics.widthPixels * 0.8);
-            window.setAttributes(lp);
-        }
-    }
-
-    //primer če hočeš dat direkt v texview
-    /*
-    private void counterPlusOne(TextView txtCounter){
-        String stringCounter = txtCounter.getText().toString();
-        int numCounter = Integer.parseInt(stringCounter);
-        numCounter++;
-        txtCounter.setText(String.valueOf(numCounter));
-    }
-
-    private void counterPlusTen(TextView txtCounter){
-        String stringCounter = txtCounter.getText().toString();
-        int numCounter = Integer.parseInt(stringCounter);
-        numCounter = numCounter + 10;
-        txtCounter.setText(String.valueOf(numCounter));
-    }
-     */
 }
