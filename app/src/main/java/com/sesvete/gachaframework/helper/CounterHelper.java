@@ -1,12 +1,8 @@
 package com.sesvete.gachaframework.helper;
 
 
-import android.content.Context;
 import android.content.res.Resources;
-import android.os.Handler;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.sesvete.gachaframework.R;

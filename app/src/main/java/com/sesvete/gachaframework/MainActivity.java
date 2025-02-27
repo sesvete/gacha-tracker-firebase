@@ -1,25 +1,29 @@
 package com.sesvete.gachaframework;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.fragment.CounterFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachaframework.fragment.HistoryFragment;
 import com.sesvete.gachaframework.fragment.SettingsFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
+import com.sesvete.gachaframework.helper.DialogHelper;
 import com.sesvete.gachaframework.helper.SettingsHelper;
 
 //TODO: light/night mode
@@ -78,7 +82,33 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.setTitle(R.string.settings);
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment.class, null).setReorderingAllowed(true).commit();
                 } else if (id == R.id.nav_logout) {
-                    Toast.makeText(MainActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    LayoutInflater dialogInflater = getLayoutInflater();
+                    View dialogView = dialogInflater.inflate(R.layout.logout_dialog, null);
+                    builder.setView(dialogView);
+                    AlertDialog dialog = builder.create();
+
+                    DialogHelper.buildAlertDialogWindow(dialog, MainActivity.this, MainActivity.this);
+
+                    MaterialButton btnLogoutCancel = dialogView.findViewById(R.id.btnLogoutCancel);
+                    MaterialButton btnLogoutConfirm = dialogView.findViewById(R.id.btnLogoutConfirm);
+
+                    btnLogoutCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnLogoutConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // tu bo seveda najprej prišlo do odjave
+                            dialog.dismiss();
+                            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

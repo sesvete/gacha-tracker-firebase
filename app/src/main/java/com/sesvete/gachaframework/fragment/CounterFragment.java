@@ -1,9 +1,9 @@
 package com.sesvete.gachaframework.fragment;
 
-import android.app.AlertDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
