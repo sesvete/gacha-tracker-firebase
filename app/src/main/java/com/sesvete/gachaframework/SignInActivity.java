@@ -11,6 +11,9 @@ import com.google.android.material.button.MaterialButton;
 //TODO: make sure you check for safer intents!!!!!
 //TODO: also check intent filters
 
+//TODO: add language setting on signIn Screen
+// language setting bo sicer tudi na register screenu, vendar nom uno itak samo kopiral
+
 
 public class SignInActivity extends AppCompatActivity {
 
