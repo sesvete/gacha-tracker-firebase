@@ -7,21 +7,21 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHistoryListVertical1"
+        android:id="@+id/guideline_history_list_vertical1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHistoryListVertical2"
+        android:id="@+id/guideline_history_list_vertical2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.55" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineHistoryListVertical3"
+        android:id="@+id/guideline_history_list_vertical3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -29,7 +29,7 @@
 
 
     <TextView
-        android:id="@+id/txtHistoryNumPulls"
+        android:id="@+id/txt_history_num_pulls"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="5dp"
@@ -41,10 +41,10 @@
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryListVertical1" />
+        app:layout_constraintRight_toLeftOf="@id/guideline_history_list_vertical1" />
 
     <TextView
-        android:id="@+id/txtHistoryUnitName"
+        android:id="@+id/txt_history_unit_name"
         android:layout_marginTop="10dp"
         android:paddingBottom="10dp"
         android:layout_marginRight="5dp"
@@ -55,12 +55,12 @@
         android:text="Mavuika"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryListVertical1"
-        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryListVertical2"
+        app:layout_constraintLeft_toRightOf="@id/guideline_history_list_vertical1"
+        app:layout_constraintRight_toLeftOf="@id/guideline_history_list_vertical2"
         />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgHistoryBannerName"
+        android:id="@+id/img_history_banner_name"
         android:layout_marginTop="13dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
@@ -69,11 +69,11 @@
         android:src="@drawable/ic_checkmark_green"
         android:contentDescription="@string/status_50_50"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryListVertical2"
-        app:layout_constraintRight_toLeftOf="@id/guidelineHistoryListVertical3"/>
+        app:layout_constraintLeft_toRightOf="@id/guideline_history_list_vertical2"
+        app:layout_constraintRight_toLeftOf="@id/guideline_history_list_vertical3"/>
 
     <TextView
-        android:id="@+id/txtHistoryDateName"
+        android:id="@+id/txt_history_date_name"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:paddingBottom="10dp"
@@ -84,7 +84,7 @@
         android:text="2025-02-08"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineHistoryListVertical3"
+        app:layout_constraintLeft_toRightOf="@id/guideline_history_list_vertical3"
         app:layout_constraintRight_toRightOf="parent"
         />
 

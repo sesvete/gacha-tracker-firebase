@@ -1,6 +1,5 @@
 package com.sesvete.gachaframework.fragment;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,51 +8,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
-import com.sesvete.gachaframework.MainActivity;
 import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.helper.SettingsHelper;
 
-public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private ListPreference bannerPreference;
-
+public class LanguageSettingsFragment extends PreferenceFragmentCompat {
     @Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-        bannerPreference = findPreference("banner");
-
-        SettingsHelper.updateBannerPreference(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin"), bannerPreference);
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
+        setPreferencesFromResource(R.xml.language_preferences, rootKey);
     }
 
-    // register and unregister the settings fragment as a listener
-    @Override
-    public void onResume() {
-        super.onResume();
-        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
-        if (key.equals("game")) {
-            SettingsHelper.updateBannerPreference(sharedPreferences.getString(key, "genshin"), findPreference("banner"));
-            bannerPreference.setValueIndex(0);
-        }
-        if (getActivity() instanceof MainActivity) {
-            MainActivity mainActivity = (MainActivity) getActivity();
-            mainActivity.updateNavHeader(mainActivity.findViewById(R.id.nav_view));
-        }
-    }
-
-    // custom alert dialog builder za settingse
     @Override
     public void onDisplayPreferenceDialog(@NonNull Preference preference) {
         if (preference instanceof ListPreference) {

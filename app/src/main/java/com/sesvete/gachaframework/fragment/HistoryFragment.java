@@ -69,7 +69,7 @@ public class HistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
-        recyclerViewHistory = view.findViewById(R.id.recyclerViewHistory);
+        recyclerViewHistory = view.findViewById(R.id.recycler_view_history);
 
         // za zdaj bo provizorično tako, sicer se bo to pobralo iz podatkovne baze
         ArrayList<PulledUnit> pulledUnits = new ArrayList<>();

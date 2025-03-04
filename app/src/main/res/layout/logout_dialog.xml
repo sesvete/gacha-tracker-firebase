@@ -8,7 +8,7 @@
     >
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical_x"
+        android:id="@+id/guideline_vertical_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,10 +16,10 @@
         />
 
     <TextView
-        android:id="@+id/txt_x_title"
+        android:id="@+id/txt_logout_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/input_custom_number"
+        android:text="@string/logout"
         android:layout_margin="10dp"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -27,38 +27,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
-        android:id="@+id/input_x_counter"
+    <TextView
+        android:id="@+id/txt_logout_confirmation"
         android:layout_margin="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="@string/enter_counter_number_hint"
-        app:layout_constraintTop_toBottomOf="@id/txt_x_title"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="@string/logout_confirmation"
+        app:layout_constraintTop_toBottomOf="@id/txt_logout_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_x_confirm"
+        android:id="@+id/btn_logout_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="@string/confirm"
-        app:layout_constraintTop_toBottomOf="@id/input_x_counter"
-        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_x"
+        app:layout_constraintTop_toBottomOf="@id/txt_logout_confirmation"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_logout"
         app:layout_constraintRight_toRightOf="parent"
 
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="20dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_x_cancel"
+        android:id="@+id/btn_logout_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="@string/cancel"
-        app:layout_constraintTop_toBottomOf="@id/input_x_counter"
+        app:layout_constraintTop_toBottomOf="@id/txt_logout_confirmation"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_x"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_logout"
+        android:layout_marginTop="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

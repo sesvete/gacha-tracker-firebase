@@ -10,7 +10,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     >
     <TextView
-        android:id="@+id/txtNavHeaderUserName"
+        android:id="@+id/txt_nav_header_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -20,7 +20,7 @@
         android:text="Test Test"
         />
     <TextView
-        android:id="@+id/txtNavHeaderGame"
+        android:id="@+id/txt_nav_header_game"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="10dp"
         android:textSize="18sp"
@@ -29,7 +29,7 @@
         android:text="Test Test"
         />
     <TextView
-        android:id="@+id/txtNavHeaderBanner"
+        android:id="@+id/txt_nav_header_banner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Test"

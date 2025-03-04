@@ -1,6 +1,8 @@
 package com.sesvete.gachaframework;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -8,17 +10,20 @@ import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.button.MaterialButton;
 import com.sesvete.gachaframework.fragment.CounterFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachaframework.fragment.HistoryFragment;
 import com.sesvete.gachaframework.fragment.SettingsFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
+import com.sesvete.gachaframework.helper.DialogHelper;
 import com.sesvete.gachaframework.helper.SettingsHelper;
 
 //TODO: light/night mode
@@ -76,6 +81,34 @@ public class MainActivity extends AppCompatActivity {
                 else if (id == R.id.nav_settings){
                     toolbar.setTitle(R.string.settings);
                     fragmentManager.beginTransaction().replace(R.id.fragment_container, SettingsFragment.class, null).setReorderingAllowed(true).commit();
+                } else if (id == R.id.nav_logout) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    LayoutInflater dialogInflater = getLayoutInflater();
+                    View dialogView = dialogInflater.inflate(R.layout.logout_dialog, null);
+                    builder.setView(dialogView);
+                    AlertDialog dialog = builder.create();
+
+                    DialogHelper.buildAlertDialogWindow(dialog, MainActivity.this, MainActivity.this);
+
+                    MaterialButton btnLogoutCancel = dialogView.findViewById(R.id.btn_logout_cancel);
+                    MaterialButton btnLogoutConfirm = dialogView.findViewById(R.id.btn_logout_confirm);
+
+                    btnLogoutCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnLogoutConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // tu bo seveda najprej prišlo do odjave
+                            dialog.dismiss();
+                            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -90,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)){
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
-                    finish();
+                    finishAffinity();
                 }
             }
         });
@@ -100,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
     private void updateNavHeaderUser(NavigationView navigationView){
         if (navigationView != null) {
             View navHeaderView = navigationView.getHeaderView(0);
-            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txtNavHeaderUserName);
+            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txt_nav_header_user_name);
+            // nav header user se bo pobral iz podatkovne baze
             txtNavHeaderUserName.setText("Simon Svetec");
         }
     }
@@ -108,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
     public void updateNavHeader(NavigationView navigationView){
         if (navigationView != null) {
             View navHeaderView = navigationView.getHeaderView(0);
-            TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txtNavHeaderGame);
-            TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txtNavHeaderBanner);
+            TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txt_nav_header_game);
+            TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txt_nav_header_banner);
 
             txtNavHeaderGame.setText(SettingsHelper.getEntryFromValue(this, "game", "genshin"));
             txtNavHeaderBanner.setText(SettingsHelper.getEntryFromValue(this, "banner", "limited"));

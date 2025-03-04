@@ -1,22 +1,18 @@
 package com.sesvete.gachaframework.fragment;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -28,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.helper.CounterHelper;
+import com.sesvete.gachaframework.helper.DialogHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -118,24 +115,24 @@ public class CounterFragment extends Fragment {
         int wishValue = 160;
         String currencyType = getString(R.string.primogens);
 
-        txtCounterProgressNumber = view.findViewById(R.id.txtCounterProgressNumber);
-        txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
-        txtCounterHistoryNumber = view.findViewById(R.id.txtCounterHistoryNumber);
-        txtCounterHistoryUnit = view.findViewById(R.id.txtCounterHistoryUnit);
-        cardCounterProgress = view.findViewById(R.id.cardCounterProgress);
-        imgCounterProgressGuaranteedDescription = view.findViewById(R.id.imgCounterProgressGuaranteedDescription);
-        imgCounterHistoryFeaturedUnitStatus = view.findViewById(R.id.imgCounterHistoryFeaturedUnitStatus);
+        txtCounterProgressNumber = view.findViewById(R.id.txt_counter_progress_number);
+        txtCounterHistoryNumber = view.findViewById(R.id.txt_counter_history_number);
+        txtCounterHistoryNumber = view.findViewById(R.id.txt_counter_history_number);
+        txtCounterHistoryUnit = view.findViewById(R.id.txt_counter_history_unit);
+        cardCounterProgress = view.findViewById(R.id.card_counter_progress);
+        imgCounterProgressGuaranteedDescription = view.findViewById(R.id.img_counter_progress_guaranteed_description);
+        imgCounterHistoryFeaturedUnitStatus = view.findViewById(R.id.img_counter_history_featured_unit_status);
 
-        btnCounterPlusOne = view.findViewById(R.id.btnCounterPlusOne);
-        btnCounterPlusTen = view.findViewById(R.id.btnCounterPlusTen);
-        btnCounterPlusX = view.findViewById(R.id.btnCounterPlusX);
-        btnCounterConfirm = view.findViewById(R.id.btnCounterConfirm);
-        txtCounterSpentTillJackpot = view.findViewById((R.id.txtCounterSpentTillJackpot));
-        txtCounterSpentTillJackpotDescription = view.findViewById(R.id.txtCounterSpentTillJackpotDescription);
-        txtCounterSpentTillJackpotCurrency = view.findViewById(R.id.txtCounterSpentTillJackpotCurrency);
-        txtCounterSpentTillJackpotCurrencyDescription = view.findViewById(R.id.txtCounterSpentTillJackpotCurrencyDescription);
-        txtCounterSpentTillJackpotTotal = view.findViewById(R.id.txtCounterSpentTillJackpotTotal);
-        txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txtCounterSpentTillJackpotTotalDescription);
+        btnCounterPlusOne = view.findViewById(R.id.btn_counter_plus_one);
+        btnCounterPlusTen = view.findViewById(R.id.btn_counter_plus_ten);
+        btnCounterPlusX = view.findViewById(R.id.btn_counter_plus_x);
+        btnCounterConfirm = view.findViewById(R.id.btn_counter_confirm);
+        txtCounterSpentTillJackpot = view.findViewById((R.id.txt_counter_spent_till_jackpot));
+        txtCounterSpentTillJackpotDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_description);
+        txtCounterSpentTillJackpotCurrency = view.findViewById(R.id.txt_counter_spent_till_jackpot_currency);
+        txtCounterSpentTillJackpotCurrencyDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_currency_description);
+        txtCounterSpentTillJackpotTotal = view.findViewById(R.id.txt_counter_spent_till_jackpot_total);
+        txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_total_description);
 
         // začasno se preveri, če ima player guaranteed
         // TODO: to se bo preverlo iz podatkovne baze
@@ -169,13 +166,13 @@ public class CounterFragment extends Fragment {
                 View dialogView = dialogInflater.inflate(R.layout.plus_x_dialog, null);
                 builder.setView(dialogView);
 
-                EditText inputXCounter = dialogView.findViewById(R.id.inputXCounter);
-                MaterialButton btnXConfirm = dialogView.findViewById(R.id.btnXConfirm);
-                MaterialButton btnXCancel = dialogView.findViewById(R.id.btnXCancel);
+                EditText inputXCounter = dialogView.findViewById(R.id.input_x_counter);
+                MaterialButton btnXConfirm = dialogView.findViewById(R.id.btn_x_confirm);
+                MaterialButton btnXCancel = dialogView.findViewById(R.id.btn_x_cancel);
 
                 AlertDialog dialog = builder.create();
 
-                buildAlertDialogWindow(dialog, inputXCounter);
+                DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputXCounter, getActivity());
 
                 btnXConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -220,18 +217,18 @@ public class CounterFragment extends Fragment {
                         View dialogView = dialogInflater.inflate(R.layout.confirm_unit_dialog, null);
                         builder.setView(dialogView);
 
-                        EditText inputConfirmCounter = dialogView.findViewById(R.id.inputConfirmCounter);
-                        MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfirm);
-                        MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
-                        RadioGroup rGrConfirm = dialogView.findViewById(R.id.rGrConfirm);
+                        EditText inputConfirmCounter = dialogView.findViewById(R.id.input_confirm_counter);
+                        MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btn_confirm_confirm);
+                        MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btn_confirm_cancel);
+                        RadioGroup rGrConfirm = dialogView.findViewById(R.id.r_gr_confirm);
                         if (guaranteed){
                             rGrConfirm.setVisibility(View.GONE);
                             featuredUnitStatus = true;
-                            rGrConfirm.check(R.id.wonRadioButton);
+                            rGrConfirm.check(R.id.won_radio_button);
                         }
                         AlertDialog dialog = builder.create();
 
-                        buildAlertDialogWindow(dialog, inputConfirmCounter);
+                        DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputConfirmCounter, getActivity());
 
                         radioFunction(rGrConfirm);
                         btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
@@ -287,25 +284,24 @@ public class CounterFragment extends Fragment {
                 View dialogView = dialogInflater.inflate(R.layout.confirm_unit_dialog, null);
                 builder.setView(dialogView);
 
-                RadioGroup rGrConfirm = dialogView.findViewById(R.id.rGrConfirm);
-                TextView txtConfirmTitle = dialogView.findViewById(R.id.txtConfirmTitle);
-                RadioButton wonRadioButton = dialogView.findViewById(R.id.wonRadioButton);
-                RadioButton lostRadioButton = dialogView.findViewById(R.id.lostRadioButton);
+                RadioGroup rGrConfirm = dialogView.findViewById(R.id.r_gr_confirm);
+                TextView txtConfirmTitle = dialogView.findViewById(R.id.txt_confirm_title);
+                RadioButton wonRadioButton = dialogView.findViewById(R.id.won_radio_button);
+                RadioButton lostRadioButton = dialogView.findViewById(R.id.lost_radio_button);
 
                 txtConfirmTitle.setText(R.string.update_counter);
                 wonRadioButton.setText("G");
                 lostRadioButton.setText("N");
 
-                EditText inputUpdateCounter = dialogView.findViewById(R.id.inputConfirmCounter);
-                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btnConfirmConfirm);
-                MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btnConfirmCancel);
+                EditText inputUpdateCounter = dialogView.findViewById(R.id.input_confirm_counter);
+                MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btn_confirm_confirm);
+                MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btn_confirm_cancel);
                 inputUpdateCounter.setHint(R.string.enter_counter_number_hint);
                 inputUpdateCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                 AlertDialog dialog = builder.create();
 
-                // da se keyboard odpre šele ko se dialog popolnoma zgradi
-                buildAlertDialogWindow(dialog, inputUpdateCounter);
+                DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputUpdateCounter, getActivity());
 
                 radioFunction(rGrConfirm);
 
@@ -354,61 +350,20 @@ public class CounterFragment extends Fragment {
 
     private void radioFunction(RadioGroup rGrConfirm){
         int checkedChoice = rGrConfirm.getCheckedRadioButtonId();
-        if (checkedChoice == R.id.wonRadioButton){
+        if (checkedChoice == R.id.won_radio_button){
             featuredUnitStatus = true;
-        } else if (checkedChoice == R.id.lostRadioButton){
+        } else if (checkedChoice == R.id.lost_radio_button){
             featuredUnitStatus = false;
         }
         rGrConfirm.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.wonRadioButton){
+                if (checkedId == R.id.won_radio_button){
                     featuredUnitStatus = true;
-                } else if (checkedId == R.id.lostRadioButton){
+                } else if (checkedId == R.id.lost_radio_button){
                     featuredUnitStatus = false;
                 }
             }
         });
     }
-
-    private void buildAlertDialogWindow(AlertDialog dialog, EditText editText){
-        // da se keyboard odpre šele ko se dialog popolnoma zgradi
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                CounterHelper.openKeyboard(editText, getContext());
-            }
-        });
-
-        dialog.show();
-        Window window = dialog.getWindow();
-        if (window != null) {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            // prevents white background of the drawable
-            window.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rounded_corners));
-            lp.copyFrom(window.getAttributes());
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            lp.width = (int) (displayMetrics.widthPixels * 0.8);
-            window.setAttributes(lp);
-        }
-    }
-
-    //primer če hočeš dat direkt v texview
-    /*
-    private void counterPlusOne(TextView txtCounter){
-        String stringCounter = txtCounter.getText().toString();
-        int numCounter = Integer.parseInt(stringCounter);
-        numCounter++;
-        txtCounter.setText(String.valueOf(numCounter));
-    }
-
-    private void counterPlusTen(TextView txtCounter){
-        String stringCounter = txtCounter.getText().toString();
-        int numCounter = Integer.parseInt(stringCounter);
-        numCounter = numCounter + 10;
-        txtCounter.setText(String.valueOf(numCounter));
-    }
-     */
 }
