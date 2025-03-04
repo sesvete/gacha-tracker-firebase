@@ -54,8 +54,8 @@ public class StatsRecViewAdapter extends RecyclerView.Adapter<StatsRecViewAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtStatsListDescription = itemView.findViewById(R.id.txtStatsListDescription);
-            txtStatsListNumber = itemView.findViewById(R.id.txtStatsListNumber);
+            txtStatsListDescription = itemView.findViewById(R.id.txt_stats_list_description);
+            txtStatsListNumber = itemView.findViewById(R.id.txt_stats_list_number);
         }
     }
 

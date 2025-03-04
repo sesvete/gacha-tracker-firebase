@@ -65,10 +65,10 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtHistoryNumPulls = itemView.findViewById(R.id.txtHistoryNumPulls);
-            txtHistoryUnitName = itemView.findViewById(R.id.txtHistoryUnitName);
-            imgHistoryBannerName = itemView.findViewById(R.id.imgHistoryBannerName);
-            txtHistoryDateName = itemView.findViewById(R.id.txtHistoryDateName);
+            txtHistoryNumPulls = itemView.findViewById(R.id.txt_history_num_pulls);
+            txtHistoryUnitName = itemView.findViewById(R.id.txt_history_unit_name);
+            imgHistoryBannerName = itemView.findViewById(R.id.img_history_banner_name);
+            txtHistoryDateName = itemView.findViewById(R.id.txt_history_date_name);
         }
     }
 

@@ -7,14 +7,14 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_marginTop="5dp"
-        android:id="@+id/guidelineStatsListVertical1"
+        android:id="@+id/guideline_stats_list_vertical1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.65" />
 
     <TextView
-        android:id="@+id/txtStatsListDescription"
+        android:id="@+id/txt_stats_list_description"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
@@ -26,10 +26,10 @@
         android:textSize="15sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guidelineStatsListVertical1" />
+        app:layout_constraintRight_toLeftOf="@id/guideline_stats_list_vertical1" />
 
     <TextView
-        android:id="@+id/txtStatsListNumber"
+        android:id="@+id/txt_stats_list_number"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
@@ -42,7 +42,7 @@
         android:textSize="15sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/guidelineStatsListVertical1" />
+        app:layout_constraintLeft_toRightOf="@id/guideline_stats_list_vertical1" />
 
     <!-- Mogoče se bo ta črta dala v vijolično barvo -->
     <View

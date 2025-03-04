@@ -79,10 +79,10 @@ public class StatsFragment extends Fragment {
 
         statsHelper = new StatsHelper();
 
-        btnStatsGlobal = view.findViewById(R.id.btnStatsGlobal);
-        btnStatsPersonal = view.findViewById(R.id.btnStatsPersonal);
-        txtStatsTitle = view.findViewById(R.id.txtStatsTitle);
-        recyclerViewStats = view.findViewById(R.id.recyclerViewStats);
+        btnStatsGlobal = view.findViewById(R.id.btn_stats_global);
+        btnStatsPersonal = view.findViewById(R.id.btn_stats_personal);
+        txtStatsTitle = view.findViewById(R.id.txt_stats_title);
+        recyclerViewStats = view.findViewById(R.id.recycler_view_stats);
 
         // TODO: naredil se bo ločen helper, ki bo zasluže za sestavo lista
         // ne pozabi najprej clearat list ob kliku na gumb

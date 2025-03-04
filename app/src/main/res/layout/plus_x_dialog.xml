@@ -8,7 +8,7 @@
     >
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineVerticalX"
+        android:id="@+id/guideline_vertical_x"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,7 +16,7 @@
         />
 
     <TextView
-        android:id="@+id/txtXTitle"
+        android:id="@+id/txt_x_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/input_custom_number"
@@ -28,37 +28,37 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/inputXCounter"
+        android:id="@+id/input_x_counter"
         android:layout_margin="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:hint="@string/enter_counter_number_hint"
-        app:layout_constraintTop_toBottomOf="@id/txtXTitle"
+        app:layout_constraintTop_toBottomOf="@id/txt_x_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnXConfirm"
+        android:id="@+id/btn_x_confirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="@string/confirm"
-        app:layout_constraintTop_toBottomOf="@id/inputXCounter"
-        app:layout_constraintLeft_toRightOf="@id/guidelineVerticalX"
+        app:layout_constraintTop_toBottomOf="@id/input_x_counter"
+        app:layout_constraintLeft_toRightOf="@id/guideline_vertical_x"
         app:layout_constraintRight_toRightOf="parent"
 
         android:layout_marginTop="8dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnXCancel"
+        android:id="@+id/btn_x_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="@string/cancel"
-        app:layout_constraintTop_toBottomOf="@id/inputXCounter"
+        app:layout_constraintTop_toBottomOf="@id/input_x_counter"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guidelineVerticalX"
+        app:layout_constraintRight_toLeftOf="@id/guideline_vertical_x"
         android:layout_marginTop="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

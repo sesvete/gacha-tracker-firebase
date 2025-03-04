@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                     DialogHelper.buildAlertDialogWindow(dialog, MainActivity.this, MainActivity.this);
 
-                    MaterialButton btnLogoutCancel = dialogView.findViewById(R.id.btnLogoutCancel);
-                    MaterialButton btnLogoutConfirm = dialogView.findViewById(R.id.btnLogoutConfirm);
+                    MaterialButton btnLogoutCancel = dialogView.findViewById(R.id.btn_logout_cancel);
+                    MaterialButton btnLogoutConfirm = dialogView.findViewById(R.id.btn_logout_confirm);
 
                     btnLogoutCancel.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateNavHeaderUser(NavigationView navigationView){
         if (navigationView != null) {
             View navHeaderView = navigationView.getHeaderView(0);
-            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txtNavHeaderUserName);
+            TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txt_nav_header_user_name);
             // nav header user se bo pobral iz podatkovne baze
             txtNavHeaderUserName.setText("Simon Svetec");
         }
@@ -142,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
     public void updateNavHeader(NavigationView navigationView){
         if (navigationView != null) {
             View navHeaderView = navigationView.getHeaderView(0);
-            TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txtNavHeaderGame);
-            TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txtNavHeaderBanner);
+            TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txt_nav_header_game);
+            TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txt_nav_header_banner);
 
             txtNavHeaderGame.setText(SettingsHelper.getEntryFromValue(this, "game", "genshin"));
             txtNavHeaderBanner.setText(SettingsHelper.getEntryFromValue(this, "banner", "limited"));

@@ -8,7 +8,7 @@
     tools:context=".SignInActivity">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontal1"
+        android:id="@+id/guideline_sign_in_horizontal1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,7 +16,7 @@
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontal2"
+        android:id="@+id/guideline_sign_in_horizontal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -24,7 +24,7 @@
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInVertical1"
+        android:id="@+id/guideline_sign_in_vertical1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -32,7 +32,7 @@
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInVertical2"
+        android:id="@+id/guideline_sign_in_vertical2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -40,7 +40,7 @@
         />
 
     <TextView
-        android:id="@+id/txtSignInTitle"
+        android:id="@+id/txt_sign_in_title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -50,14 +50,14 @@
         android:autoSizeMaxTextSize="60sp"
         android:autoSizeStepGranularity="2sp"
         android:text="@string/gacha_app_framework"
-        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal1"
-        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical1"
-        app:layout_constraintBottom_toTopOf="@id/guidelineSignInHorizontal2"
-        app:layout_constraintRight_toLeftOf="@id/guidelineSignInVertical2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal1"
+        app:layout_constraintLeft_toRightOf="@id/guideline_sign_in_vertical1"
+        app:layout_constraintBottom_toTopOf="@id/guideline_sign_in_horizontal2"
+        app:layout_constraintRight_toLeftOf="@id/guideline_sign_in_vertical2"
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontal3"
+        android:id="@+id/guideline_sign_in_horizontal3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -65,7 +65,7 @@
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontal4"
+        android:id="@+id/guideline_sign_in_horizontal4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -73,7 +73,7 @@
         />
 
     <TextView
-        android:id="@+id/txtSignInDescription"
+        android:id="@+id/txt_sign_in_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -82,14 +82,14 @@
         android:autoSizeMaxTextSize="18sp"
         android:autoSizeStepGranularity="2sp"
         android:text="@string/sign_in_description"
-        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal3"
-        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical1"
-        app:layout_constraintBottom_toTopOf="@id/guidelineSignInHorizontal4"
-        app:layout_constraintRight_toLeftOf="@id/guidelineSignInVertical2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal3"
+        app:layout_constraintLeft_toRightOf="@id/guideline_sign_in_vertical1"
+        app:layout_constraintBottom_toTopOf="@id/guideline_sign_in_horizontal4"
+        app:layout_constraintRight_toLeftOf="@id/guideline_sign_in_vertical2"
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontal5"
+        android:id="@+id/guideline_sign_in_horizontal5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -97,7 +97,7 @@
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontal6"
+        android:id="@+id/guideline_sign_in_horizontal6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -105,7 +105,7 @@
         />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btn_sign_in"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
@@ -113,14 +113,14 @@
         android:autoSizeMaxTextSize="60sp"
         android:autoSizeStepGranularity="2sp"
         android:text="@string/sign_in"
-        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal5"
-        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical1"
-        app:layout_constraintBottom_toTopOf="@id/guidelineSignInHorizontal6"
-        app:layout_constraintRight_toLeftOf="@id/guidelineSignInVertical2"
+        app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal5"
+        app:layout_constraintLeft_toRightOf="@id/guideline_sign_in_vertical1"
+        app:layout_constraintBottom_toTopOf="@id/guideline_sign_in_horizontal6"
+        app:layout_constraintRight_toLeftOf="@id/guideline_sign_in_vertical2"
         />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInHorizontalSettings"
+        android:id="@+id/guideline_sign_in_horizontal_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -129,16 +129,16 @@
 
     <FrameLayout
         android:layout_marginTop="50dp"
-        android:id="@+id/languageFragmentContainer"
+        android:id="@+id/language_fragment_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/guidelineSignInHorizontal6"
-        app:layout_constraintLeft_toRightOf="@id/guidelineSignInVertical3"
-        app:layout_constraintBottom_toBottomOf="@id/guidelineSignInHorizontalSettings"
+        app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal6"
+        app:layout_constraintLeft_toRightOf="@id/guideline_sign_in_vertical3"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_sign_in_horizontal_settings"
         app:layout_constraintRight_toRightOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineSignInVertical3"
+        android:id="@+id/guideline_sign_in_vertical3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
