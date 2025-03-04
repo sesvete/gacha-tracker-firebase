@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
+import com.sesvete.gachaframework.fragment.LanguageSettingsFragment;
 
 //TODO: make sure you check for safer intents!!!!!
 //TODO: also check intent filters
@@ -23,6 +25,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.languageFragmentContainer, LanguageSettingsFragment.class, null).setReorderingAllowed(true).commit();
 
         btnSignIn = findViewById(R.id.btnSignIn);
 
