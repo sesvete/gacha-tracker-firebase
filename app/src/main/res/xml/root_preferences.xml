@@ -34,7 +34,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
-            app:key="sync"
+            app:key="dark_mode"
             app:title="@string/dark_mode" />
 
 

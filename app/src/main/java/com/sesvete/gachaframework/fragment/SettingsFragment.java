@@ -6,10 +6,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.sesvete.gachaframework.MainActivity;
 import com.sesvete.gachaframework.R;
@@ -18,12 +20,14 @@ import com.sesvete.gachaframework.helper.SettingsHelper;
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private ListPreference bannerPreference;
+    private SwitchPreferenceCompat darkModeSwitch;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
         bannerPreference = findPreference("banner");
+        darkModeSwitch = findPreference("dark_mode");
 
         SettingsHelper.updateBannerPreference(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin"), bannerPreference);
     }
@@ -33,6 +37,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     public void onResume() {
         super.onResume();
         PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
+        updateDarkMode();
     }
 
     @Override
@@ -46,6 +51,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         if (key.equals("game")) {
             SettingsHelper.updateBannerPreference(sharedPreferences.getString(key, "genshin"), findPreference("banner"));
             bannerPreference.setValueIndex(0);
+        }
+        if (key.equals("dark_mode")){
+            updateDarkMode();
         }
         if (getActivity() instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) getActivity();
@@ -93,6 +101,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                     .show();
         } else {
             super.onDisplayPreferenceDialog(preference); // Use the default dialog for other preferences
+        }
+    }
+
+    private void updateDarkMode(){
+        if(darkModeSwitch != null && darkModeSwitch.isChecked()){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
