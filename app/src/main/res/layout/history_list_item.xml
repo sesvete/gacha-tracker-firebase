@@ -91,8 +91,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@color/black"
         app:layout_constraintTop_toTopOf="parent"
+        style="@style/MyCustomDivider"
         />
 
 

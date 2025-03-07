@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="@drawable/rounded_corners"
+    android:theme="@style/RoundedDialog"
     >
 
     <androidx.constraintlayout.widget.Guideline
@@ -31,7 +31,7 @@
         android:id="@+id/input_x_counter"
         android:layout_margin="20dp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:inputType="number"
         android:hint="@string/enter_counter_number_hint"
         app:layout_constraintTop_toBottomOf="@id/txt_x_title"

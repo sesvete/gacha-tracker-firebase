@@ -19,6 +19,7 @@
     <style name="RoundedDialog" parent="Theme.Material3.DayNight.Dialog.Alert">
         <item name="android:background">@drawable/rounded_corners</item>
         <item name="android:windowBackground">@drawable/dialog_transparent_background</item>
+        <item name="colorPrimary">@color/primary</item>
     </style>
 
     <style name="Theme.GachaFramework" parent="Base.Theme.GachaFramework" />

@@ -21,14 +21,19 @@ public class DialogHelper {
         dialog.show();
         Window window = dialog.getWindow();
         if (window != null) {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             // prevents white background of the drawable
-            window.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_corners));
+
+            window.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.dialog_transparent_background));
+            // če rabim custom size
+            /*
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(window.getAttributes());
             DisplayMetrics displayMetrics = new DisplayMetrics();
             activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             lp.width = (int) (displayMetrics.widthPixels * 0.8);
             window.setAttributes(lp);
+
+             */
         }
     }
 
@@ -46,14 +51,17 @@ public class DialogHelper {
         dialog.show();
         Window window = dialog.getWindow();
         if (window != null) {
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             // prevents white background of the drawable
-            window.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.rounded_corners));
+            window.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.dialog_transparent_background));
+            /*
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
             lp.copyFrom(window.getAttributes());
             DisplayMetrics displayMetrics = new DisplayMetrics();
             activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             lp.width = (int) (displayMetrics.widthPixels * 0.8);
             window.setAttributes(lp);
+
+             */
         }
     }
 

@@ -45,11 +45,12 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:cardBackgroundColor="@color/light_purple"
         app:cardCornerRadius="14sp"
         app:cardElevation="14sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline_counter_top2"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_counter_top1">
+        app:layout_constraintTop_toBottomOf="@+id/guideline_counter_top1"
+        style="@style/MyCardViewStyle"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_counter_history"
@@ -190,9 +191,9 @@
         android:layout_marginRight="10dp"
         app:cardCornerRadius="14sp"
         app:cardElevation="14sp"
-        app:cardBackgroundColor="@color/light_purple"
         app:layout_constraintTop_toBottomOf="@id/guideline_counter_mid1"
         app:layout_constraintBottom_toTopOf="@id/guideline_counter_mid2"
+        style="@style/MyCardViewStyle"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_counter_progress"
@@ -372,9 +373,10 @@
         android:layout_marginRight="10dp"
         app:cardCornerRadius="14sp"
         app:cardElevation="14sp"
-        app:cardBackgroundColor="@color/light_purple"
         app:layout_constraintTop_toBottomOf="@id/guideline_counter_bottom1"
-        app:layout_constraintBottom_toTopOf="@id/guideline_counter_bottom2">
+        app:layout_constraintBottom_toTopOf="@id/guideline_counter_bottom2"
+        style="@style/MyCardViewStyle"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_counter_spent"
