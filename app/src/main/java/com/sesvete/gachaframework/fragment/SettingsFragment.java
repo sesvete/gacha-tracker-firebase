@@ -29,7 +29,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         bannerPreference = findPreference("banner");
         darkModeSwitch = findPreference("dark_mode");
 
-        SettingsHelper.updateBannerPreference(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin"), bannerPreference);
+        SettingsHelper.updateBannerPreference(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin_impact"), bannerPreference);
     }
 
     // register and unregister the settings fragment as a listener
@@ -49,7 +49,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
         if (key.equals("game")) {
-            SettingsHelper.updateBannerPreference(sharedPreferences.getString(key, "genshin"), findPreference("banner"));
+            SettingsHelper.updateBannerPreference(sharedPreferences.getString(key, "genshin_impact"), findPreference("banner"));
             bannerPreference.setValueIndex(0);
         }
         if (key.equals("dark_mode")){

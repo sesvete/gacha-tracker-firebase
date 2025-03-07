@@ -3,7 +3,7 @@
     <PreferenceCategory app:title="@string/game_settings">
 
         <ListPreference
-            app:defaultValue="genshin"
+            app:defaultValue="genshin_impact"
             app:entries="@array/game_entries"
             app:entryValues="@array/game_values"
             app:key="game"
