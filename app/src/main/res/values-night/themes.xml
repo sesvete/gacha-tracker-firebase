@@ -39,4 +39,8 @@
         <item name="android:background">@color/night_background</item>
     </style>
 
+    <style name="MyNavHeader" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

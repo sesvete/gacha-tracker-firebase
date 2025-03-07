@@ -4,9 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#800096</color>
     <color name="primary">#4d095c</color>
-    <color name="light_purple">#f7dcfc</color>
+    <color name="light_purple">#d6b1de</color>
+    <color name="light_purple_variation">#f7dcfc</color>
     <color name="gray">#353635</color>
     <color name="night_background">#303030</color>
+    <color name="light_background">#fbe6ff</color>
     <color name="card_view_background_night">#5e4863</color>
     <color name="night_highlight">#737373</color>
 </resources>
