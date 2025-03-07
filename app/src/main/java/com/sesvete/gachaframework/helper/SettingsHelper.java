@@ -40,6 +40,8 @@ public class SettingsHelper {
                 return R.array.hsr_banner_entries;
             } else if (game.equals("zzz")) {
                 return R.array.zzz_banner_entries;
+            } else if (game.equals("tribe_nine")) {
+                return R.array.tribe_nine_banner_entries;
             } else {
                 return R.array.banner_entries;
             }
@@ -62,6 +64,8 @@ public class SettingsHelper {
                 return R.array.hsr_banner_values;
             } else if (game.equals("zzz")) {
                 return R.array.zzz_banner_values;
+            } else if (game.equals("tribe_nine")) {
+                return R.array.tribe_nine_banner_values;
             } else {
                 return R.array.banner_values;
             }
@@ -88,6 +92,10 @@ public class SettingsHelper {
             case "zzz":
                 entriesResId = R.array.zzz_banner_entries;
                 valuesResId = R.array.zzz_banner_values;
+                break;
+            case "tribe_nine":
+                entriesResId = R.array.tribe_nine_banner_entries;
+                valuesResId = R.array.tribe_nine_banner_values;
                 break;
             default:
                 entriesResId = R.array.banner_entries; // Default

@@ -3,12 +3,14 @@
         <item>Genshin Impact</item>
         <item>Honkai Star Rail</item>
         <item>Zenless Zone Zero</item>
+        <item>Tribe Nine</item>
     </string-array>
 
     <string-array name="game_values">
         <item>genshin</item>
         <item>hsr</item>
         <item>zzz</item>
+        <item>tribe_nine</item>
     </string-array>
 
     <string-array name="banner_entries">
@@ -59,6 +61,18 @@
         <item>w_engine</item>
         <item>standard</item>
         <item>bangboo</item>
+    </string-array>
+
+    <string-array name="tribe_nine_banner_entries">
+        <item>Limited</item>
+        <item>Tension Card</item>
+        <item>Standard</item>
+    </string-array>
+
+    <string-array name="tribe_nine_banner_values">
+        <item>limited</item>
+        <item>tension_card</item>
+        <item>standard</item>
     </string-array>
 
     <string-array name="language_entries">
