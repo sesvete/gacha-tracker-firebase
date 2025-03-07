@@ -5,7 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInActivity">
+    tools:context=".SignInActivity"
+    style="@style/AppBackground"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_sign_in_horizontal1"

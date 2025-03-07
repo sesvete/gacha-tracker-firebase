@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             TextView txtNavHeaderGame = navHeaderView.findViewById(R.id.txt_nav_header_game);
             TextView txtNavHeaderBanner = navHeaderView.findViewById(R.id.txt_nav_header_banner);
 
-            txtNavHeaderGame.setText(SettingsHelper.getEntryFromValue(this, "game", "genshin"));
+            txtNavHeaderGame.setText(SettingsHelper.getEntryFromValue(this, "game", "genshin_impact"));
             txtNavHeaderBanner.setText(SettingsHelper.getEntryFromValue(this, "banner", "limited"));
         }
     }

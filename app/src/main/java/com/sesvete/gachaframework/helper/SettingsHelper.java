@@ -33,13 +33,15 @@ public class SettingsHelper {
         if(key.equals("game")){
             return R.array.game_entries;
         } else if (key.equals("banner")){
-            String game = prefs.getString("game", "genshin");
-            if (game.equals("genshin")){
-                return R.array.genshin_banner_entries;
-            } else if (game.equals("hsr")) {
-                return R.array.hsr_banner_entries;
-            } else if (game.equals("zzz")) {
-                return R.array.zzz_banner_entries;
+            String game = prefs.getString("game", "genshin_impact");
+            if (game.equals("genshin_impact")){
+                return R.array.genshin_impact_banner_entries;
+            } else if (game.equals("honkai_star_rail")) {
+                return R.array.honkai_star_rail_banner_entries;
+            } else if (game.equals("zenless_zone_zero")) {
+                return R.array.zenless_zone_zero_banner_entries;
+            } else if (game.equals("tribe_nine")) {
+                return R.array.tribe_nine_banner_entries;
             } else {
                 return R.array.banner_entries;
             }
@@ -55,13 +57,15 @@ public class SettingsHelper {
         if(key.equals("game")){
             return R.array.game_values;
         } else if (key.equals("banner")){
-            String game = prefs.getString("game", "genshin");
-            if (game.equals("genshin")){
-                return R.array.genshin_banner_values;
-            } else if (game.equals("hsr")) {
-                return R.array.hsr_banner_values;
-            } else if (game.equals("zzz")) {
-                return R.array.zzz_banner_values;
+            String game = prefs.getString("game", "genshin_impact");
+            if (game.equals("genshin_impact")){
+                return R.array.genshin_impact_banner_values;
+            } else if (game.equals("honkai_star_rail")) {
+                return R.array.honkai_star_rail_banner_values;
+            } else if (game.equals("zenless_zone_zero")) {
+                return R.array.zenless_zone_zero_banner_values;
+            } else if (game.equals("tribe_nine")) {
+                return R.array.tribe_nine_banner_values;
             } else {
                 return R.array.banner_values;
             }
@@ -77,17 +81,21 @@ public class SettingsHelper {
         int valuesResId;
 
         switch (gameValue) {
-            case "genshin":
-                entriesResId = R.array.genshin_banner_entries;
-                valuesResId = R.array.genshin_banner_values;
+            case "genshin_impact":
+                entriesResId = R.array.genshin_impact_banner_entries;
+                valuesResId = R.array.genshin_impact_banner_values;
                 break;
-            case "hsr":
-                entriesResId = R.array.hsr_banner_entries;
-                valuesResId = R.array.hsr_banner_values;
+            case "honkai_star_rail":
+                entriesResId = R.array.honkai_star_rail_banner_entries;
+                valuesResId = R.array.honkai_star_rail_banner_values;
                 break;
-            case "zzz":
-                entriesResId = R.array.zzz_banner_entries;
-                valuesResId = R.array.zzz_banner_values;
+            case "zenless_zone_zero":
+                entriesResId = R.array.zenless_zone_zero_banner_entries;
+                valuesResId = R.array.zenless_zone_zero_banner_values;
+                break;
+            case "tribe_nine":
+                entriesResId = R.array.tribe_nine_banner_entries;
+                valuesResId = R.array.tribe_nine_banner_values;
                 break;
             default:
                 entriesResId = R.array.banner_entries; // Default

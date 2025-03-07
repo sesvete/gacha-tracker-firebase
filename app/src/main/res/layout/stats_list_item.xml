@@ -48,8 +48,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="@color/light_purple"
         app:layout_constraintTop_toTopOf="parent"
+        style="@style/MyCustomDivider"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

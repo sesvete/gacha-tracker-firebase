@@ -3,12 +3,14 @@
         <item>Genshin Impact</item>
         <item>Honkai Star Rail</item>
         <item>Zenless Zone Zero</item>
+        <item>Tribe Nine</item>
     </string-array>
 
     <string-array name="game_values">
-        <item>genshin</item>
-        <item>hsr</item>
-        <item>zzz</item>
+        <item>genshin_impact</item>
+        <item>honkai_star_rail</item>
+        <item>zenless_zone_zero</item>
+        <item>tribe_nine</item>
     </string-array>
 
     <string-array name="banner_entries">
@@ -23,42 +25,54 @@
         <item>standard</item>
     </string-array>
 
-    <string-array name="genshin_banner_entries">
+    <string-array name="genshin_impact_banner_entries">
         <item>Limited</item>
         <item>Weapon</item>
         <item>Standard</item>
     </string-array>
 
-    <string-array name="genshin_banner_values">
+    <string-array name="genshin_impact_banner_values">
         <item>limited</item>
         <item>weapon</item>
         <item>standard</item>
     </string-array>
 
-    <string-array name="hsr_banner_entries">
+    <string-array name="honkai_star_rail_banner_entries">
         <item>Limited</item>
         <item>Light Cone</item>
         <item>Standard</item>
     </string-array>
 
-    <string-array name="hsr_banner_values">
+    <string-array name="honkai_star_rail_banner_values">
         <item>limited</item>
         <item>light_cone</item>
         <item>standard</item>
     </string-array>
 
-    <string-array name="zzz_banner_entries">
+    <string-array name="zenless_zone_zero_banner_entries">
         <item>Limited</item>
         <item>W-Engine</item>
         <item>Standard</item>
         <item>Bangboo</item>
     </string-array>
 
-    <string-array name="zzz_banner_values">
+    <string-array name="zenless_zone_zero_banner_values">
         <item>limited</item>
         <item>w_engine</item>
         <item>standard</item>
         <item>bangboo</item>
+    </string-array>
+
+    <string-array name="tribe_nine_banner_entries">
+        <item>Limited</item>
+        <item>Tension Card</item>
+        <item>Standard</item>
+    </string-array>
+
+    <string-array name="tribe_nine_banner_values">
+        <item>limited</item>
+        <item>tension_card</item>
+        <item>standard</item>
     </string-array>
 
     <string-array name="language_entries">
