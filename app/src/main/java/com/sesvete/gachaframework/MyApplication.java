@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
+import com.sesvete.gachaframework.helper.LocaleHelper;
+
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LocaleHelper.onAttach(this);
         applySavedDarkMode();
     }
 

@@ -1,5 +1,6 @@
 package com.sesvete.gachaframework;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +25,10 @@ import com.sesvete.gachaframework.fragment.HistoryFragment;
 import com.sesvete.gachaframework.fragment.SettingsFragment;
 import com.sesvete.gachaframework.fragment.StatsFragment;
 import com.sesvete.gachaframework.helper.DialogHelper;
+import com.sesvete.gachaframework.helper.LocaleHelper;
 import com.sesvete.gachaframework.helper.SettingsHelper;
+
+//TODO: check and fix formating of slovene language
 
 //TODO: light/night mode
 //TODO: translations ENG/SLO
@@ -38,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private FragmentManager fragmentManager;
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
