@@ -3,12 +3,14 @@ package com.sesvete.gachaframework.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.helper.HistoryRecViewAdapter;
@@ -31,7 +33,10 @@ public class HistoryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
     private RecyclerView recyclerViewHistory;
+    private TextView txtHistoryBannerDescription;
+    private String bannerType;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -70,6 +75,14 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
         recyclerViewHistory = view.findViewById(R.id.recycler_view_history);
+        txtHistoryBannerDescription = view.findViewById(R.id.txt_history_banner_description);
+
+        bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
+
+        if (bannerType.equals("standard") || bannerType.equals("bangboo")){
+            txtHistoryBannerDescription.setVisibility(View.GONE);
+        }
+
 
         // za zdaj bo provizorično tako, sicer se bo to pobralo iz podatkovne baze
         ArrayList<PulledUnit> pulledUnits = new ArrayList<>();

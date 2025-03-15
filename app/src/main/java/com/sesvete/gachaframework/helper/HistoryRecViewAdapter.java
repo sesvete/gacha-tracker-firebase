@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -39,7 +40,10 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         holder.txtHistoryUnitName.setText(pulledUnits.get(position).getUnitName());
         holder.txtHistoryDateName.setText(pulledUnits.get(position).getDate());
 
-        if (pulledUnits.get(position).isFromBanner()){
+        String bannerType = PreferenceManager.getDefaultSharedPreferences(context).getString("banner", "limited");
+        if (bannerType.equals("standard") || bannerType.equals("bangboo")){
+            holder.imgHistoryBannerName.setVisibility(View.GONE);
+        } else if (pulledUnits.get(position).isFromBanner()) {
             holder.imgHistoryBannerName.setImageResource(R.drawable.ic_checkmark_green);
         } else {
             holder.imgHistoryBannerName.setImageResource(R.drawable.ic_block_red);
