@@ -1,6 +1,11 @@
 package com.sesvete.gachaframework.helper;
 
+// TODO: to še posodobi, ko boš enkrat pridobil podatke iz baze
+
+import android.content.Context;
 import android.content.res.Resources;
+
+import androidx.preference.PreferenceManager;
 
 import com.sesvete.gachaframework.R;
 import com.sesvete.gachaframework.model.Statistic;
@@ -15,19 +20,30 @@ public class StatsHelper {
 
     // imel bom ločen database helper, ki bo parsal podatke iz podatkovne baze in ustvaril ustrezne arraye
 
-    public void statsCalculator(Resources resources, ArrayList<Statistic> statisticList){
+    public void statsCalculator(Context context, Resources resources, ArrayList<Statistic> statisticList){
 
         int intNumWonFiftyFifty = numWonFiftyFifty(won5050);
         int intNumLostFiftyFifty = numLostFiftyFifty(won5050);
         double doublePercentageFiftyFifty = percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
         double doubleAvgNumPulls = avgNumPulls(pullsFor5Star);
         int intTotalNumPulls = totalNumPulls(pullsFor5Star);
-        int currencyValue = 160;
+        int currencyValue;
 
+        String game = PreferenceManager.getDefaultSharedPreferences(context).getString("game", "genshin_impact");
+        String bannerType = PreferenceManager.getDefaultSharedPreferences(context).getString("banner", "limited");
+
+        if (game.equals("tribe_nine")){
+            currencyValue = 120;
+        }
+        else {
+            currencyValue = 160;
+        }
         statisticList.clear();
-        statisticList.add(new Statistic(resources.getString(R.string.percentage_fifty_fifty), doublePercentageFiftyFifty));
-        statisticList.add(new Statistic(resources.getString(R.string.total_won_fifty_fifty), intNumWonFiftyFifty));
-        statisticList.add(new Statistic(resources.getString(R.string.total_lost_fifty_fifty), intNumLostFiftyFifty));
+        if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
+            statisticList.add(new Statistic(resources.getString(R.string.percentage_fifty_fifty), doublePercentageFiftyFifty));
+            statisticList.add(new Statistic(resources.getString(R.string.total_won_fifty_fifty), intNumWonFiftyFifty));
+            statisticList.add(new Statistic(resources.getString(R.string.total_lost_fifty_fifty), intNumLostFiftyFifty));
+        }
         statisticList.add(new Statistic(resources.getString(R.string.avg_for_five_star), doubleAvgNumPulls));
         statisticList.add(new Statistic(resources.getString(R.string.total_num_pulls), intTotalNumPulls));
         statisticList.add(new Statistic(resources.getString(R.string.avg_currency_five_star), doubleAvgNumPulls * currencyValue));
