@@ -1,5 +1,7 @@
 package com.sesvete.gachaframework.helper;
 
+// TODO: ko se bo pobralo podatke iz baze se bodo tudi primerno updatala polja
+
 
 import android.content.res.Resources;
 import android.util.Log;
@@ -31,9 +33,8 @@ public class CounterHelper {
         String stringNumCurrencyToSoftPity;
         String stringCurrencyToSoftPity;
         String stringCombinedCurrencyToSoftPity;
-        String stringCurrencyType = resources.getString(R.string.primogens);
         String stringTotalCurrencySpent = resources.getString(R.string.total_currency_spent);
-        String stringCombinedTotalSpent = stringCurrencyType + " " + stringTotalCurrencySpent;
+        String stringCombinedTotalSpent = currencyType + " " + stringTotalCurrencySpent;
         int intTotalSpent = counter * wishValue;
         String stringTotalSpent = String.valueOf(intTotalSpent);
         if (counter < softPity){
@@ -46,7 +47,7 @@ public class CounterHelper {
 
             stringNumCurrencyToSoftPity = String.valueOf(intCurrencyToSoftPity);
             stringCurrencyToSoftPity = resources.getString(R.string.currency_till_soft_pity);
-            stringCombinedCurrencyToSoftPity = stringCurrencyType + " " + stringCurrencyToSoftPity;
+            stringCombinedCurrencyToSoftPity = currencyType + " " + stringCurrencyToSoftPity;
 
             updateTextFields(txtNumToSoftPity, txtToSoftPity, txtNumCurrencyToSoftPity,txtCurrencyToSoftPity, txtNumTotalSpent, txtTotalSpent, stringNumToSoftPity, stringToSoftPity, stringNumCurrencyToSoftPity, stringCombinedCurrencyToSoftPity, stringTotalSpent, stringCombinedTotalSpent);
         } else if (counter == softPity) {
@@ -64,7 +65,7 @@ public class CounterHelper {
 
             stringNumCurrencyToSoftPity = String.valueOf(intCurrencyToSoftPity);
             stringCurrencyToSoftPity = resources.getString(R.string.currency_past_soft_pity);
-            stringCombinedCurrencyToSoftPity = stringCurrencyType + " " + stringCurrencyToSoftPity;
+            stringCombinedCurrencyToSoftPity = currencyType + " " + stringCurrencyToSoftPity;
 
             updateTextFields(txtNumToSoftPity, txtToSoftPity, txtNumCurrencyToSoftPity,txtCurrencyToSoftPity, txtNumTotalSpent, txtTotalSpent, stringNumToSoftPity, stringToSoftPity, stringNumCurrencyToSoftPity, stringCombinedCurrencyToSoftPity, stringTotalSpent, stringCombinedTotalSpent);
         }
@@ -77,5 +78,14 @@ public class CounterHelper {
         txtNumTotalSpent.setText(stringTotalSpent);
         txtTotalSpent.setText(stringCombinedTotalSpent);
     }
+
+    // to se bo itak še popravilo, ko se bo pobralo iz baze - gledalo se bo katea igra je samo zdaj se mi ne da
+
+    public static void initialSetup(TextView pullsTillSoftPity, TextView currencyTillSoftPity, TextView totalCurrencySpent, int softPity, int wishValue){
+        pullsTillSoftPity.setText(String.valueOf(softPity));
+        currencyTillSoftPity.setText(String.valueOf(softPity*wishValue));
+        totalCurrencySpent.setText("0");
+    }
+
 
 }

@@ -405,14 +405,6 @@
                 app:layout_constraintGuide_percent="0.3"
                 />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_counter_currency_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.65"
-                />
-
             <TextView
                 android:id="@+id/txt_counter_spent_till_jackpot"
                 android:layout_width="0dp"
@@ -481,25 +473,6 @@
                 />
 
             <TextView
-                android:id="@+id/txt_counter_currency_till_jackpot_currency_description"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="12sp"
-                android:autoSizeMaxTextSize="40sp"
-                android:autoSizeStepGranularity="2sp"
-                android:text="@string/primogens"
-                app:layout_constraintTop_toBottomOf="@id/guideline_counter_spent_horizontal_top"
-                app:layout_constraintBottom_toTopOf="@id/guideline_counter_spent_horizontal_bottom"
-                app:layout_constraintLeft_toRightOf="@id/guideline_counter_spent_vertical"
-                app:layout_constraintRight_toLeftOf="@id/guideline_counter_currency_vertical"
-
-                />
-
-            <TextView
                 android:id="@+id/txt_counter_spent_till_jackpot_currency_description"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -513,26 +486,8 @@
                 android:text="@string/currency_till_soft_pity"
                 app:layout_constraintTop_toBottomOf="@id/guideline_counter_spent_horizontal_top"
                 app:layout_constraintBottom_toTopOf="@id/guideline_counter_spent_horizontal_bottom"
-                app:layout_constraintLeft_toRightOf="@id/guideline_counter_currency_vertical"
-                app:layout_constraintRight_toRightOf="parent"
-                />
-
-            <TextView
-                android:id="@+id/txt_counter_currency_till_jackpot_total_description"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMinTextSize="12sp"
-                android:autoSizeMaxTextSize="100sp"
-                android:autoSizeStepGranularity="2sp"
-                android:text="@string/primogens"
-                app:layout_constraintTop_toBottomOf="@id/guideline_counter_spent_horizontal_bottom"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/guideline_counter_spent_vertical"
-                app:layout_constraintRight_toLeftOf="@id/guideline_counter_currency_vertical"
+                app:layout_constraintRight_toRightOf="parent"
                 />
 
             <TextView
@@ -549,7 +504,7 @@
                 android:text="@string/total_currency_spent"
                 app:layout_constraintTop_toBottomOf="@id/guideline_counter_spent_horizontal_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/guideline_counter_currency_vertical"
+                app:layout_constraintLeft_toRightOf="@id/guideline_counter_spent_vertical"
                 app:layout_constraintRight_toRightOf="parent"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
