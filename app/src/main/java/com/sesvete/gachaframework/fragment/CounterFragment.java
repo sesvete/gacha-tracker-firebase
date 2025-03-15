@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.text.InputType;
 import android.util.Log;
@@ -59,6 +60,8 @@ public class CounterFragment extends Fragment {
     private TextView txtCounterSpentTillJackpotTotalDescription;
     private TextView txtCounterHistoryNumber;
     private TextView txtCounterHistoryUnit;
+    private TextView txtCounterHistoryFeaturedUnitDescription;
+    private TextView txtCounterProgressGuaranteedDescription;
     private MaterialButton btnCounterPlusOne;
     private MaterialButton btnCounterPlusX;
     private MaterialButton btnCounterPlusTen;
@@ -70,6 +73,7 @@ public class CounterFragment extends Fragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormatter;
     private String formatedDate;
+    private String bannerType;
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
@@ -133,6 +137,8 @@ public class CounterFragment extends Fragment {
         txtCounterSpentTillJackpotCurrencyDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_currency_description);
         txtCounterSpentTillJackpotTotal = view.findViewById(R.id.txt_counter_spent_till_jackpot_total);
         txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_total_description);
+        txtCounterHistoryFeaturedUnitDescription = view.findViewById(R.id.txt_counter_history_featured_unit_description);
+        txtCounterProgressGuaranteedDescription = view.findViewById(R.id.txt_counter_progress_guaranteed_description);
 
         // začasno se preveri, če ima player guaranteed
         // TODO: to se bo preverlo iz podatkovne baze
@@ -144,6 +150,14 @@ public class CounterFragment extends Fragment {
             guaranteed = true;
         } else {
             guaranteed = false;
+        }
+
+        bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
+        if (bannerType.equals("standard") || bannerType.equals("bangboo")){
+            txtCounterHistoryFeaturedUnitDescription.setVisibility(View.GONE);
+            txtCounterProgressGuaranteedDescription.setVisibility(View.GONE);
+            imgCounterHistoryFeaturedUnitStatus.setVisibility(View.GONE);
+            imgCounterProgressGuaranteedDescription.setVisibility(View.GONE);
         }
 
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
@@ -221,7 +235,7 @@ public class CounterFragment extends Fragment {
                         MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btn_confirm_confirm);
                         MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btn_confirm_cancel);
                         RadioGroup rGrConfirm = dialogView.findViewById(R.id.r_gr_confirm);
-                        if (guaranteed){
+                        if (guaranteed || bannerType.equals("standard") || bannerType.equals("bangboo")){
                             rGrConfirm.setVisibility(View.GONE);
                             featuredUnitStatus = true;
                             rGrConfirm.check(R.id.won_radio_button);
@@ -299,6 +313,11 @@ public class CounterFragment extends Fragment {
                 inputUpdateCounter.setHint(R.string.enter_counter_number_hint);
                 inputUpdateCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
 
+                if (bannerType.equals("standard") || bannerType.equals("bangboo")){
+                    rGrConfirm.setVisibility(View.GONE);
+                    featuredUnitStatus = true;
+                    rGrConfirm.check(R.id.won_radio_button);
+                }
                 AlertDialog dialog = builder.create();
 
                 DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputUpdateCounter, getActivity());
