@@ -25,8 +25,8 @@
     <string name="currency_past_soft_pity">Past Soft Pity</string>
     <string name="total_currency_spent">Spent</string>
     <string name="confirm_5_star">Confirm 5 Star</string>
-    <string name="primogens">Primogens</string>
-    <string name="stellar_jades">Stellar Jades</string>
+    <string name="primogens" translatable="false">Primogens</string>
+    <string name="stellar_jades" translatable="false">Stellar Jades</string>
     <string name="featured_unit">Featured Unit</string>
     <string name="update_counter">Update Counter</string>
     <string name="not_guaranteed">Not Guaranteed</string>
@@ -77,5 +77,8 @@
     <string name="logout_confirmation">Are You Sure?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+
+    <string name="polychrome" translatable="false">Polychrome</string>
+    <string name="enigma_entity" translatable="false">Enigma entity</string>
 
 </resources>

@@ -62,6 +62,8 @@ public class CounterFragment extends Fragment {
     private TextView txtCounterHistoryUnit;
     private TextView txtCounterHistoryFeaturedUnitDescription;
     private TextView txtCounterProgressGuaranteedDescription;
+    private TextView txtCounterCurrencyTillJackpotCurrencyDescription;
+    private TextView txtCounterCurrencyTillJackpotTotalDescription;
     private MaterialButton btnCounterPlusOne;
     private MaterialButton btnCounterPlusX;
     private MaterialButton btnCounterPlusTen;
@@ -73,6 +75,7 @@ public class CounterFragment extends Fragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormatter;
     private String formatedDate;
+    private String game;
     private String bannerType;
 
     // to se bo še pobral iz podatkovne baze
@@ -139,6 +142,8 @@ public class CounterFragment extends Fragment {
         txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_total_description);
         txtCounterHistoryFeaturedUnitDescription = view.findViewById(R.id.txt_counter_history_featured_unit_description);
         txtCounterProgressGuaranteedDescription = view.findViewById(R.id.txt_counter_progress_guaranteed_description);
+        txtCounterCurrencyTillJackpotCurrencyDescription = view.findViewById(R.id.txt_counter_currency_till_jackpot_currency_description);
+        txtCounterCurrencyTillJackpotTotalDescription = view.findViewById(R.id.txt_counter_currency_till_jackpot_total_description);
 
         // začasno se preveri, če ima player guaranteed
         // TODO: to se bo preverlo iz podatkovne baze
@@ -151,7 +156,7 @@ public class CounterFragment extends Fragment {
         } else {
             guaranteed = false;
         }
-
+        game = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin_impact");
         bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
         if (bannerType.equals("standard") || bannerType.equals("bangboo")){
             txtCounterHistoryFeaturedUnitDescription.setVisibility(View.GONE);
@@ -159,6 +164,8 @@ public class CounterFragment extends Fragment {
             imgCounterHistoryFeaturedUnitStatus.setVisibility(View.GONE);
             imgCounterProgressGuaranteedDescription.setVisibility(View.GONE);
         }
+
+        adjustingCurrency(game, txtCounterCurrencyTillJackpotCurrencyDescription, txtCounterCurrencyTillJackpotTotalDescription);
 
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,5 +391,31 @@ public class CounterFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void adjustingCurrency(String game, TextView currencyTillPity, TextView currencyTotal){
+        switch (game){
+            case "genshin_impact":
+                currencyTillPity.setText(R.string.primogens);
+                currencyTotal.setText(R.string.primogens);
+                break;
+            case "honkai_star_rail":
+                currencyTillPity.setText(R.string.stellar_jades);
+                currencyTotal.setText(R.string.stellar_jades);
+                break;
+            case "zenless_zone_zero":
+                currencyTillPity.setText(R.string.polychrome);
+                currencyTotal.setText(R.string.polychrome);
+                break;
+            case "tribe_nine":
+                currencyTillPity.setText(R.string.enigma_entity);
+                currencyTotal.setText(R.string.enigma_entity);
+                break;
+            default:
+                currencyTillPity.setText(R.string.primogens);
+                currencyTotal.setText(R.string.primogens);
+                break;
+        }
+
     }
 }
