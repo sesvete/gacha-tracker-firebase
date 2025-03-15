@@ -481,7 +481,7 @@
                 android:textStyle="bold"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMinTextSize="12sp"
-                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMaxTextSize="40sp"
                 android:autoSizeStepGranularity="2sp"
                 android:text="@string/currency_till_soft_pity"
                 app:layout_constraintTop_toBottomOf="@id/guideline_counter_spent_horizontal_top"

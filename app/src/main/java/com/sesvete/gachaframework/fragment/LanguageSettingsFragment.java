@@ -1,5 +1,6 @@
 package com.sesvete.gachaframework.fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,13 +9,40 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import com.sesvete.gachaframework.R;
+import com.sesvete.gachaframework.helper.LocaleHelper;
 
-public class LanguageSettingsFragment extends PreferenceFragmentCompat {
+public class LanguageSettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         setPreferencesFromResource(R.xml.language_preferences, rootKey);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
+        if (key.equals("language")) {
+            String languageCode = sharedPreferences.getString(key, "en");
+            if (getContext() != null) {
+                LocaleHelper.updateLocale(getContext(), languageCode);
+                if (getActivity() != null) {
+                    getActivity().recreate();
+                }
+            }
+        }
     }
 
     @Override

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import android.text.InputType;
 import android.util.Log;
@@ -28,7 +29,9 @@ import com.sesvete.gachaframework.helper.DialogHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,8 @@ public class CounterFragment extends Fragment {
     private TextView txtCounterSpentTillJackpotTotalDescription;
     private TextView txtCounterHistoryNumber;
     private TextView txtCounterHistoryUnit;
+    private TextView txtCounterHistoryFeaturedUnitDescription;
+    private TextView txtCounterProgressGuaranteedDescription;
     private MaterialButton btnCounterPlusOne;
     private MaterialButton btnCounterPlusX;
     private MaterialButton btnCounterPlusTen;
@@ -70,6 +75,11 @@ public class CounterFragment extends Fragment {
     private Calendar calendar;
     private SimpleDateFormat dateFormatter;
     private String formatedDate;
+    private String game;
+    private String bannerType;
+    private int softPity;
+    private int wishValue;
+    private String currencyType;
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
@@ -111,10 +121,6 @@ public class CounterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
 
-        int softPity = 75;
-        int wishValue = 160;
-        String currencyType = getString(R.string.primogens);
-
         txtCounterProgressNumber = view.findViewById(R.id.txt_counter_progress_number);
         txtCounterHistoryNumber = view.findViewById(R.id.txt_counter_history_number);
         txtCounterHistoryNumber = view.findViewById(R.id.txt_counter_history_number);
@@ -133,6 +139,8 @@ public class CounterFragment extends Fragment {
         txtCounterSpentTillJackpotCurrencyDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_currency_description);
         txtCounterSpentTillJackpotTotal = view.findViewById(R.id.txt_counter_spent_till_jackpot_total);
         txtCounterSpentTillJackpotTotalDescription = view.findViewById(R.id.txt_counter_spent_till_jackpot_total_description);
+        txtCounterHistoryFeaturedUnitDescription = view.findViewById(R.id.txt_counter_history_featured_unit_description);
+        txtCounterProgressGuaranteedDescription = view.findViewById(R.id.txt_counter_progress_guaranteed_description);
 
         // začasno se preveri, če ima player guaranteed
         // TODO: to se bo preverlo iz podatkovne baze
@@ -145,6 +153,22 @@ public class CounterFragment extends Fragment {
         } else {
             guaranteed = false;
         }
+        game = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin_impact");
+        bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
+        if (bannerType.equals("standard") || bannerType.equals("bangboo")){
+            txtCounterHistoryFeaturedUnitDescription.setVisibility(View.GONE);
+            txtCounterProgressGuaranteedDescription.setVisibility(View.GONE);
+            imgCounterHistoryFeaturedUnitStatus.setVisibility(View.GONE);
+            imgCounterProgressGuaranteedDescription.setVisibility(View.GONE);
+        }
+
+        softPity = adjustSoftPity(game, bannerType);
+        wishValue = adjustWishValue(game);
+        currencyType = adjustCurrencyString(game);
+
+        CounterHelper.initialSetup(txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue);
+
+        initialTextviewAdjust(game, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
 
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +245,7 @@ public class CounterFragment extends Fragment {
                         MaterialButton btnConfirmConfirm = dialogView.findViewById(R.id.btn_confirm_confirm);
                         MaterialButton btnConfirmCancel = dialogView.findViewById(R.id.btn_confirm_cancel);
                         RadioGroup rGrConfirm = dialogView.findViewById(R.id.r_gr_confirm);
-                        if (guaranteed){
+                        if (guaranteed || bannerType.equals("standard") || bannerType.equals("bangboo")){
                             rGrConfirm.setVisibility(View.GONE);
                             featuredUnitStatus = true;
                             rGrConfirm.check(R.id.won_radio_button);
@@ -299,6 +323,11 @@ public class CounterFragment extends Fragment {
                 inputUpdateCounter.setHint(R.string.enter_counter_number_hint);
                 inputUpdateCounter.setInputType(InputType.TYPE_CLASS_NUMBER);
 
+                if (bannerType.equals("standard") || bannerType.equals("bangboo")){
+                    rGrConfirm.setVisibility(View.GONE);
+                    featuredUnitStatus = true;
+                    rGrConfirm.check(R.id.won_radio_button);
+                }
                 AlertDialog dialog = builder.create();
 
                 DialogHelper.buildAlertDialogWindowWithKeyboard(dialog, getContext(), inputUpdateCounter, getActivity());
@@ -365,5 +394,71 @@ public class CounterFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void initialTextviewAdjust(String game, TextView currencyTillPity, TextView currencyTotal){
+        switch (game){
+            case "genshin_impact":
+                currencyTillPity.setText(getString(R.string.primogens) + " " + getString(R.string.currency_till_soft_pity));
+                currencyTotal.setText(getString(R.string.primogens) + " " + getString(R.string.total_currency_spent));
+                break;
+            case "honkai_star_rail":
+                currencyTillPity.setText(getString(R.string.stellar_jades) + " " + getString(R.string.currency_till_soft_pity));
+                currencyTotal.setText(getString(R.string.stellar_jades) + " " + getString(R.string.total_currency_spent));
+                break;
+            case "zenless_zone_zero":
+                currencyTillPity.setText(getString(R.string.polychrome) + " " + getString(R.string.currency_till_soft_pity));
+                currencyTotal.setText(getString(R.string.polychrome) + " " + getString(R.string.total_currency_spent));
+                break;
+            case "tribe_nine":
+                currencyTillPity.setText(getString(R.string.enigma_entity) + " " + getString(R.string.currency_till_soft_pity));
+                currencyTotal.setText(getString(R.string.enigma_entity) + " " + getString(R.string.total_currency_spent));
+                break;
+            default:
+                currencyTillPity.setText(getString(R.string.primogens)+ " " + getString(R.string.currency_till_soft_pity));
+                currencyTotal.setText(getString(R.string.primogens) + " " + getString(R.string.total_currency_spent));
+                break;
+        }
+    }
+    private int adjustSoftPity(String game, String bannerType){
+        Set<String> weaponBanners = new HashSet<>();
+        weaponBanners.add("weapon");
+        weaponBanners.add("light_cone");
+        weaponBanners.add("w_engine");
+        weaponBanners.add("bangboo");
+
+        int softPity;
+        if (game.equals("tribe_nine")) {
+            softPity = 80;
+        } else if (weaponBanners.contains(bannerType)) {
+            softPity = 65;
+        } else {
+            softPity = 75;
+        }
+        return softPity;
+    }
+
+    private int adjustWishValue(String game){
+        int wishValue;
+        if (game.equals("tribe_nine")){
+            wishValue = 120;
+        } else {
+            wishValue = 160;
+        }
+        return wishValue;
+    }
+
+    private String adjustCurrencyString(String game){
+        String currencyType;
+        if (game.equals("genshin_impact")){
+            currencyType = getString(R.string.primogens);
+        } else if (game.equals("honkai_star_rail")) {
+            currencyType = getString(R.string.stellar_jades);
+        } else if (game.equals("zenless_zone_zero")) {
+            currencyType = getString(R.string.polychrome);
+        } else {
+            currencyType = getString(R.string.enigma_entity);
+        }
+        return currencyType;
     }
 }

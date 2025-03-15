@@ -91,7 +91,7 @@ public class StatsFragment extends Fragment {
         onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
 
         ArrayList<Statistic> statisticList = new ArrayList<>();
-        statsHelper.statsCalculator(getResources(), statisticList);
+        statsHelper.statsCalculator(getContext(), getResources(), statisticList);
         StatsRecViewAdapter adapter = new StatsRecViewAdapter(getContext());
         adapter.setStatisticList(statisticList);
         recyclerViewStats.setAdapter(adapter);
@@ -100,7 +100,7 @@ public class StatsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
-                statsHelper.statsCalculator(getResources(), statisticList);
+                statsHelper.statsCalculator(getContext(), getResources(), statisticList);
                 adapter.setStatisticList(statisticList);
             }
         });

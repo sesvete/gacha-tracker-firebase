@@ -81,8 +81,8 @@
     </string-array>
 
     <string-array name="language_values">
-        <item>eng</item>
-        <item>slo</item>
+        <item>en</item>
+        <item>sl</item>
     </string-array>
 
 </resources>

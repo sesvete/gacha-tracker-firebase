@@ -15,6 +15,7 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.sesvete.gachaframework.MainActivity;
 import com.sesvete.gachaframework.R;
+import com.sesvete.gachaframework.helper.LocaleHelper;
 import com.sesvete.gachaframework.helper.SettingsHelper;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -54,6 +55,15 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         }
         if (key.equals("dark_mode")){
             updateDarkMode();
+        }
+        if (key.equals("language")) {
+            String languageCode = sharedPreferences.getString(key, "en");
+            if (getContext() != null) {
+                LocaleHelper.updateLocale(getContext(), languageCode);
+                if (getActivity() != null) {
+                    getActivity().recreate();
+                }
+            }
         }
         if (getActivity() instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) getActivity();
