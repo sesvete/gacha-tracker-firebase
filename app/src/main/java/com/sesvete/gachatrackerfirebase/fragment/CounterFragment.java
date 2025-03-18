@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.fragment;
+package com.sesvete.gachatrackerfirebase.fragment;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,9 +23,9 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.helper.CounterHelper;
-import com.sesvete.gachaframework.helper.DialogHelper;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.helper.CounterHelper;
+import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

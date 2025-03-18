@@ -1,19 +1,17 @@
-package com.sesvete.gachaframework.helper;
+package com.sesvete.gachatrackerfirebase.helper;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
-import com.sesvete.gachaframework.R;
+import com.sesvete.gachatrackerfirebase.R;
 
 public class DialogHelper {
 

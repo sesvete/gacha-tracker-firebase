@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.helper;
+package com.sesvete.gachatrackerfirebase.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceManager;
 
-import com.sesvete.gachaframework.R;
+import com.sesvete.gachatrackerfirebase.R;
 
 public class SettingsHelper {
 

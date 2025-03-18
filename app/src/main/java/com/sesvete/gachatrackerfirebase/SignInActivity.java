@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework;
+package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
-import com.sesvete.gachaframework.fragment.LanguageSettingsFragment;
-import com.sesvete.gachaframework.helper.LocaleHelper;
+import com.sesvete.gachatrackerfirebase.fragment.LanguageSettingsFragment;
+import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 
 //TODO: make sure you check for safer intents!!!!!
 //TODO: also check intent filters

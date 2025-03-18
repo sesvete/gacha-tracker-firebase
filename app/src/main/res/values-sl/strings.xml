@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Gacha Framework</string>
     <string name="games">Igre</string>
     <string name="counter">Števec</string>
     <string name="history">Zgodovina</string>

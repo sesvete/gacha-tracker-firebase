@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.sesvete.gachaframework"
+    namespace = "com.sesvete.gachatrackerfirebase"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.sesvete.gachaframework"
+        applicationId = "com.sesvete.gachatrackerfirebase"
         minSdk = 26
         targetSdk = 34
         versionCode = 1

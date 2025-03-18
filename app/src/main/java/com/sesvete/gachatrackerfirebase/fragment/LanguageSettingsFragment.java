@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.fragment;
+package com.sesvete.gachatrackerfirebase.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.helper.LocaleHelper;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 
 public class LanguageSettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override

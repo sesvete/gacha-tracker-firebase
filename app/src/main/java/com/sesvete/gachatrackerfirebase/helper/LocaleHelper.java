@@ -1,9 +1,8 @@
-package com.sesvete.gachaframework.helper;
+package com.sesvete.gachatrackerfirebase.helper;
 
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.util.DisplayMetrics;
 
 import androidx.preference.PreferenceManager;
 

@@ -51,7 +51,7 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="60sp"
         android:autoSizeStepGranularity="2sp"
-        android:text="@string/gacha_app_framework"
+        android:text="@string/app_name"
         app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal1"
         app:layout_constraintLeft_toRightOf="@id/guideline_sign_in_vertical1"
         app:layout_constraintBottom_toTopOf="@id/guideline_sign_in_horizontal2"

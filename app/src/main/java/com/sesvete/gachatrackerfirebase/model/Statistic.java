@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.model;
+package com.sesvete.gachatrackerfirebase.model;
 
 public class Statistic {
     private String statisticDescription;

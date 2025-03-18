@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework;
+package com.sesvete.gachatrackerfirebase;
 
 import android.content.Intent;
 import android.os.Bundle;

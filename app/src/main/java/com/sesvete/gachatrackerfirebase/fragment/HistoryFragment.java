@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.fragment;
+package com.sesvete.gachatrackerfirebase.fragment;
 
 import android.os.Bundle;
 
@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.helper.HistoryRecViewAdapter;
-import com.sesvete.gachaframework.model.PulledUnit;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.helper.HistoryRecViewAdapter;
+import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
 import java.util.ArrayList;
 

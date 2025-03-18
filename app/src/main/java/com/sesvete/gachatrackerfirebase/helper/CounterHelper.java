@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.helper;
+package com.sesvete.gachatrackerfirebase.helper;
 
 // TODO: ko se bo pobralo podatke iz baze se bodo tudi primerno updatala polja
 
@@ -7,7 +7,7 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.sesvete.gachaframework.R;
+import com.sesvete.gachatrackerfirebase.R;
 
 public class CounterHelper {
 

@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.fragment;
+package com.sesvete.gachatrackerfirebase.fragment;
 
 import android.os.Bundle;
 
@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.helper.StatsHelper;
-import com.sesvete.gachaframework.helper.StatsRecViewAdapter;
-import com.sesvete.gachaframework.model.Statistic;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.helper.StatsHelper;
+import com.sesvete.gachatrackerfirebase.helper.StatsRecViewAdapter;
+import com.sesvete.gachatrackerfirebase.model.Statistic;
 
 import java.util.ArrayList;
 

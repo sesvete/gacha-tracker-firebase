@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.model;
+package com.sesvete.gachatrackerfirebase.model;
 
 // to se bo verjetno še spremenilo
 // ni nujno, da bosta obe aplikaciji imeli enak model

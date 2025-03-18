@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.helper;
+package com.sesvete.gachatrackerfirebase.helper;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.model.Statistic;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.model.Statistic;
 
 import java.util.ArrayList;
 

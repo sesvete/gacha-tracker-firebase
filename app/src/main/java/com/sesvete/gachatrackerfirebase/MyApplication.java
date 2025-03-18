@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework;
+package com.sesvete.gachatrackerfirebase;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 
-import com.sesvete.gachaframework.helper.LocaleHelper;
+import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 
 public class MyApplication extends Application {
     @Override

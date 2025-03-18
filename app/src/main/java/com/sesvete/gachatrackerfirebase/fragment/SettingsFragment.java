@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.fragment;
+package com.sesvete.gachatrackerfirebase.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,10 +13,10 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreferenceCompat;
 
-import com.sesvete.gachaframework.MainActivity;
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.helper.LocaleHelper;
-import com.sesvete.gachaframework.helper.SettingsHelper;
+import com.sesvete.gachatrackerfirebase.MainActivity;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
+import com.sesvete.gachatrackerfirebase.helper.SettingsHelper;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 

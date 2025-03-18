@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework;
+package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,14 +19,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
-import com.sesvete.gachaframework.fragment.CounterFragment;
+import com.sesvete.gachatrackerfirebase.fragment.CounterFragment;
 import com.google.android.material.navigation.NavigationView;
-import com.sesvete.gachaframework.fragment.HistoryFragment;
-import com.sesvete.gachaframework.fragment.SettingsFragment;
-import com.sesvete.gachaframework.fragment.StatsFragment;
-import com.sesvete.gachaframework.helper.DialogHelper;
-import com.sesvete.gachaframework.helper.LocaleHelper;
-import com.sesvete.gachaframework.helper.SettingsHelper;
+import com.sesvete.gachatrackerfirebase.fragment.HistoryFragment;
+import com.sesvete.gachatrackerfirebase.fragment.SettingsFragment;
+import com.sesvete.gachatrackerfirebase.fragment.StatsFragment;
+import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
+import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
+import com.sesvete.gachatrackerfirebase.helper.SettingsHelper;
 
 //TODO: check and fix formating of slovene language
 

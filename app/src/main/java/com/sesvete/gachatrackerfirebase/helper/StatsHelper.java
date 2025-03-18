@@ -1,4 +1,4 @@
-package com.sesvete.gachaframework.helper;
+package com.sesvete.gachatrackerfirebase.helper;
 
 // TODO: to še posodobi, ko boš enkrat pridobil podatke iz baze
 
@@ -7,8 +7,8 @@ import android.content.res.Resources;
 
 import androidx.preference.PreferenceManager;
 
-import com.sesvete.gachaframework.R;
-import com.sesvete.gachaframework.model.Statistic;
+import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.model.Statistic;
 
 import java.util.ArrayList;
 
