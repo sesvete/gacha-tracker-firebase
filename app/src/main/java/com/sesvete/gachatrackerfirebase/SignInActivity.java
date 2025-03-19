@@ -1,27 +1,31 @@
 package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.credentials.CredentialManager;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sesvete.gachatrackerfirebase.fragment.LanguageSettingsFragment;
+import com.sesvete.gachatrackerfirebase.helper.AuthenticationHelper;
 import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
+
 
 //TODO: make sure you check for safer intents!!!!!
 //TODO: also check intent filters
 
-//TODO: add language setting on signIn Screen
-// language setting bo sicer tudi na register screenu, vendar nom uno itak samo kopiral
+//TODO: language setting bo sicer tudi na register screenu, vendar nom uno itak samo kopiral
 
 
 public class SignInActivity extends AppCompatActivity {
 
     private MaterialButton btnSignIn;
+    private FirebaseAuth mAuth;
+    private CredentialManager credentialManager;
 
     //basically zagotovimo, da se locale posodobi preden se izgradi main activity
 
@@ -33,6 +37,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        mAuth = FirebaseAuth.getInstance();
+
+        credentialManager = CredentialManager.create(getBaseContext());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.language_fragment_container, LanguageSettingsFragment.class, null).setReorderingAllowed(true).commit();
@@ -42,8 +49,7 @@ public class SignInActivity extends AppCompatActivity {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                startActivity(intent);
+                AuthenticationHelper.launchCredentialManager(getResources(), credentialManager, mAuth, SignInActivity.this);
             }
         });
 
