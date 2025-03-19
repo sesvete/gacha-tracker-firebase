@@ -1,7 +1,6 @@
 package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,33 +14,31 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.credentials.CredentialManager;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sesvete.gachatrackerfirebase.fragment.CounterFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachatrackerfirebase.fragment.HistoryFragment;
 import com.sesvete.gachatrackerfirebase.fragment.SettingsFragment;
 import com.sesvete.gachatrackerfirebase.fragment.StatsFragment;
+import com.sesvete.gachatrackerfirebase.helper.AuthenticationHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
 import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 import com.sesvete.gachatrackerfirebase.helper.SettingsHelper;
 
 //TODO: check and fix formating of slovene language
 
-//TODO: light/night mode
-//TODO: translations ENG/SLO
-//TODO: sign in activity
-//TODO: loading/splash screen
-//TODO: add confirm dialog for logout
-//TODO: remove guarantee when banner is standard
-
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private FragmentManager fragmentManager;
+    private FirebaseAuth mAuth;
+    private CredentialManager credentialManager;
 
 
     @Override
@@ -53,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        credentialManager = CredentialManager.create(getBaseContext());
 
         toolbar = findViewById(R.id.toolbar);
         if (savedInstanceState == null){
@@ -115,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             // tu bo seveda najprej prišlo do odjave
                             dialog.dismiss();
-                            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
-                            startActivity(intent);
+                            AuthenticationHelper.logOut(mAuth, credentialManager, MainActivity.this);
                         }
                     });
                 }
@@ -145,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
             View navHeaderView = navigationView.getHeaderView(0);
             TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txt_nav_header_user_name);
             // nav header user se bo pobral iz podatkovne baze
-            txtNavHeaderUserName.setText("Simon Svetec");
+            String userName = mAuth.getCurrentUser().getEmail();
+            txtNavHeaderUserName.setText(userName);
         }
     }
 

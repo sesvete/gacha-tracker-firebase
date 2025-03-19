@@ -6,11 +6,13 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-//TODO: to se bo še posodobilo
-// glede na to če je upoarbnik pirjavljen ali ne se bo prešlo bodisi v sign in screen ali ali main activity
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    private Intent intent;
     // to lahko še prilagodiš glede na potrebe
     private static final long SPLASH_DISPLAY_LENGTH = 2000; // 2 seconds
 
@@ -18,15 +20,20 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // to se bo še prilagodilo
-                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                SplashActivity.this.startActivity(intent);
-                SplashActivity.this.finish();
+                if (currentUser == null) {
+                    intent = new Intent(SplashActivity.this, SignInActivity.class);
+                } else {
+                    intent = new Intent(SplashActivity.this, MainActivity.class);
+                }
+                startActivity(intent);
+                finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
-
     }
 }
