@@ -15,6 +15,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: update the counter
+// TODO: write into the database
+
 public class DatabaseHelper {
 
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -26,7 +29,11 @@ public class DatabaseHelper {
         void onRetrieveExistingData(String uid);
     }
 
-    interface OnCreateUserCallback{
+    public interface OnCounterReceivedListener {
+        void onCounterReceived(int counter, boolean guarantee);
+    }
+
+    public interface OnCreateUserCallback{
         void onCreateUser(String uid);
     }
 
@@ -62,137 +69,70 @@ public class DatabaseHelper {
         initialValues.put("number", 0);
         initialValues.put("guaranteed", false);
 
-        usersReference.child(uid).child("games").child("genshin_impact").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "Genshin limited banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
+        String[] games = {"genshin_impact", "honkai_star_rail", "zenless_zone_zero", "tribe_nine"};
+        String[][] bannerTypes = {
+                {"limited", "weapon", "standard"},
+                {"limited", "light_cone", "standard"},
+                {"limited", "w_engine", "standard", "bangboo"},
+                {"limited", "tension_card", "standard"}
+        };
+        for (int i = 0; i < games.length; i++) {
+            String game = games[i];
+            for (String banner : bannerTypes[i]) {
+                usersReference.child(uid).child("games").child(game).child(banner).child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("Database Creation", game + " " + banner + " banner created");
+                        } else {
+                            Log.d("Database Creation", "Error creating " + game + " " + banner + " banner: " + task.getException().getMessage());
+                        }
+                    }
+                });
             }
-        });
-        usersReference.child(uid).child("games").child("genshin_impact").child("weapon").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "Genshin weapon banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("genshin_impact").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "Genshin standard banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("honkai_star_rail").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "honkai_star_rail limited banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("honkai_star_rail").child("light_cone").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "honkai_star_rail weapon banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("honkai_star_rail").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "honkai_star_rail standard banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("zenless_zone_zero").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "zenless_zone_zero limited banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("zenless_zone_zero").child("w_engine").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "zenless_zone_zero weapon banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("zenless_zone_zero").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "zenless_zone_zero standard banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("zenless_zone_zero").child("bangboo").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "zenless_zone_zero standard banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("tribe_nine").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "tribe_nine limited banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("tribe_nine").child("tension_card").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "tribe_nine weapon banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
-        usersReference.child(uid).child("games").child("tribe_nine").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.d("Database Creation", "tribe_nine standard banner created");
-                } else {
-                    Log.d("Database Creation", task.getException().getMessage());
-                }
-            }
-        });
+        }
         callback.onCreateUser(uid);
+    }
+
+    public void getCounterStatus(String uid, String game, String banner, OnCounterReceivedListener listener){
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference counterNumberReference = userNameReference.child("games").child(game).child(banner).child("counter_progress");
+        counterNumberReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DataSnapshot dataSnapshot = task.getResult();
+                    if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
+                        Log.d("SuccessCounter", "Counter progress retrieved");
+
+                        try {
+                            Map<String, Object> counterProgress = (Map<String, Object>) dataSnapshot.getValue();
+
+                            int counter = 0;
+                            boolean guaranteed = false;
+
+                            if (counterProgress.containsKey("number")) {
+                                counter = ((Long) counterProgress.get("number")).intValue(); // or (int)(long) counterProgress.get("number")
+                            }
+
+                            if (counterProgress.containsKey("guaranteed")) {
+                                guaranteed = (boolean) counterProgress.get("guaranteed");
+                            }
+
+                            listener.onCounterReceived(counter, guaranteed);
+                        } catch (Exception e) {
+                            Log.e("FirebaseDataError", "Error parsing counter progress: " + e.getMessage());
+                            listener.onCounterReceived(0, false); // Default values on error
+                        }
+                    } else {
+                        Log.d("skipped counter", "failure");
+                        listener.onCounterReceived(0, false); // Default values if data doesn't exist
+                    }
+                } else {
+                    listener.onCounterReceived(0, false); // Default values on task failure
+                }
+            }
+        });
 
     }
 }

@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.sesvete.gachatrackerfirebase.R;
 import com.sesvete.gachatrackerfirebase.helper.CounterHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
@@ -80,6 +82,9 @@ public class CounterFragment extends Fragment {
     private int softPity;
     private int wishValue;
     private String currencyType;
+    FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private String uid;
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
@@ -120,6 +125,10 @@ public class CounterFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        uid = currentUser.getUid();
 
         txtCounterProgressNumber = view.findViewById(R.id.txt_counter_progress_number);
         txtCounterHistoryNumber = view.findViewById(R.id.txt_counter_history_number);
@@ -166,7 +175,7 @@ public class CounterFragment extends Fragment {
         wishValue = adjustWishValue(game);
         currencyType = adjustCurrencyString(game);
 
-        CounterHelper.initialSetup(txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue);
+        CounterHelper.initialSetup(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, uid, game, bannerType);
 
         initialTextviewAdjust(game, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
 

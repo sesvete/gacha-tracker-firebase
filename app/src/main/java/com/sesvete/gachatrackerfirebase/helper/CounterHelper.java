@@ -5,6 +5,7 @@ package com.sesvete.gachatrackerfirebase.helper;
 
 import android.content.res.Resources;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sesvete.gachatrackerfirebase.R;
@@ -81,10 +82,30 @@ public class CounterHelper {
 
     // to se bo itak še popravilo, ko se bo pobralo iz baze - gledalo se bo katea igra je samo zdaj se mi ne da
 
-    public static void initialSetup(TextView pullsTillSoftPity, TextView currencyTillSoftPity, TextView totalCurrencySpent, int softPity, int wishValue){
+    // initial setup se bo izboljšal - zdaj je ena navadna katastrofa - bom jutri to delal
+
+    public static void initialSetup(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, TextView pullsTillSoftPity, TextView currencyTillSoftPity, TextView totalCurrencySpent, int softPity, int wishValue, String uid, String game, String banner){
+        setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, banner);
         pullsTillSoftPity.setText(String.valueOf(softPity));
         currencyTillSoftPity.setText(String.valueOf(softPity*wishValue));
         totalCurrencySpent.setText("0");
+    }
+
+    private static void setInitialCounter(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, String uid, String game, String banner){
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.getCounterStatus(uid, game, banner, new DatabaseHelper.OnCounterReceivedListener() {
+            @Override
+            public void onCounterReceived(int counter, boolean guarantee) {
+                txtCounterProgressNumber.setText(String.valueOf(counter));
+                if (guarantee){
+                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
+                }
+                else {
+                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                }
+            }
+        });
+
     }
 
 
