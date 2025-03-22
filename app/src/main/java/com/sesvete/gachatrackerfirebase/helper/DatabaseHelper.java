@@ -92,6 +92,106 @@ public class DatabaseHelper {
                 }
             }
         });
+        usersReference.child(uid).child("games").child("honkai_star_rail").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "honkai_star_rail limited banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("honkai_star_rail").child("light_cone").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "honkai_star_rail weapon banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("honkai_star_rail").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "honkai_star_rail standard banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("zenless_zone_zero").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "zenless_zone_zero limited banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("zenless_zone_zero").child("w_engine").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "zenless_zone_zero weapon banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("zenless_zone_zero").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "zenless_zone_zero standard banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("zenless_zone_zero").child("bangboo").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "zenless_zone_zero standard banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("tribe_nine").child("limited").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "tribe_nine limited banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("tribe_nine").child("tension_card").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "tribe_nine weapon banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
+        usersReference.child(uid).child("games").child("tribe_nine").child("standard").child("counter_progress").setValue(initialValues).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Creation", "tribe_nine standard banner created");
+                } else {
+                    Log.d("Database Creation", task.getException().getMessage());
+                }
+            }
+        });
         callback.onCreateUser(uid);
 
     }
