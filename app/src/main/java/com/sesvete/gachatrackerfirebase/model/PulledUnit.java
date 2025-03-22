@@ -11,16 +11,12 @@ public class PulledUnit {
     private String unitName;
     private boolean fromBanner;
     private String date;
-    private String game;
-    private String bannerType;
 
-    public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date, String game, String bannerType) {
+    public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date) {
         this.numOfPulls = numOfPulls;
         this.unitName = unitName;
         this.fromBanner = fromBanner;
         this.date = date;
-        this.game = game;
-        this.bannerType = bannerType;
     }
 
     public int getNumOfPulls() {
@@ -55,22 +51,6 @@ public class PulledUnit {
         this.date = date;
     }
 
-    public String getGame() {
-        return game;
-    }
-
-    public void setGame(String game) {
-        this.game = game;
-    }
-
-    public String getBannerType() {
-        return bannerType;
-    }
-
-    public void setBannerType(String bannerType) {
-        this.bannerType = bannerType;
-    }
-
     @Override
     public String toString() {
         return "PulledUnit{" +
@@ -78,8 +58,8 @@ public class PulledUnit {
                 ", unitName='" + unitName + '\'' +
                 ", fromBanner=" + fromBanner +
                 ", date='" + date + '\'' +
-                ", game='" + game + '\'' +
-                ", bannerType='" + bannerType + '\'' +
                 '}';
     }
+
+    // write to database
 }
