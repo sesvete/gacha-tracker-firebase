@@ -1,11 +1,10 @@
 package com.sesvete.gachatrackerfirebase.fragment;
 
-import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
@@ -27,32 +26,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sesvete.gachatrackerfirebase.R;
 import com.sesvete.gachatrackerfirebase.helper.CounterHelper;
+import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CounterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 
 // bomo še pogruntali pol katere začetne argumente bomo dali notr
 
 public class CounterFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     //od tle dalje so moje spremenljivke
     private TextView txtCounterProgressNumber;
@@ -86,38 +69,13 @@ public class CounterFragment extends Fragment {
     private FirebaseUser currentUser;
     private String uid;
 
+    private int counterNumber;
+
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
 
     public CounterFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CounterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CounterFragment newInstance(String param1, String param2) {
-        CounterFragment fragment = new CounterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -128,7 +86,10 @@ public class CounterFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        uid = currentUser.getUid();
+
+        if (currentUser != null){
+            uid = currentUser.getUid();
+        }
 
         txtCounterProgressNumber = view.findViewById(R.id.txt_counter_progress_number);
         txtCounterHistoryNumber = view.findViewById(R.id.txt_counter_history_number);
@@ -151,19 +112,11 @@ public class CounterFragment extends Fragment {
         txtCounterHistoryFeaturedUnitDescription = view.findViewById(R.id.txt_counter_history_featured_unit_description);
         txtCounterProgressGuaranteedDescription = view.findViewById(R.id.txt_counter_progress_guaranteed_description);
 
-        // začasno se preveri, če ima player guaranteed
-        // TODO: to se bo preverlo iz podatkovne baze
-        Drawable currentDrawable = imgCounterProgressGuaranteedDescription.getDrawable();
-        Drawable checkmarkDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_checkmark_green);
-        if (currentDrawable != null && checkmarkDrawable != null &&
-                currentDrawable.getConstantState() != null && checkmarkDrawable.getConstantState() != null &&
-                currentDrawable.getConstantState().equals(checkmarkDrawable.getConstantState())) {
-            guaranteed = true;
-        } else {
-            guaranteed = false;
-        }
+        // get game and banner from preferencess
         game = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin_impact");
         bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
+
+        // if it's a standard banner the guaranteed is hidden
         if (bannerType.equals("standard") || bannerType.equals("bangboo")){
             txtCounterHistoryFeaturedUnitDescription.setVisibility(View.GONE);
             txtCounterProgressGuaranteedDescription.setVisibility(View.GONE);
@@ -171,14 +124,13 @@ public class CounterFragment extends Fragment {
             imgCounterProgressGuaranteedDescription.setVisibility(View.GONE);
         }
 
-        softPity = adjustSoftPity(game, bannerType);
-        wishValue = adjustWishValue(game);
-        currencyType = adjustCurrencyString(game);
+        // set soft pity wish value and currency type
+        softPity = CounterHelper.adjustSoftPity(game, bannerType);
+        wishValue = CounterHelper.adjustWishValue(game);
+        currencyType = CounterHelper.adjustCurrencyString(getResources(), game);
 
-        CounterHelper.initialSetup(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, uid, game, bannerType);
-
-        initialTextviewAdjust(game, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
-
+        // sets the initial state of the counter
+        setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -405,69 +357,29 @@ public class CounterFragment extends Fragment {
         });
     }
 
-    private void initialTextviewAdjust(String game, TextView currencyTillPity, TextView currencyTotal){
-        switch (game){
-            case "genshin_impact":
-                currencyTillPity.setText(getString(R.string.primogens) + " " + getString(R.string.currency_till_soft_pity));
-                currencyTotal.setText(getString(R.string.primogens) + " " + getString(R.string.total_currency_spent));
-                break;
-            case "honkai_star_rail":
-                currencyTillPity.setText(getString(R.string.stellar_jades) + " " + getString(R.string.currency_till_soft_pity));
-                currencyTotal.setText(getString(R.string.stellar_jades) + " " + getString(R.string.total_currency_spent));
-                break;
-            case "zenless_zone_zero":
-                currencyTillPity.setText(getString(R.string.polychrome) + " " + getString(R.string.currency_till_soft_pity));
-                currencyTotal.setText(getString(R.string.polychrome) + " " + getString(R.string.total_currency_spent));
-                break;
-            case "tribe_nine":
-                currencyTillPity.setText(getString(R.string.enigma_entity) + " " + getString(R.string.currency_till_soft_pity));
-                currencyTotal.setText(getString(R.string.enigma_entity) + " " + getString(R.string.total_currency_spent));
-                break;
-            default:
-                currencyTillPity.setText(getString(R.string.primogens)+ " " + getString(R.string.currency_till_soft_pity));
-                currencyTotal.setText(getString(R.string.primogens) + " " + getString(R.string.total_currency_spent));
-                break;
-        }
-    }
-    private int adjustSoftPity(String game, String bannerType){
-        Set<String> weaponBanners = new HashSet<>();
-        weaponBanners.add("weapon");
-        weaponBanners.add("light_cone");
-        weaponBanners.add("w_engine");
-        weaponBanners.add("bangboo");
+    // initial setup
+    // mora se pobrati zadnji pull iz zgodovine
+    // mora se pobrati stanje trenutenga counterja
+    // morajo se posodobiti tista polja
 
-        int softPity;
-        if (game.equals("tribe_nine")) {
-            softPity = 80;
-        } else if (weaponBanners.contains(bannerType)) {
-            softPity = 65;
-        } else {
-            softPity = 75;
-        }
-        return softPity;
-    }
-
-    private int adjustWishValue(String game){
-        int wishValue;
-        if (game.equals("tribe_nine")){
-            wishValue = 120;
-        } else {
-            wishValue = 160;
-        }
-        return wishValue;
-    }
-
-    private String adjustCurrencyString(String game){
-        String currencyType;
-        if (game.equals("genshin_impact")){
-            currencyType = getString(R.string.primogens);
-        } else if (game.equals("honkai_star_rail")) {
-            currencyType = getString(R.string.stellar_jades);
-        } else if (game.equals("zenless_zone_zero")) {
-            currencyType = getString(R.string.polychrome);
-        } else {
-            currencyType = getString(R.string.enigma_entity);
-        }
-        return currencyType;
+    private void setInitialCounter(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, String uid, String game, String bannerType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotTotal, int softPity, int wishValue, Resources resources, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotalDescription){
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.getCounterStatus(uid, game, bannerType, new DatabaseHelper.OnCounterReceivedListener() {
+            @Override
+            public void onCounterReceived(int counter, boolean guarantee) {
+                counterNumber = counter;
+                txtCounterProgressNumber.setText(String.valueOf(counterNumber));
+                if (guarantee){
+                    guaranteed = true;
+                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
+                }
+                else {
+                    guaranteed = false;
+                    imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
+                }
+                CounterHelper.initialPityTrackerSetup(counterNumber, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue);
+                CounterHelper.initialTextviewAdjust(resources, game, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+            }
+        });
     }
 }
