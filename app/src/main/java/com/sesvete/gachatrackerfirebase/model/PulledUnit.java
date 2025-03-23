@@ -1,12 +1,10 @@
 package com.sesvete.gachatrackerfirebase.model;
 
-// to se bo verjetno še spremenilo
-// ni nujno, da bosta obe aplikaciji imeli enak model
+import android.util.Log;
+
+import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 
 public class PulledUnit {
-    // tu bo še int userId ali String userName
-    // tak bo definitivno za relational database
-    // za firebase bom še videl
     private int numOfPulls;
     private String unitName;
     private boolean fromBanner;
@@ -62,4 +60,17 @@ public class PulledUnit {
     }
 
     // write to database
+    public void writePulledUnitToDatabase(String uid, String game, String banner){
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.savePulledUnit(uid, game, banner, getUnitName(), getNumOfPulls(), isFromBanner(), getDate(), new DatabaseHelper.OnSavePulledUnitCallback() {
+            @Override
+            public void onSavedPulledUnit(boolean success) {
+                if (success){
+                    Log.d("Pulled unit Writing", "Successfully wrote to Database");
+                } else {
+                    Log.d("Pulled unit Writing", "Failed writing to Database");
+                }
+            }
+        });
+    }
 }

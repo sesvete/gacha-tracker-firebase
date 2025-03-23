@@ -28,12 +28,13 @@ import com.sesvete.gachatrackerfirebase.R;
 import com.sesvete.gachatrackerfirebase.helper.CounterHelper;
 import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
+import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-// bomo še pogruntali pol katere začetne argumente bomo dali notr
+// TODO: Get last unit and display it
 
 public class CounterFragment extends Fragment {
 
@@ -64,7 +65,7 @@ public class CounterFragment extends Fragment {
     private int softPity;
     private int wishValue;
     private String currencyType;
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private String uid;
 
@@ -73,6 +74,7 @@ public class CounterFragment extends Fragment {
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
     private boolean radioButtonChoice;
+    private boolean wonFiftyFifty;
 
     public CounterFragment() {
         // Required empty public constructor
@@ -238,10 +240,9 @@ public class CounterFragment extends Fragment {
         btnCounterConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String stringCounterNumber = txtCounterProgressNumber.getText().toString();
+                String stringCounterNumber = String.valueOf(counterNumber);
                 try {
-                    int intCounterNumber = Integer.parseInt(stringCounterNumber);
-                    if (intCounterNumber <= 0) {
+                    if (counterNumber <= 0) {
                         Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -274,25 +275,43 @@ public class CounterFragment extends Fragment {
                                 else if (rGrConfirm.getCheckedRadioButtonId() == -1) {
                                     Toast.makeText(getContext(), R.string.select_radio_choice_error, Toast.LENGTH_SHORT).show();
                                 } else {
+                                    disableButtons();
                                     // Datum se bo shranil v obliki "yyyy-MM-dd" v podatkovno bazo
                                     calendar = Calendar.getInstance();
-                                    dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                     formatedDate = dateFormatter.format(calendar.getTime());
-                                    Toast.makeText(getContext(), formatedDate, Toast.LENGTH_SHORT).show();
                                     txtCounterHistoryNumber.setText(stringCounterNumber);
                                     txtCounterHistoryUnit.setText(inputString);
                                     txtCounterProgressNumber.setText(String.valueOf(0));
+                                    int numOfPulls = counterNumber;
                                     CounterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
                                     if (radioButtonChoice){
                                         guaranteed = false;
+                                        wonFiftyFifty = true;
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
                                         imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
                                     } else {
                                         guaranteed = true;
+                                        wonFiftyFifty = false;
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
                                         imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
                                     }
-                                    dialog.dismiss();
+                                    PulledUnit pulledUnit = new PulledUnit(numOfPulls, inputString, wonFiftyFifty, formatedDate);
+                                    pulledUnit.writePulledUnitToDatabase(uid, game, bannerType);
+                                    counterNumber = 0;
+                                    databaseHelper.updateCounter(uid, game, bannerType, counterNumber, guaranteed, new DatabaseHelper.OnCounterUpdateCallback() {
+                                        @Override
+                                        public void onCounterUpdated(boolean success) {
+                                            if (success){
+                                                Log.d("btnCounterConfirm", "updated successfully");
+                                            } else {
+                                                Log.d("btnCounterConfirm", "update failed");
+                                                Toast.makeText(getContext(), "Failed reseting counter", Toast.LENGTH_SHORT).show();
+                                            }
+                                            enableButtons();
+                                            dialog.dismiss();
+                                        }
+                                    });
                                 }
                             }
                         });

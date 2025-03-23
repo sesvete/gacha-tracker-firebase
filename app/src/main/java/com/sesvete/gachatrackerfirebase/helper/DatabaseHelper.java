@@ -41,6 +41,10 @@ public class DatabaseHelper {
         void onCounterUpdated(boolean success);
     }
 
+    public interface OnSavePulledUnitCallback{
+        void onSavedPulledUnit(boolean success);
+    }
+
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
         DatabaseReference usernameReference = usersReference.child(uid);
         ValueEventListener checkForUserListener = new ValueEventListener() {
@@ -159,5 +163,37 @@ public class DatabaseHelper {
                 }
             }
         });
+    }
+
+    public void savePulledUnit(String uid, String game, String banner, String unitName, int counterProgress, boolean statusFiftyFifty, String formattedDate, OnSavePulledUnitCallback callback){
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
+
+        Map<String, Object> unitData = new HashMap<>();
+        unitData.put("unit_name", unitName);
+        unitData.put("number_of_pulls", counterProgress);
+        unitData.put("from_banner", statusFiftyFifty);
+        unitData.put("date", formattedDate);
+
+        String uniqueKey = pulledUnitsReference.push().getKey();
+
+        if (uniqueKey != null){
+            pulledUnitsReference.child(uniqueKey).setValue(unitData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.d("Database Save", "Pulled unit saved successfully: " + unitName);
+                        callback.onSavedPulledUnit(true);
+                    } else {
+                        Log.e("Database Save", "Failed to save pulled unit: " + unitName + ", Error: " + task.getException());
+                        callback.onSavedPulledUnit(false);
+                    }
+                }
+            });
+        } else {
+            Log.e("Database Save", "Failed to generate unique key");
+            callback.onSavedPulledUnit(false);
+        }
+
     }
 }
