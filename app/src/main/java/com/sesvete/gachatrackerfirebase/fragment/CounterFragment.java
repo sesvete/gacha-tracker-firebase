@@ -112,6 +112,9 @@ public class CounterFragment extends Fragment {
         txtCounterHistoryFeaturedUnitDescription = view.findViewById(R.id.txt_counter_history_featured_unit_description);
         txtCounterProgressGuaranteedDescription = view.findViewById(R.id.txt_counter_progress_guaranteed_description);
 
+        //disable buttons
+        disableButtons();
+
         // get game and banner from preferencess
         game = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin_impact");
         bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
@@ -379,7 +382,23 @@ public class CounterFragment extends Fragment {
                 }
                 CounterHelper.initialPityTrackerSetup(counterNumber, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue);
                 CounterHelper.initialTextviewAdjust(resources, game, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+                //enable buttons once the values are set
+                enableButtons();
             }
         });
+    }
+
+    private void disableButtons(){
+        btnCounterConfirm.setEnabled(false);
+        btnCounterPlusOne.setEnabled(false);
+        btnCounterPlusX.setEnabled(false);
+        btnCounterPlusTen.setEnabled(false);
+    }
+
+    private void enableButtons(){
+        btnCounterConfirm.setEnabled(true);
+        btnCounterPlusOne.setEnabled(true);
+        btnCounterPlusX.setEnabled(true);
+        btnCounterPlusTen.setEnabled(true);
     }
 }
