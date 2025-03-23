@@ -1,26 +1,20 @@
 package com.sesvete.gachatrackerfirebase.model;
 
-// to se bo verjetno še spremenilo
-// ni nujno, da bosta obe aplikaciji imeli enak model
+import android.util.Log;
+
+import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 
 public class PulledUnit {
-    // tu bo še int userId ali String userName
-    // tak bo definitivno za relational database
-    // za firebase bom še videl
     private int numOfPulls;
     private String unitName;
     private boolean fromBanner;
     private String date;
-    private String game;
-    private String bannerType;
 
-    public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date, String game, String bannerType) {
+    public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date) {
         this.numOfPulls = numOfPulls;
         this.unitName = unitName;
         this.fromBanner = fromBanner;
         this.date = date;
-        this.game = game;
-        this.bannerType = bannerType;
     }
 
     public int getNumOfPulls() {
@@ -55,22 +49,6 @@ public class PulledUnit {
         this.date = date;
     }
 
-    public String getGame() {
-        return game;
-    }
-
-    public void setGame(String game) {
-        this.game = game;
-    }
-
-    public String getBannerType() {
-        return bannerType;
-    }
-
-    public void setBannerType(String bannerType) {
-        this.bannerType = bannerType;
-    }
-
     @Override
     public String toString() {
         return "PulledUnit{" +
@@ -78,8 +56,21 @@ public class PulledUnit {
                 ", unitName='" + unitName + '\'' +
                 ", fromBanner=" + fromBanner +
                 ", date='" + date + '\'' +
-                ", game='" + game + '\'' +
-                ", bannerType='" + bannerType + '\'' +
                 '}';
+    }
+
+    // write to database
+    public void writePulledUnitToDatabase(String uid, String game, String banner){
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.savePulledUnit(uid, game, banner, getUnitName(), getNumOfPulls(), isFromBanner(), getDate(), new DatabaseHelper.OnSavePulledUnitCallback() {
+            @Override
+            public void onSavedPulledUnit(boolean success) {
+                if (success){
+                    Log.d("Pulled unit Writing", "Successfully wrote to Database");
+                } else {
+                    Log.d("Pulled unit Writing", "Failed writing to Database");
+                }
+            }
+        });
     }
 }

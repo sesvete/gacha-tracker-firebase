@@ -2,6 +2,7 @@ package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,17 +21,20 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.sesvete.gachatrackerfirebase.fragment.CounterFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.sesvete.gachatrackerfirebase.fragment.HistoryFragment;
 import com.sesvete.gachatrackerfirebase.fragment.SettingsFragment;
 import com.sesvete.gachatrackerfirebase.fragment.StatsFragment;
 import com.sesvete.gachatrackerfirebase.helper.AuthenticationHelper;
+import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
 import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 import com.sesvete.gachatrackerfirebase.helper.SettingsHelper;
 
 //TODO: check and fix formating of slovene language
+// TODO: check id user is signed in - if not clear all credential and return to sign in screen
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private FirebaseAuth mAuth;
     private CredentialManager credentialManager;
-
+    private FirebaseUser currentUser;
+    private String uid;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         credentialManager = CredentialManager.create(getBaseContext());
+        currentUser = mAuth.getCurrentUser();
+        uid = mAuth.getUid();
 
         toolbar = findViewById(R.id.toolbar);
         if (savedInstanceState == null){
@@ -71,6 +78,21 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().replace(R.id.fragment_container, CounterFragment.class, null).setReorderingAllowed(true).commit();
             navigationView.setCheckedItem(R.id.nav_counter);
         }
+
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+
+        databaseHelper.checkIfUserExists(uid, new DatabaseHelper.OnCheckExistingUser() {
+            @Override
+            public void onCreateNewUser(String uid) {
+                Log.d("Main Startup", "Created user");
+            }
+
+            @Override
+            public void onRetrieveExistingData(String uid) {
+                Log.d("Main Startup", "User already exists");
+            }
+        });
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -144,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             View navHeaderView = navigationView.getHeaderView(0);
             TextView txtNavHeaderUserName = navHeaderView.findViewById(R.id.txt_nav_header_user_name);
             // nav header user se bo pobral iz podatkovne baze
-            String userName = mAuth.getCurrentUser().getEmail();
+            String userName = currentUser.getEmail();
             txtNavHeaderUserName.setText(userName);
         }
     }

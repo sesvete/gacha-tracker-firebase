@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.sesvete.gachatrackerfirebase.R;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class CounterHelper {
 
     public static void updateCounter(Resources resources, TextView txtCounterProgressNumber, int amountToAdd, int softPity, int wishValue, String currencyType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotDescription, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotal, TextView txtCounterSpentTillJackpotTotalDescription){
@@ -79,13 +82,77 @@ public class CounterHelper {
         txtTotalSpent.setText(stringCombinedTotalSpent);
     }
 
-    // to se bo itak še popravilo, ko se bo pobralo iz baze - gledalo se bo katea igra je samo zdaj se mi ne da
+    public static int adjustSoftPity(String game, String bannerType){
+        Set<String> weaponBanners = new HashSet<>();
+        weaponBanners.add("weapon");
+        weaponBanners.add("light_cone");
+        weaponBanners.add("w_engine");
+        weaponBanners.add("bangboo");
 
-    public static void initialSetup(TextView pullsTillSoftPity, TextView currencyTillSoftPity, TextView totalCurrencySpent, int softPity, int wishValue){
-        pullsTillSoftPity.setText(String.valueOf(softPity));
-        currencyTillSoftPity.setText(String.valueOf(softPity*wishValue));
-        totalCurrencySpent.setText("0");
+        int softPity;
+        if (game.equals("tribe_nine")) {
+            softPity = 80;
+        } else if (weaponBanners.contains(bannerType)) {
+            softPity = 65;
+        } else {
+            softPity = 75;
+        }
+        return softPity;
     }
 
+    public static int adjustWishValue(String game){
+        int wishValue;
+        if (game.equals("tribe_nine")){
+            wishValue = 120;
+        } else {
+            wishValue = 160;
+        }
+        return wishValue;
+    }
+
+    public static String adjustCurrencyString(Resources resources, String game){
+        String currencyType;
+        if (game.equals("genshin_impact")){
+            currencyType = resources.getString(R.string.primogens);
+        } else if (game.equals("honkai_star_rail")) {
+            currencyType = resources.getString(R.string.stellar_jades);
+        } else if (game.equals("zenless_zone_zero")) {
+            currencyType = resources.getString(R.string.polychrome);
+        } else {
+            currencyType = resources.getString(R.string.enigma_entity);
+        }
+        return currencyType;
+    }
+
+    public static void initialTextviewAdjust(Resources resources, String game, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotalDescription){
+        switch (game){
+            case "genshin_impact":
+                txtCounterSpentTillJackpotCurrencyDescription.setText(resources.getString(R.string.primogens) + " " + resources.getString(R.string.currency_till_soft_pity));
+                txtCounterSpentTillJackpotTotalDescription.setText(resources.getString(R.string.primogens) + " " + resources.getString(R.string.total_currency_spent));
+                break;
+            case "honkai_star_rail":
+                txtCounterSpentTillJackpotCurrencyDescription.setText(resources.getString(R.string.stellar_jades) + " " + resources.getString(R.string.currency_till_soft_pity));
+                txtCounterSpentTillJackpotTotalDescription.setText(resources.getString(R.string.stellar_jades) + " " + resources.getString(R.string.total_currency_spent));
+                break;
+            case "zenless_zone_zero":
+                txtCounterSpentTillJackpotCurrencyDescription.setText(resources.getString(R.string.polychrome) + " " + resources.getString(R.string.currency_till_soft_pity));
+                txtCounterSpentTillJackpotTotalDescription.setText(resources.getString(R.string.polychrome) + " " + resources.getString(R.string.total_currency_spent));
+                break;
+            case "tribe_nine":
+                txtCounterSpentTillJackpotCurrencyDescription.setText(resources.getString(R.string.enigma_entity) + " " + resources.getString(R.string.currency_till_soft_pity));
+                txtCounterSpentTillJackpotTotalDescription.setText(resources.getString(R.string.enigma_entity) + " " + resources.getString(R.string.total_currency_spent));
+                break;
+            default:
+                txtCounterSpentTillJackpotCurrencyDescription.setText(resources.getString(R.string.primogens)+ " " + resources.getString(R.string.currency_till_soft_pity));
+                txtCounterSpentTillJackpotTotalDescription.setText(resources.getString(R.string.primogens) + " " + resources.getString(R.string.total_currency_spent));
+                break;
+        }
+    }
+
+    public static void initialPityTrackerSetup(int counterNumber, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotTotal, int softPity, int wishValue){
+        txtCounterSpentTillJackpot.setText(String.valueOf(softPity - counterNumber));
+        txtCounterSpentTillJackpotCurrency.setText(String.valueOf((softPity - counterNumber)*wishValue));
+        txtCounterSpentTillJackpotTotal.setText(String.valueOf(counterNumber * wishValue));
+    }
 
 }
