@@ -37,6 +37,10 @@ public class DatabaseHelper {
         void onCreateUser(String uid);
     }
 
+    public interface OnCounterUpdateCallback{
+        void onCounterUpdated(boolean success);
+    }
+
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
         DatabaseReference usernameReference = usersReference.child(uid);
         ValueEventListener checkForUserListener = new ValueEventListener() {
@@ -133,6 +137,27 @@ public class DatabaseHelper {
                 }
             }
         });
+    }
 
+    public void updateCounter(String uid, String game, String banner, int newCounter, boolean newGuaranteed, OnCounterUpdateCallback callback){
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference counterNumberReference = userNameReference.child("games").child(game).child(banner).child("counter_progress");
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("number", newCounter);
+        updates.put("guaranteed", newGuaranteed);
+
+        counterNumberReference.updateChildren(updates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d("Database Update", game + " " + banner + " counter updated successfully.");
+                    callback.onCounterUpdated(true); // Indicate success
+                } else {
+                    Log.e("Database Update", "Failed to update " + game + " " + banner + " counter: " + task.getException());
+                    callback.onCounterUpdated(false); // Indicate failure
+                }
+            }
+        });
     }
 }

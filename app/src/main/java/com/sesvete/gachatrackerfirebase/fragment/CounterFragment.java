@@ -112,6 +112,8 @@ public class CounterFragment extends Fragment {
         txtCounterHistoryFeaturedUnitDescription = view.findViewById(R.id.txt_counter_history_featured_unit_description);
         txtCounterProgressGuaranteedDescription = view.findViewById(R.id.txt_counter_progress_guaranteed_description);
 
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+
         //disable buttons
         disableButtons();
 
@@ -137,13 +139,41 @@ public class CounterFragment extends Fragment {
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, 1, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                counterNumber = counterNumber + 1;
+                databaseHelper.updateCounter(uid, game, bannerType, counterNumber, guaranteed, new DatabaseHelper.OnCounterUpdateCallback() {
+                    @Override
+                    public void onCounterUpdated(boolean success) {
+                        if (success){
+                            Log.d("btnPlusOne", "updated successfully");
+                        } else {
+                            Log.d("btnPlusOne", "update failed");
+                            Toast.makeText(getContext(), "Failed adding +1", Toast.LENGTH_SHORT).show();
+                        }
+                        enableButtons();
+                    }
+                });
             }
         });
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, 10, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
+                counterNumber = counterNumber + 10;
+                databaseHelper.updateCounter(uid, game, bannerType, counterNumber, guaranteed, new DatabaseHelper.OnCounterUpdateCallback() {
+                    @Override
+                    public void onCounterUpdated(boolean success) {
+                        if (success){
+                            Log.d("btnPlusTen", "updated successfully");
+                        } else {
+                            Log.d("btnPlusTen", "update failed");
+                            Toast.makeText(getContext(), "Failed adding +10", Toast.LENGTH_SHORT).show();
+                        }
+                        enableButtons();
+                    }
+                });
             }
         });
         btnCounterPlusX.setOnClickListener(new View.OnClickListener() {
@@ -174,8 +204,22 @@ public class CounterFragment extends Fragment {
                                 if (numCustomWishes <= 0) {
                                     Toast.makeText(getContext(), R.string.num_wishes_grater_0_error, Toast.LENGTH_SHORT).show();
                                 } else {
+                                    disableButtons();
                                     CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                                    dialog.dismiss();
+                                    counterNumber = counterNumber + numCustomWishes;
+                                    databaseHelper.updateCounter(uid, game, bannerType, counterNumber, guaranteed, new DatabaseHelper.OnCounterUpdateCallback() {
+                                        @Override
+                                        public void onCounterUpdated(boolean success) {
+                                            if (success){
+                                                Log.d("btnPlusX", "updated successfully");
+                                            } else {
+                                                Log.d("btnPlusX", "update failed");
+                                                Toast.makeText(getContext(), "Failed adding custom number", Toast.LENGTH_SHORT).show();
+                                            }
+                                            enableButtons();
+                                            dialog.dismiss();
+                                        }
+                                    });
                                 }
                             } catch (Exception e) {
                                 Log.e("bntXConfirm", "An error occurred: " + e.getMessage(), e);
