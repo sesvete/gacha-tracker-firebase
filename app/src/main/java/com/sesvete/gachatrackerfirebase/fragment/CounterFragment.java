@@ -56,7 +56,6 @@ public class CounterFragment extends Fragment {
     private CardView cardCounterProgress;
     private ImageView imgCounterProgressGuaranteedDescription;
     private ShapeableImageView imgCounterHistoryFeaturedUnitStatus;
-    private boolean featuredUnitStatus;
     private Calendar calendar;
     private SimpleDateFormat dateFormatter;
     private String formatedDate;
@@ -73,6 +72,7 @@ public class CounterFragment extends Fragment {
 
     // to se bo še pobral iz podatkovne baze
     private boolean guaranteed;
+    private boolean radioButtonChoice;
 
     public CounterFragment() {
         // Required empty public constructor
@@ -255,7 +255,7 @@ public class CounterFragment extends Fragment {
                         RadioGroup rGrConfirm = dialogView.findViewById(R.id.r_gr_confirm);
                         if (guaranteed || bannerType.equals("standard") || bannerType.equals("bangboo")){
                             rGrConfirm.setVisibility(View.GONE);
-                            featuredUnitStatus = true;
+                            radioButtonChoice = true;
                             rGrConfirm.check(R.id.won_radio_button);
                         }
                         AlertDialog dialog = builder.create();
@@ -283,7 +283,7 @@ public class CounterFragment extends Fragment {
                                     txtCounterHistoryUnit.setText(inputString);
                                     txtCounterProgressNumber.setText(String.valueOf(0));
                                     CounterHelper.updateSoftPityTracker(getResources(), 0, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                                    if (featuredUnitStatus){
+                                    if (radioButtonChoice){
                                         guaranteed = false;
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_block_red);
                                         imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
@@ -333,7 +333,7 @@ public class CounterFragment extends Fragment {
 
                 if (bannerType.equals("standard") || bannerType.equals("bangboo")){
                     rGrConfirm.setVisibility(View.GONE);
-                    featuredUnitStatus = true;
+                    radioButtonChoice = true;
                     rGrConfirm.check(R.id.won_radio_button);
                 }
                 AlertDialog dialog = builder.create();
@@ -356,7 +356,7 @@ public class CounterFragment extends Fragment {
                                 if (numCustomWishes < 0) {
                                     Toast.makeText(getContext(), R.string.num_wishes_at_least_0, Toast.LENGTH_SHORT).show();
                                 } else {
-                                    if (featuredUnitStatus) {
+                                    if (radioButtonChoice) {
                                         guaranteed = true;
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
                                     } else {
@@ -388,17 +388,17 @@ public class CounterFragment extends Fragment {
     private void radioFunction(RadioGroup rGrConfirm){
         int checkedChoice = rGrConfirm.getCheckedRadioButtonId();
         if (checkedChoice == R.id.won_radio_button){
-            featuredUnitStatus = true;
+            radioButtonChoice = true;
         } else if (checkedChoice == R.id.lost_radio_button){
-            featuredUnitStatus = false;
+            radioButtonChoice = false;
         }
         rGrConfirm.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.won_radio_button){
-                    featuredUnitStatus = true;
+                    radioButtonChoice = true;
                 } else if (checkedId == R.id.lost_radio_button){
-                    featuredUnitStatus = false;
+                    radioButtonChoice = false;
                 }
             }
         });
