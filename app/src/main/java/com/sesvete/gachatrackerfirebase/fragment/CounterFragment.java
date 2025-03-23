@@ -356,6 +356,7 @@ public class CounterFragment extends Fragment {
                                 if (numCustomWishes < 0) {
                                     Toast.makeText(getContext(), R.string.num_wishes_at_least_0, Toast.LENGTH_SHORT).show();
                                 } else {
+                                    disableButtons();
                                     if (radioButtonChoice) {
                                         guaranteed = true;
                                         imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
@@ -365,7 +366,20 @@ public class CounterFragment extends Fragment {
                                     }
                                     txtCounterProgressNumber.setText(String.valueOf(numCustomWishes));
                                     CounterHelper.updateSoftPityTracker(getResources(), numCustomWishes, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
-                                    dialog.dismiss();
+                                    counterNumber = numCustomWishes;
+                                    databaseHelper.updateCounter(uid, game, bannerType, counterNumber, guaranteed, new DatabaseHelper.OnCounterUpdateCallback() {
+                                        @Override
+                                        public void onCounterUpdated(boolean success) {
+                                            if (success){
+                                                Log.d("btnPlusX", "updated successfully");
+                                            } else {
+                                                Log.d("btnPlusX", "update failed");
+                                                Toast.makeText(getContext(), "Failed adding custom number. Please try again later", Toast.LENGTH_SHORT).show();
+                                            }
+                                            enableButtons();
+                                            dialog.dismiss();
+                                        }
+                                    });
                                 }
                             } catch (Exception e){
                                 Log.e("bntCounterProgress", "An error occurred: " + e.getMessage(), e);
