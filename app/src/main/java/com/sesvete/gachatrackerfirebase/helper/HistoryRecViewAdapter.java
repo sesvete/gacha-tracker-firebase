@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -52,6 +53,16 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         } else {
             holder.imgHistoryBannerName.setImageResource(R.drawable.ic_block_red);
         }
+
+        // long click on unit name to display full name
+        holder.txtHistoryUnitName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, pulledUnits.get(holder.getAdapterPosition()).getUnitName(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 
     @Override
