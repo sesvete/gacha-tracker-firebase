@@ -36,9 +36,13 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String formattedString = CounterHelper.truncateString(pulledUnits.get(position).getUnitName(), 10);
+        String formattedDate = CounterHelper.dateFormatter(pulledUnits.get(position).getDate());
+
+
         holder.txtHistoryNumPulls.setText(String.valueOf(pulledUnits.get(position).getNumOfPulls()));
-        holder.txtHistoryUnitName.setText(pulledUnits.get(position).getUnitName());
-        holder.txtHistoryDateName.setText(pulledUnits.get(position).getDate());
+        holder.txtHistoryUnitName.setText(formattedString);
+        holder.txtHistoryDateName.setText(formattedDate);
 
         String bannerType = PreferenceManager.getDefaultSharedPreferences(context).getString("banner", "limited");
         if (bannerType.equals("standard") || bannerType.equals("bangboo")){
