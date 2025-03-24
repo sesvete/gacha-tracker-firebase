@@ -7,9 +7,15 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class CounterHelper {
@@ -155,4 +161,43 @@ public class CounterHelper {
         txtCounterSpentTillJackpotTotal.setText(String.valueOf(counterNumber * wishValue));
     }
 
+    public static void retrieveNewestUnit(String uid, String game, String banner, TextView txtCounterHistoryNumber, TextView txtCounterHistoryUnit, ShapeableImageView imgCounterHistoryFeaturedUnitStatus) {
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.retrieveNewestPulledUnit(uid, game, banner, new DatabaseHelper.OnRetrieveNewestUnitCallback() {
+            @Override
+            public void OnRetrievedNewestPulledUnit(PulledUnit newestPulledUnit) {
+                txtCounterHistoryNumber.setText(String.valueOf(newestPulledUnit.getNumOfPulls()));
+                txtCounterHistoryUnit.setText(newestPulledUnit.getUnitName());
+                if (newestPulledUnit.isFromBanner()){
+                    imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
+                } else {
+                    imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
+                }
+            }
+        });
+    }
+
+    public static String dateFormatter(String inputDateString){
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+
+            Date date = inputFormat.parse(inputDateString);
+            return outputFormat.format(date);
+
+        } catch (ParseException e) {
+            Log.e("Date formatter", "An error occurred: " + e.getMessage(), e);
+            return inputDateString;
+        }
+    }
+
+    public static String truncateString(String inputString, int stringLengthLimit){
+        if (inputString == null){
+            return null;
+        } else if (inputString.length() <= stringLengthLimit) {
+            return inputString;
+        } else {
+            return inputString.substring(0, stringLengthLimit) + "...";
+        }
+    }
 }

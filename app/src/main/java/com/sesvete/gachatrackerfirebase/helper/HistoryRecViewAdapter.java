@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
@@ -36,9 +37,13 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String formattedString = CounterHelper.truncateString(pulledUnits.get(position).getUnitName(), 10);
+        String formattedDate = CounterHelper.dateFormatter(pulledUnits.get(position).getDate());
+
+
         holder.txtHistoryNumPulls.setText(String.valueOf(pulledUnits.get(position).getNumOfPulls()));
-        holder.txtHistoryUnitName.setText(pulledUnits.get(position).getUnitName());
-        holder.txtHistoryDateName.setText(pulledUnits.get(position).getDate());
+        holder.txtHistoryUnitName.setText(formattedString);
+        holder.txtHistoryDateName.setText(formattedDate);
 
         String bannerType = PreferenceManager.getDefaultSharedPreferences(context).getString("banner", "limited");
         if (bannerType.equals("standard") || bannerType.equals("bangboo")){
@@ -48,6 +53,16 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         } else {
             holder.imgHistoryBannerName.setImageResource(R.drawable.ic_block_red);
         }
+
+        // long click on unit name to display full name
+        holder.txtHistoryUnitName.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, pulledUnits.get(holder.getAdapterPosition()).getUnitName(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 
     @Override

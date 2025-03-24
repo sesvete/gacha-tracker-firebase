@@ -28,6 +28,7 @@ import com.sesvete.gachatrackerfirebase.R;
 import com.sesvete.gachatrackerfirebase.helper.CounterHelper;
 import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
+import com.sesvete.gachatrackerfirebase.model.CounterProgress;
 import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
 import java.text.SimpleDateFormat;
@@ -136,8 +137,43 @@ public class CounterFragment extends Fragment {
         wishValue = CounterHelper.adjustWishValue(game);
         currencyType = CounterHelper.adjustCurrencyString(getResources(), game);
 
-        // sets the initial state of the counter
-        setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+        // this is the lunching fragment, so we check here whether the user and the database entry exist
+        databaseHelper.checkIfUserExists(uid, new DatabaseHelper.OnCheckExistingUser() {
+            @Override
+            public void onCreateNewUser(String uid) {
+                Log.d("Main Startup", "Created user");
+                // checks whether there are any pulled units
+                databaseHelper.checkPathExists(uid, game, bannerType, new DatabaseHelper.OnPathExistsCallback() {
+                    @Override
+                    public void onPathExists(boolean exists) {
+                        if (exists){
+                            // retrieve latest unit from history
+                            CounterHelper.retrieveNewestUnit(uid, game, bannerType, txtCounterHistoryNumber, txtCounterHistoryUnit, imgCounterHistoryFeaturedUnitStatus);
+                        }
+                    }
+                });
+                // sets the initial state of the counter
+                setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+            }
+
+            @Override
+            public void onRetrieveExistingData(String uid) {
+                Log.d("Main Startup", "User already exists");
+                // checks whether there are any pulled units
+                databaseHelper.checkPathExists(uid, game, bannerType, new DatabaseHelper.OnPathExistsCallback() {
+                    @Override
+                    public void onPathExists(boolean exists) {
+                        if (exists){
+                            // retrieve latest unit from history
+                            CounterHelper.retrieveNewestUnit(uid, game, bannerType, txtCounterHistoryNumber, txtCounterHistoryUnit, imgCounterHistoryFeaturedUnitStatus);
+                        }
+                    }
+                });
+                // sets the initial state of the counter
+                setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+            }
+        });
+
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -444,12 +480,12 @@ public class CounterFragment extends Fragment {
 
     private void setInitialCounter(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, String uid, String game, String bannerType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotTotal, int softPity, int wishValue, Resources resources, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotalDescription){
         DatabaseHelper databaseHelper = new DatabaseHelper();
-        databaseHelper.getCounterStatus(uid, game, bannerType, new DatabaseHelper.OnCounterReceivedListener() {
+        databaseHelper.getCounterStatus(uid, game, bannerType, new DatabaseHelper.OnCounterReceivedCallback() {
             @Override
-            public void onCounterReceived(int counter, boolean guarantee) {
-                counterNumber = counter;
+            public void onCounterReceived(CounterProgress counterProgress) {
+                counterNumber = counterProgress.getNumber();
                 txtCounterProgressNumber.setText(String.valueOf(counterNumber));
-                if (guarantee){
+                if (counterProgress.isGuaranteed()){
                     guaranteed = true;
                     imgCounterProgressGuaranteedDescription.setImageResource(R.drawable.ic_checkmark_green);
                 }

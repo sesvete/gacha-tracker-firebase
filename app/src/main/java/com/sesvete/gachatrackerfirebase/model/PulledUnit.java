@@ -10,6 +10,10 @@ public class PulledUnit {
     private boolean fromBanner;
     private String date;
 
+    public PulledUnit() {
+        // Required empty constructor
+    }
+
     public PulledUnit(int numOfPulls, String unitName, boolean fromBanner, String date) {
         this.numOfPulls = numOfPulls;
         this.unitName = unitName;
