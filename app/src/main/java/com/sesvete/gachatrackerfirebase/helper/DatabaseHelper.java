@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.sesvete.gachatrackerfirebase.model.CounterProgress;
 import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class DatabaseHelper {
     }
 
     public interface OnCounterReceivedCallback {
-        void onCounterReceived(int counter, boolean guarantee);
+        void onCounterReceived(CounterProgress counterProgress);
     }
 
     public interface OnCreateUserCallback{
@@ -89,9 +90,7 @@ public class DatabaseHelper {
     // nastavi za vse bannerje in igre strukturo podatkovne baze že ob ustvaritvi
     public void writeNewUser(String uid, OnCreateUserCallback callback){
 
-        Map<String, Object> initialValues = new HashMap<>();
-        initialValues.put("number", 0);
-        initialValues.put("guaranteed", false);
+        CounterProgress initialValues = new CounterProgress(0, false);
 
         String[] games = {"genshin_impact", "honkai_star_rail", "zenless_zone_zero", "tribe_nine"};
         String[][] bannerTypes = {
@@ -121,42 +120,17 @@ public class DatabaseHelper {
     public void getCounterStatus(String uid, String game, String banner, OnCounterReceivedCallback callback){
         DatabaseReference userNameReference = usersReference.child(uid);
         DatabaseReference counterNumberReference = userNameReference.child("games").child(game).child(banner).child("counter_progress");
-        counterNumberReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        counterNumberReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DataSnapshot dataSnapshot = task.getResult();
-                    if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-                        Log.d("SuccessCounter", "Counter progress retrieved");
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                CounterProgress counterProgress = dataSnapshot.getValue(CounterProgress.class);
+                callback.onCounterReceived(counterProgress);
+            }
 
-                        try {
-                            // retrieve dataSnapshot as a Map<String, Object>
-                            Map<String, Object> counterProgress = (Map<String, Object>) dataSnapshot.getValue();
-
-                            int counter = 0;
-                            boolean guaranteed = false;
-
-                            if (counterProgress.containsKey("number")) {
-                                // Firebase stores numbers as Long - we cast them to int
-                                counter = ((Long) counterProgress.get("number")).intValue();
-                            }
-
-                            if (counterProgress.containsKey("guaranteed")) {
-                                guaranteed = (boolean) counterProgress.get("guaranteed");
-                            }
-
-                            callback.onCounterReceived(counter, guaranteed);
-                        } catch (Exception e) {
-                            Log.e("FirebaseDataError", "Error parsing counter progress: " + e.getMessage());
-                            callback.onCounterReceived(0, false); // Default values on error
-                        }
-                    } else {
-                        Log.d("skipped counter", "failure");
-                        callback.onCounterReceived(0, false); // Default values if data doesn't exist
-                    }
-                } else {
-                    callback.onCounterReceived(0, false); // Default values on task failure
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Database Retrieval", "Failed to retrieve counter progress: " + databaseError.getMessage());
+                callback.onCounterReceived(null);
             }
         });
     }
