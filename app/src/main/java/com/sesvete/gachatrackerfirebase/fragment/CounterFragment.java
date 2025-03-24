@@ -136,6 +136,9 @@ public class CounterFragment extends Fragment {
         wishValue = CounterHelper.adjustWishValue(game);
         currencyType = CounterHelper.adjustCurrencyString(getResources(), game);
 
+        // retrieve latest unit from history
+        CounterHelper.retrieveNewestUnit(uid, game, bannerType, txtCounterHistoryNumber, txtCounterHistoryUnit, imgCounterHistoryFeaturedUnitStatus);
+
         // sets the initial state of the counter
         setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {

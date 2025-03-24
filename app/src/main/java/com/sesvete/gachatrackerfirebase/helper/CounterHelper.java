@@ -7,7 +7,9 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.sesvete.gachatrackerfirebase.R;
+import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -157,6 +159,22 @@ public class CounterHelper {
         txtCounterSpentTillJackpot.setText(String.valueOf(softPity - counterNumber));
         txtCounterSpentTillJackpotCurrency.setText(String.valueOf((softPity - counterNumber)*wishValue));
         txtCounterSpentTillJackpotTotal.setText(String.valueOf(counterNumber * wishValue));
+    }
+
+    public static void retrieveNewestUnit(String uid, String game, String banner, TextView txtCounterHistoryNumber, TextView txtCounterHistoryUnit, ShapeableImageView imgCounterHistoryFeaturedUnitStatus) {
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        databaseHelper.retrieveNewestPulledUnit(uid, game, banner, new DatabaseHelper.OnRetrieveNewestUnitCallback() {
+            @Override
+            public void OnRetrievedNewestPulledUnit(PulledUnit newestPulledUnit) {
+                txtCounterHistoryNumber.setText(String.valueOf(newestPulledUnit.getNumOfPulls()));
+                txtCounterHistoryUnit.setText(newestPulledUnit.getUnitName());
+                if (newestPulledUnit.isFromBanner()){
+                    imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_checkmark_green);
+                } else {
+                    imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
+                }
+            }
+        });
     }
 
     public static String dateFormatter(String inputDateString){

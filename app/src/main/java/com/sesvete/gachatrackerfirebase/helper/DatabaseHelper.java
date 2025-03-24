@@ -52,6 +52,11 @@ public class DatabaseHelper {
         void OnRetrievedPullsHistory(ArrayList<PulledUnit> pulledUnitList);
     }
 
+    public interface OnRetrieveNewestUnitCallback{
+        void OnRetrievedNewestPulledUnit(PulledUnit newestPulledUnit);
+    }
+
+
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
         DatabaseReference usernameReference = usersReference.child(uid);
         ValueEventListener checkForUserListener = new ValueEventListener() {
@@ -214,10 +219,10 @@ public class DatabaseHelper {
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<PulledUnit> pulledUnitList = new ArrayList<>();
                 ArrayList<DataSnapshot> reversedChildren = new ArrayList<>();
-                for (DataSnapshot unitSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot unitSnapshot : snapshot.getChildren()){
                     reversedChildren.add(unitSnapshot);
                 }
                 // we're reversing the order so the newest uni are displayed first
@@ -236,7 +241,29 @@ public class DatabaseHelper {
                 callback.OnRetrievedPullsHistory(null);
             }
         });
+    }
 
+    public void retrieveNewestPulledUnit(String uid, String game, String banner, OnRetrieveNewestUnitCallback callback){
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
 
+        Query query = pulledUnitsReference.orderByChild("date").limitToLast(1);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // initialize the object
+                PulledUnit newestUnit = null;
+                for (DataSnapshot unitSnapshot : snapshot.getChildren()){
+                    newestUnit = unitSnapshot.getValue(PulledUnit.class);
+                }
+                callback.OnRetrievedNewestPulledUnit(newestUnit);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database Retrieval", "Failed to retrieve pulled units: " + error.getMessage());
+                callback.OnRetrievedNewestPulledUnit(null);
+            }
+        });
     }
 }
