@@ -136,9 +136,16 @@ public class CounterFragment extends Fragment {
         wishValue = CounterHelper.adjustWishValue(game);
         currencyType = CounterHelper.adjustCurrencyString(getResources(), game);
 
-        // retrieve latest unit from history
-        CounterHelper.retrieveNewestUnit(uid, game, bannerType, txtCounterHistoryNumber, txtCounterHistoryUnit, imgCounterHistoryFeaturedUnitStatus);
-
+        // checks whether there are any pulled units
+        databaseHelper.checkPathExists(uid, game, bannerType, new DatabaseHelper.OnPathExistsCallback() {
+            @Override
+            public void onPathExists(boolean exists) {
+                if (exists){
+                    // retrieve latest unit from history
+                    CounterHelper.retrieveNewestUnit(uid, game, bannerType, txtCounterHistoryNumber, txtCounterHistoryUnit, imgCounterHistoryFeaturedUnitStatus);
+                }
+            }
+        });
         // sets the initial state of the counter
         setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
@@ -447,7 +454,7 @@ public class CounterFragment extends Fragment {
 
     private void setInitialCounter(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, String uid, String game, String bannerType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotTotal, int softPity, int wishValue, Resources resources, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotalDescription){
         DatabaseHelper databaseHelper = new DatabaseHelper();
-        databaseHelper.getCounterStatus(uid, game, bannerType, new DatabaseHelper.OnCounterReceivedListener() {
+        databaseHelper.getCounterStatus(uid, game, bannerType, new DatabaseHelper.OnCounterReceivedCallback() {
             @Override
             public void onCounterReceived(int counter, boolean guarantee) {
                 counterNumber = counter;

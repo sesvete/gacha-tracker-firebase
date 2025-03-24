@@ -32,7 +32,7 @@ public class DatabaseHelper {
         void onRetrieveExistingData(String uid);
     }
 
-    public interface OnCounterReceivedListener {
+    public interface OnCounterReceivedCallback {
         void onCounterReceived(int counter, boolean guarantee);
     }
 
@@ -54,6 +54,10 @@ public class DatabaseHelper {
 
     public interface OnRetrieveNewestUnitCallback{
         void OnRetrievedNewestPulledUnit(PulledUnit newestPulledUnit);
+    }
+
+    public interface OnPathExistsCallback {
+        void onPathExists(boolean exists);
     }
 
 
@@ -114,7 +118,7 @@ public class DatabaseHelper {
         callback.onCreateUser(uid);
     }
 
-    public void getCounterStatus(String uid, String game, String banner, OnCounterReceivedListener listener){
+    public void getCounterStatus(String uid, String game, String banner, OnCounterReceivedCallback callback){
         DatabaseReference userNameReference = usersReference.child(uid);
         DatabaseReference counterNumberReference = userNameReference.child("games").child(game).child(banner).child("counter_progress");
         counterNumberReference.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -141,17 +145,17 @@ public class DatabaseHelper {
                                 guaranteed = (boolean) counterProgress.get("guaranteed");
                             }
 
-                            listener.onCounterReceived(counter, guaranteed);
+                            callback.onCounterReceived(counter, guaranteed);
                         } catch (Exception e) {
                             Log.e("FirebaseDataError", "Error parsing counter progress: " + e.getMessage());
-                            listener.onCounterReceived(0, false); // Default values on error
+                            callback.onCounterReceived(0, false); // Default values on error
                         }
                     } else {
                         Log.d("skipped counter", "failure");
-                        listener.onCounterReceived(0, false); // Default values if data doesn't exist
+                        callback.onCounterReceived(0, false); // Default values if data doesn't exist
                     }
                 } else {
-                    listener.onCounterReceived(0, false); // Default values on task failure
+                    callback.onCounterReceived(0, false); // Default values on task failure
                 }
             }
         });
@@ -263,6 +267,33 @@ public class DatabaseHelper {
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("Database Retrieval", "Failed to retrieve pulled units: " + error.getMessage());
                 callback.OnRetrievedNewestPulledUnit(null);
+            }
+        });
+    }
+
+    // to check whether the pulled unit path already exists, so we
+
+    public void checkPathExists(String uid, String game, String banner, OnPathExistsCallback callback) {
+
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
+
+        pulledUnitsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Path exists (regardless of data)
+                    callback.onPathExists(true);
+                } else {
+                    // Path does not exist
+                    callback.onPathExists(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("Database Check", "Failed to check path existence: " + databaseError.getMessage());
+                callback.onPathExists(false); // Or handle the error appropriately
             }
         });
     }
