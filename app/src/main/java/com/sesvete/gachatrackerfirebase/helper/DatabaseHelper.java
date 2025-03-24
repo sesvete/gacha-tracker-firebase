@@ -10,8 +10,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.sesvete.gachatrackerfirebase.model.PulledUnit;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +46,10 @@ public class DatabaseHelper {
 
     public interface OnSavePulledUnitCallback{
         void onSavedPulledUnit(boolean success);
+    }
+
+    public interface OnRetrievePullsHistoryCallback{
+        void OnRetrievedPullsHistory(ArrayList<PulledUnit> pulledUnitList);
     }
 
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
@@ -114,13 +121,15 @@ public class DatabaseHelper {
                         Log.d("SuccessCounter", "Counter progress retrieved");
 
                         try {
+                            // retrieve dataSnapshot as a Map<String, Object>
                             Map<String, Object> counterProgress = (Map<String, Object>) dataSnapshot.getValue();
 
                             int counter = 0;
                             boolean guaranteed = false;
 
                             if (counterProgress.containsKey("number")) {
-                                counter = ((Long) counterProgress.get("number")).intValue(); // or (int)(long) counterProgress.get("number")
+                                // Firebase stores numbers as Long - we cast them to int
+                                counter = ((Long) counterProgress.get("number")).intValue();
                             }
 
                             if (counterProgress.containsKey("guaranteed")) {
@@ -169,10 +178,11 @@ public class DatabaseHelper {
         DatabaseReference userNameReference = usersReference.child(uid);
         DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
 
+        // needs to be the exact same name as the Pulled unit model
         Map<String, Object> unitData = new HashMap<>();
-        unitData.put("unit_name", unitName);
-        unitData.put("number_of_pulls", counterProgress);
-        unitData.put("from_banner", statusFiftyFifty);
+        unitData.put("unitName", unitName);
+        unitData.put("numOfPulls", counterProgress);
+        unitData.put("fromBanner", statusFiftyFifty);
         unitData.put("date", formattedDate);
 
         String uniqueKey = pulledUnitsReference.push().getKey();
@@ -194,6 +204,39 @@ public class DatabaseHelper {
             Log.e("Database Save", "Failed to generate unique key");
             callback.onSavedPulledUnit(false);
         }
+    }
+
+    public void retrievePullsHistory(String uid, String game, String banner, OnRetrievePullsHistoryCallback callback){
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
+
+        Query query = pulledUnitsReference.orderByChild("date");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<PulledUnit> pulledUnitList = new ArrayList<>();
+                ArrayList<DataSnapshot> reversedChildren = new ArrayList<>();
+                for (DataSnapshot unitSnapshot : dataSnapshot.getChildren()){
+                    reversedChildren.add(unitSnapshot);
+                }
+                // we're reversing the order so the newest uni are displayed first
+                for (int i = reversedChildren.size()-1; i>=0; i--) {
+                    PulledUnit pulledUnit = reversedChildren.get(i).getValue(PulledUnit.class);
+                    if (pulledUnit != null){
+                        pulledUnitList.add(pulledUnit);
+                    }
+                }
+                callback.OnRetrievedPullsHistory(pulledUnitList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database Retrieval", "Failed to retrieve pulled unit values: " + error.getMessage());
+                callback.OnRetrievedPullsHistory(null);
+            }
+        });
+
 
     }
 }
