@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: update the counter
-// TODO: write into the database
 
 public class DatabaseHelper {
 

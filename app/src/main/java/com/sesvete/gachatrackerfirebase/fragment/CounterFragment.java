@@ -35,7 +35,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-// TODO: Get last unit and display it
 
 public class CounterFragment extends Fragment {
 

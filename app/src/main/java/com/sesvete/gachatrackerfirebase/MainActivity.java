@@ -36,6 +36,12 @@ import com.sesvete.gachatrackerfirebase.helper.SettingsHelper;
 //TODO: check and fix formating of slovene language
 // TODO: check id user is signed in - if not clear all credential and return to sign in screen
 
+// TODO: 1.) personal stats
+// TODO: 2.) email sign in
+// TODO: 3.) python script for populating database
+// TODO: 4.) global stats
+// TODO: 5.) final checks, bugfixes etc
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
