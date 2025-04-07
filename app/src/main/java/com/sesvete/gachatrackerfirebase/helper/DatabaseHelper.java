@@ -59,6 +59,10 @@ public class DatabaseHelper {
         void onPathExists(boolean exists);
     }
 
+    public interface OnPersonalNumOfPullsListRetrievedCallback {
+        void onNumOfPullsListRetrieved(ArrayList<Integer> numOfPullsList);
+    }
+
 
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
         DatabaseReference usernameReference = usersReference.child(uid);
@@ -268,5 +272,34 @@ public class DatabaseHelper {
                 callback.onPathExists(false); // Or handle the error appropriately
             }
         });
+    }
+
+    // tle se bo naredil list z vsemi števili no of pulls za 5 star
+    public void getPersonalNumPullsList(String uid, String game, String banner, OnPersonalNumOfPullsListRetrievedCallback callback){
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
+
+        Query query = pulledUnitsReference.orderByChild("date");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Integer> numOfPullsList = new ArrayList<>();
+
+                for (DataSnapshot unitSnapshot : snapshot.getChildren()){
+                    Long numOfPullsLong = unitSnapshot.child("numOfPulls").getValue(Long.class);
+                    if (numOfPullsLong != null){
+                        numOfPullsList.add(numOfPullsLong.intValue());
+                    }
+                }
+                callback.onNumOfPullsListRetrieved(numOfPullsList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database Retrieval", "Failed to retrieve numOfPulls list: " + error.getMessage());
+                callback.onNumOfPullsListRetrieved(null);
+            }
+        });
+
     }
 }
