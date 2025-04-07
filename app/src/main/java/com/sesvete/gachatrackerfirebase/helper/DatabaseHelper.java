@@ -63,6 +63,10 @@ public class DatabaseHelper {
         void onNumOfPullsListRetrieved(ArrayList<Integer> numOfPullsList);
     }
 
+    public interface OnFiftyFiftyOutcomesListRetrievedCallback {
+        void onFiftyFiftyOutcomesRetrieved(ArrayList<Boolean> fiftyFiftyOutcomes);
+    }
+
 
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
         DatabaseReference usernameReference = usersReference.child(uid);
@@ -247,7 +251,7 @@ public class DatabaseHelper {
         });
     }
 
-    // to check whether the pulled unit path already exists, so we
+    // to check whether the pulled unit path already exists, so we can retrieve the latest unit from history
 
     public void checkPathExists(String uid, String game, String banner, OnPathExistsCallback callback) {
 
@@ -300,6 +304,46 @@ public class DatabaseHelper {
                 callback.onNumOfPullsListRetrieved(null);
             }
         });
+    }
 
+    public void getListOfWonAndLostFiftyFifty(String uid, String game, String banner, OnFiftyFiftyOutcomesListRetrievedCallback callback) {
+        DatabaseReference userNameReference = usersReference.child(uid);
+        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
+
+        Query query = pulledUnitsReference.orderByChild("date");
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Boolean> fiftyFiftyOutcomes = new ArrayList<>();
+                ArrayList<Boolean> fromBannerList = new ArrayList<>();
+
+                for (DataSnapshot unitSnapshot : snapshot.getChildren()) {
+                    Boolean fromBanner = unitSnapshot.child("fromBanner").getValue(Boolean.class);
+                    if (fromBanner != null) {
+                        fromBannerList.add(fromBanner);
+                    }
+                }
+                boolean lost5050 = false; // Flag to track if the previous unit was a loss. We assume we won the one before starting (we don't have guarantee)
+
+                for (Boolean isFromBanner : fromBannerList){
+                    if (isFromBanner) {
+                        if (!lost5050) {
+                            fiftyFiftyOutcomes.add(true); // Won 50/50 (banner unit, not after a loss)
+                        }
+                        lost5050 = false; // Reset the loss flag
+                    } else {
+                        fiftyFiftyOutcomes.add(false); // Lost 50/50 (not from banner)
+                        lost5050 = true; // Set the loss flag for the next unit
+                    }
+                }
+                callback.onFiftyFiftyOutcomesRetrieved(fiftyFiftyOutcomes);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database Retrieval", "Failed to retrieve 50/50 outcomes: " + error.getMessage());
+                callback.onFiftyFiftyOutcomesRetrieved(null);
+            }
+        });
     }
 }

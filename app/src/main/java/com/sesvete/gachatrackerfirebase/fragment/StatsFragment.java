@@ -7,7 +7,6 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import com.sesvete.gachatrackerfirebase.model.Statistic;
 
 import java.util.ArrayList;
 
+// TODO: global stats
 
 public class StatsFragment extends Fragment {
 
@@ -40,6 +40,7 @@ public class StatsFragment extends Fragment {
     private String bannerType;
 
     private ArrayList<Integer> pullsForFiveStar;
+    private ArrayList<Boolean> wonAndLost5050;
     private ArrayList<Statistic> statisticList;
     private StatsRecViewAdapter adapter;
 
@@ -65,23 +66,18 @@ public class StatsFragment extends Fragment {
         game = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("game", "genshin_impact");
         bannerType = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("banner", "limited");
 
-
         btnStatsGlobal = view.findViewById(R.id.btn_stats_global);
         btnStatsPersonal = view.findViewById(R.id.btn_stats_personal);
         txtStatsTitle = view.findViewById(R.id.txt_stats_title);
         recyclerViewStats = view.findViewById(R.id.recycler_view_stats);
 
-        // TODO: naredil se bo ločen helper, ki bo zasluže za sestavo lista
-        // ne pozabi najprej clearat list ob kliku na gumb
-
-        //initial Load Personal stats
-        onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
-
         statisticList = new ArrayList<>();
         adapter = new StatsRecViewAdapter(getContext());
         recyclerViewStats.setAdapter(adapter);
-        getPersonalStats(statisticList, uid, game, bannerType);
 
+        //initial Load Personal stats
+        onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
+        getPersonalStats(statisticList, uid, game, bannerType);
 
         recyclerViewStats.setLayoutManager(new LinearLayoutManager(getContext()));
         btnStatsPersonal.setOnClickListener(new View.OnClickListener() {
@@ -116,20 +112,34 @@ public class StatsFragment extends Fragment {
     }
 
     private void getPersonalStats(ArrayList<Statistic> statisticList, String uid, String game, String bannerType){
+        statisticList.clear();
         DatabaseHelper databaseHelper = new DatabaseHelper();
+
+        if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
+            databaseHelper.getListOfWonAndLostFiftyFifty(uid, game, bannerType, new DatabaseHelper.OnFiftyFiftyOutcomesListRetrievedCallback() {
+                @Override
+                public void onFiftyFiftyOutcomesRetrieved(ArrayList<Boolean> fiftyFiftyOutcomes) {
+                    wonAndLost5050 = fiftyFiftyOutcomes;
+
+                    int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(wonAndLost5050);
+                    int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(wonAndLost5050);
+                    double doublePercentageFiftyFifty = StatsHelper.percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
+
+                    statisticList.add(new Statistic(getString(R.string.percentage_fifty_fifty), doublePercentageFiftyFifty));
+                    statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), intNumWonFiftyFifty));
+                    statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), intNumLostFiftyFifty));
+                }
+            });
+        }
 
         databaseHelper.getPersonalNumPullsList(uid, game, bannerType, new DatabaseHelper.OnPersonalNumOfPullsListRetrievedCallback() {
             @Override
             public void onNumOfPullsListRetrieved(ArrayList<Integer> numOfPullsList) {
-                boolean[] won5050 = {true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, true};
                 pullsForFiveStar = numOfPullsList;
-                int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(won5050);
-                int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(won5050);
-                double doublePercentageFiftyFifty = StatsHelper.percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
+
                 double doubleAvgNumPulls = StatsHelper.avgNumPulls(pullsForFiveStar);
                 int intTotalNumPulls = StatsHelper.totalNumPulls(pullsForFiveStar);
                 int currencyValue;
-
 
                 if (game.equals("tribe_nine")){
                     currencyValue = 120;
@@ -137,11 +147,8 @@ public class StatsFragment extends Fragment {
                 else {
                     currencyValue = 160;
                 }
-                statisticList.clear();
                 if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
-                    statisticList.add(new Statistic(getString(R.string.percentage_fifty_fifty), doublePercentageFiftyFifty));
-                    statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), intNumWonFiftyFifty));
-                    statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), intNumLostFiftyFifty));
+
                 }
                 statisticList.add(new Statistic(getString(R.string.avg_for_five_star), doubleAvgNumPulls));
                 statisticList.add(new Statistic(getString(R.string.total_num_pulls), intTotalNumPulls));

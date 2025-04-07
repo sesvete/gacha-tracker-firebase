@@ -1,29 +1,24 @@
 package com.sesvete.gachatrackerfirebase.helper;
 
-// TODO: to še posodobi, ko boš enkrat pridobil podatke iz baze
-
-import android.util.Log;
 import java.util.List;
 
 public class StatsHelper {
 
-    public static int numWonFiftyFifty(boolean[] won5050){
+    public static int numWonFiftyFifty(List<Boolean> outcomes){
         int won = 0;
-        for (boolean i: won5050
-             ) {
-            if (i){
-                won++;
+        for (boolean outcome : outcomes){
+            if (outcome){
+                won += 1;
             }
         }
         return won;
     }
 
-    public static int numLostFiftyFifty(boolean[] won5050){
+    public static int numLostFiftyFifty(List<Boolean> outcomes){
         int lost = 0;
-        for (boolean i: won5050
-        ) {
-            if (!i){
-                lost++;
+        for (boolean outcome : outcomes){
+            if (!outcome){
+                lost += 1;
             }
         }
         return lost;
@@ -33,7 +28,8 @@ public class StatsHelper {
         if (numWon + numLost == 0){
             return 0.0; // v primeru, da delimo z 0
         }
-        return (double) (numWon)/(numWon + numLost);
+        double result = (double) (numWon) /(numWon + numLost);
+        return Math.round(result * 100.0) / 100.0;
     }
 
     public static double avgNumPulls(List<Integer> numbers){
@@ -44,7 +40,6 @@ public class StatsHelper {
         for (int number : numbers) {
             sum += number;
         }
-        Log.d("avhNumPulls", String.valueOf(sum));
         double result = ((double) sum /numbers.size());
         return Math.round(result * 100.0) / 100.0;
     }
