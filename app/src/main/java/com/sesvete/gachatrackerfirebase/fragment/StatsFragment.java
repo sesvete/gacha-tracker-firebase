@@ -147,9 +147,6 @@ public class StatsFragment extends Fragment {
                 else {
                     currencyValue = 160;
                 }
-                if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
-
-                }
                 statisticList.add(new Statistic(getString(R.string.avg_for_five_star), doubleAvgNumPulls));
                 statisticList.add(new Statistic(getString(R.string.total_num_pulls), intTotalNumPulls));
                 statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), Math.round((doubleAvgNumPulls * currencyValue) * 100.0) / 100.0));
