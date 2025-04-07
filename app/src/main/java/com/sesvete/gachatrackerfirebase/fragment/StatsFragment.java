@@ -23,7 +23,6 @@ import com.sesvete.gachatrackerfirebase.helper.StatsRecViewAdapter;
 import com.sesvete.gachatrackerfirebase.model.Statistic;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class StatsFragment extends Fragment {
@@ -122,15 +121,13 @@ public class StatsFragment extends Fragment {
         databaseHelper.getPersonalNumPullsList(uid, game, bannerType, new DatabaseHelper.OnPersonalNumOfPullsListRetrievedCallback() {
             @Override
             public void onNumOfPullsListRetrieved(ArrayList<Integer> numOfPullsList) {
-                int[] pullsFor5Star = {78, 54, 77, 80, 56, 43, 76, 80, 81, 56, 66, 45, 23, 86, 24, 77, 78, 76, 74, 2};
                 boolean[] won5050 = {true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, true};
                 pullsForFiveStar = numOfPullsList;
-                Log.d("pulls for 5 star", pullsForFiveStar.toString());
                 int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(won5050);
                 int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(won5050);
                 double doublePercentageFiftyFifty = StatsHelper.percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
                 double doubleAvgNumPulls = StatsHelper.avgNumPulls(pullsForFiveStar);
-                int intTotalNumPulls = StatsHelper.totalNumPulls(pullsFor5Star);
+                int intTotalNumPulls = StatsHelper.totalNumPulls(pullsForFiveStar);
                 int currencyValue;
 
 
@@ -148,9 +145,8 @@ public class StatsFragment extends Fragment {
                 }
                 statisticList.add(new Statistic(getString(R.string.avg_for_five_star), doubleAvgNumPulls));
                 statisticList.add(new Statistic(getString(R.string.total_num_pulls), intTotalNumPulls));
-                statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), doubleAvgNumPulls * currencyValue));
-                statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), intTotalNumPulls * currencyValue));
-                Log.d("statistics list", statisticList.toString());
+                statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), Math.round((doubleAvgNumPulls * currencyValue) * 100.0) / 100.0));
+                statisticList.add(new Statistic(getString(R.string.total_currency_five_star), intTotalNumPulls * currencyValue));
 
                 adapter.setStatisticList(statisticList);
 

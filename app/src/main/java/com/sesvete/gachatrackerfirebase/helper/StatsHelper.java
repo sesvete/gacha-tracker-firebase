@@ -49,11 +49,14 @@ public class StatsHelper {
         return Math.round(result * 100.0) / 100.0;
     }
 
-    public static int totalNumPulls(int[] pullsFor5Star){
-        int total = 0;
-        for (int i: pullsFor5Star) {
-            total = total + i;
+    public static int totalNumPulls(List<Integer> numbers) {
+        if (numbers == null || numbers.isEmpty()) {
+            return 0;
         }
-        return total;
+        int sum = 0;
+        for (int number : numbers) {
+            sum += number;
+        }
+        return sum;
     }
 }
