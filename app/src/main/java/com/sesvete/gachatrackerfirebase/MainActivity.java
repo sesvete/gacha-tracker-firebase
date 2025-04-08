@@ -27,7 +27,6 @@ import com.sesvete.gachatrackerfirebase.fragment.HistoryFragment;
 import com.sesvete.gachatrackerfirebase.fragment.SettingsFragment;
 import com.sesvete.gachatrackerfirebase.fragment.StatsFragment;
 import com.sesvete.gachatrackerfirebase.helper.AuthenticationHelper;
-import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 import com.sesvete.gachatrackerfirebase.helper.DialogHelper;
 import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 import com.sesvete.gachatrackerfirebase.helper.SettingsHelper;
