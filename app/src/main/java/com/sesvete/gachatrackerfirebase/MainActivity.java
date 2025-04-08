@@ -2,7 +2,6 @@ package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,21 +83,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().replace(R.id.fragment_container, CounterFragment.class, null).setReorderingAllowed(true).commit();
             navigationView.setCheckedItem(R.id.nav_counter);
         }
-
-        DatabaseHelper databaseHelper = new DatabaseHelper();
-
-        databaseHelper.checkIfUserExists(uid, new DatabaseHelper.OnCheckExistingUser() {
-            @Override
-            public void onCreateNewUser(String uid) {
-                Log.d("Main Startup", "Created user");
-            }
-
-            @Override
-            public void onRetrieveExistingData(String uid) {
-                Log.d("Main Startup", "User already exists");
-            }
-        });
-
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

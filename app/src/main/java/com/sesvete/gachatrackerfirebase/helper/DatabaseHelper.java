@@ -59,12 +59,8 @@ public class DatabaseHelper {
         void onPathExists(boolean exists);
     }
 
-    public interface OnPersonalNumOfPullsListRetrievedCallback {
-        void onNumOfPullsListRetrieved(ArrayList<Integer> numOfPullsList);
-    }
-
-    public interface OnFiftyFiftyOutcomesListRetrievedCallback {
-        void onFiftyFiftyOutcomesRetrieved(ArrayList<Boolean> fiftyFiftyOutcomes);
+    public interface OnRetrievePersonalStatsCallback {
+        void onPersonalStatsRetrieved(ArrayList<Integer> numOfPullsList, ArrayList<Boolean> fiftyFiftyOutcomes);
     }
 
 
@@ -278,8 +274,7 @@ public class DatabaseHelper {
         });
     }
 
-    // tle se bo naredil list z vsemi števili no of pulls za 5 star
-    public void getPersonalNumPullsList(String uid, String game, String banner, OnPersonalNumOfPullsListRetrievedCallback callback){
+    public void retrievePersonalStats(String uid, String game, String banner, OnRetrievePersonalStatsCallback callback) {
         DatabaseReference userNameReference = usersReference.child(uid);
         DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
 
@@ -288,43 +283,20 @@ public class DatabaseHelper {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<Integer> numOfPullsList = new ArrayList<>();
+                ArrayList<Boolean> fiftyFiftyOutcomes = new ArrayList<>();
+                ArrayList<Boolean> fromBannerList = new ArrayList<>();
 
                 for (DataSnapshot unitSnapshot : snapshot.getChildren()){
                     Long numOfPullsLong = unitSnapshot.child("numOfPulls").getValue(Long.class);
                     if (numOfPullsLong != null){
                         numOfPullsList.add(numOfPullsLong.intValue());
                     }
-                }
-                callback.onNumOfPullsListRetrieved(numOfPullsList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Database Retrieval", "Failed to retrieve numOfPulls list: " + error.getMessage());
-                callback.onNumOfPullsListRetrieved(null);
-            }
-        });
-    }
-
-    public void getListOfWonAndLostFiftyFifty(String uid, String game, String banner, OnFiftyFiftyOutcomesListRetrievedCallback callback) {
-        DatabaseReference userNameReference = usersReference.child(uid);
-        DatabaseReference pulledUnitsReference = userNameReference.child("games").child(game).child(banner).child("pulled_units");
-
-        Query query = pulledUnitsReference.orderByChild("date");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Boolean> fiftyFiftyOutcomes = new ArrayList<>();
-                ArrayList<Boolean> fromBannerList = new ArrayList<>();
-
-                for (DataSnapshot unitSnapshot : snapshot.getChildren()) {
                     Boolean fromBanner = unitSnapshot.child("fromBanner").getValue(Boolean.class);
                     if (fromBanner != null) {
                         fromBannerList.add(fromBanner);
                     }
                 }
                 boolean lost5050 = false; // Flag to track if the previous unit was a loss. We assume we won the one before starting (we don't have guarantee)
-
                 for (Boolean isFromBanner : fromBannerList){
                     if (isFromBanner) {
                         if (!lost5050) {
@@ -336,14 +308,15 @@ public class DatabaseHelper {
                         lost5050 = true; // Set the loss flag for the next unit
                     }
                 }
-                callback.onFiftyFiftyOutcomesRetrieved(fiftyFiftyOutcomes);
+                callback.onPersonalStatsRetrieved(numOfPullsList, fiftyFiftyOutcomes);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Database Retrieval", "Failed to retrieve 50/50 outcomes: " + error.getMessage());
-                callback.onFiftyFiftyOutcomesRetrieved(null);
+                Log.e("Database Retrieval", "Failed to retrieve personal stats: " + error.getMessage());
+                callback.onPersonalStatsRetrieved(null, null);
             }
         });
     }
+
 }

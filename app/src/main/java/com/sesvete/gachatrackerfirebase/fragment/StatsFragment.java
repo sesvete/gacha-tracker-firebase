@@ -115,12 +115,12 @@ public class StatsFragment extends Fragment {
         statisticList.clear();
         DatabaseHelper databaseHelper = new DatabaseHelper();
 
-        if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
-            databaseHelper.getListOfWonAndLostFiftyFifty(uid, game, bannerType, new DatabaseHelper.OnFiftyFiftyOutcomesListRetrievedCallback() {
-                @Override
-                public void onFiftyFiftyOutcomesRetrieved(ArrayList<Boolean> fiftyFiftyOutcomes) {
-                    wonAndLost5050 = fiftyFiftyOutcomes;
-
+        databaseHelper.retrievePersonalStats(uid, game, bannerType, new DatabaseHelper.OnRetrievePersonalStatsCallback() {
+            @Override
+            public void onPersonalStatsRetrieved(ArrayList<Integer> numOfPullsList, ArrayList<Boolean> fiftyFiftyOutcomes) {
+                wonAndLost5050 = fiftyFiftyOutcomes;
+                pullsForFiveStar = numOfPullsList;
+                if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
                     int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(wonAndLost5050);
                     int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(wonAndLost5050);
                     double doublePercentageFiftyFifty = StatsHelper.percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
@@ -129,14 +129,6 @@ public class StatsFragment extends Fragment {
                     statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), intNumWonFiftyFifty));
                     statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), intNumLostFiftyFifty));
                 }
-            });
-        }
-
-        databaseHelper.getPersonalNumPullsList(uid, game, bannerType, new DatabaseHelper.OnPersonalNumOfPullsListRetrievedCallback() {
-            @Override
-            public void onNumOfPullsListRetrieved(ArrayList<Integer> numOfPullsList) {
-                pullsForFiveStar = numOfPullsList;
-
                 double doubleAvgNumPulls = StatsHelper.avgNumPulls(pullsForFiveStar);
                 int intTotalNumPulls = StatsHelper.totalNumPulls(pullsForFiveStar);
                 int currencyValue;
@@ -153,8 +145,8 @@ public class StatsFragment extends Fragment {
                 statisticList.add(new Statistic(getString(R.string.total_currency_five_star), intTotalNumPulls * currencyValue));
 
                 adapter.setStatisticList(statisticList);
-
             }
         });
     }
+
 }
