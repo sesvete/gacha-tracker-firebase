@@ -71,4 +71,5 @@
     <string name="or">ALI</string>
     <string name="register">Registracija</string>
     <string name="sign_in_username">Prijava z uporabniškim imenom</string>
+    <string name="create_account">Ustvari račun</string>
 </resources>

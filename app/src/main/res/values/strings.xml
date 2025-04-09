@@ -92,5 +92,6 @@
     <string name="or">OR</string>
     <string name="register">Register</string>
     <string name="sign_in_username">Sign in with Username</string>
+    <string name="create_account">Create Account</string>
 
 </resources>

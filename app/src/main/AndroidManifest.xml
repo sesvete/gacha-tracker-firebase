@@ -16,11 +16,16 @@
         android:theme="@style/Theme.GachaFramework"
         tools:targetApi="31">
         <activity
-            android:name=".SignInWithPasswordActivity"
+            android:name=".CreateAccountActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
             />
+        <activity
+            android:name=".SignInWithPasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".SplashActivity"
             android:exported="true"
