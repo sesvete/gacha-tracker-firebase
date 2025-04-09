@@ -76,7 +76,7 @@
         />
 
     <TextView
-        android:id="@+id/txt_register_username"
+        android:id="@+id/txt_register_email"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -84,7 +84,7 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="18sp"
         android:autoSizeStepGranularity="2sp"
-        android:text="@string/username"
+        android:text="@string/email"
         app:layout_constraintTop_toBottomOf="@id/guideline_register_horizontal3"
         app:layout_constraintLeft_toRightOf="@id/guideline_register_vertical1"
         app:layout_constraintBottom_toTopOf="@id/guideline_register_horizontal4"
@@ -108,11 +108,11 @@
         />
 
     <EditText
-        android:id="@+id/edit_text_register_username"
+        android:id="@+id/edit_text_register_email"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:hint="@string/enter_username"
+        android:hint="@string/enter_email"
         app:layout_constraintTop_toBottomOf="@id/guideline_register_horizontal5"
         app:layout_constraintLeft_toRightOf="@id/guideline_register_vertical1"
         app:layout_constraintBottom_toTopOf="@id/guideline_register_horizontal6"

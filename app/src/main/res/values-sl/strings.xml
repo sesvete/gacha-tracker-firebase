@@ -60,9 +60,9 @@
     <string name="logout_confirmation">Ali ste prepričani?</string>
     <string name="yes">DA</string>
     <string name="no">NE</string>
-    <string name="username">Uporabniško ime</string>
+    <string name="email">Epošta:</string>
     <string name="password">Geslo</string>
-    <string name="enter_username">Vnesi uporabniško ime</string>
+    <string name="enter_email">Vnesi epošto</string>
     <string name="enter_password">Vnesi geslo</string>
     <string name="re_enter_password">Ponovno vnesi geslo</string>
     <string name="sign_in_google">Prijava z Googlom</string>
@@ -70,6 +70,10 @@
     <string name="back">Nazaj</string>
     <string name="or">ALI</string>
     <string name="register">Registracija</string>
-    <string name="sign_in_username">Prijava z uporabniškim imenom</string>
+    <string name="sign_in_email">Vpiši se z epošto</string>
     <string name="create_account">Ustvari račun</string>
+    <string name="create_user_error">Prišlo je do napake pri izdelavi novega računa</string>
+    <string name="fill_all_forms">Prosim izpolnite vsa polja</string>
+    <string name="mismatch_password">Gesli se ne ujemata</string>
+    <string name="short_password">Geslo mora biti dologo vsaj 6 znakov</string>
 </resources>

@@ -14,7 +14,7 @@ import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 
 public class SignInWithPasswordActivity extends AppCompatActivity {
 
-    private EditText editTextSignInPasswordUsername;
+    private EditText editTextSignInPasswordEmail;
     private EditText editTextSignInPasswordPassword;
     private MaterialButton btnSignInPasswordSignIn;
     private MaterialButton btnSignInPasswordNewUser;
@@ -32,7 +32,7 @@ public class SignInWithPasswordActivity extends AppCompatActivity {
 
         DialogHelper.keyboardTouchListener(findViewById(R.id.main_sign_in_with_password), this);
 
-        editTextSignInPasswordUsername = findViewById(R.id.edit_text_sign_in_password_username);
+        editTextSignInPasswordEmail = findViewById(R.id.edit_text_sign_in_password_email);
         editTextSignInPasswordPassword = findViewById(R.id.edit_text_sign_in_password_password);
         btnSignInPasswordSignIn = findViewById(R.id.btn_sign_in_password_sign_in);
         btnSignInPasswordNewUser = findViewById(R.id.btn_sign_in_password_new_user);

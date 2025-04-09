@@ -114,7 +114,7 @@
         android:autoSizeMinTextSize="12sp"
         android:autoSizeMaxTextSize="60sp"
         android:autoSizeStepGranularity="2sp"
-        android:text="@string/sign_in_username"
+        android:text="@string/sign_in_email"
         app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal7"
         app:layout_constraintLeft_toRightOf="@id/guideline_sign_in_vertical1"
         app:layout_constraintBottom_toTopOf="@id/guideline_sign_in_horizontal8"
