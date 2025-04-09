@@ -97,5 +97,9 @@
     <string name="fill_all_forms">Please fill all forms</string>
     <string name="mismatch_password">Passwords do not match</string>
     <string name="short_password">Password needs to be at least 6 characters long</string>
+    <string name="email_used">Email is already in use</string>
+    <string name="user_not_exist">User does not exist</string>
+    <string name="sign_in_failed">Sign in failed</string>
+    <string name="registration_failed">Registration failed</string>
 
 </resources>

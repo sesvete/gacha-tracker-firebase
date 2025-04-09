@@ -76,4 +76,8 @@
     <string name="fill_all_forms">Prosim izpolnite vsa polja</string>
     <string name="mismatch_password">Gesli se ne ujemata</string>
     <string name="short_password">Geslo mora biti dologo vsaj 6 znakov</string>
+    <string name="email_used">Epošta je že v uporabi</string>
+    <string name="user_not_exist">Uporabnik ne obstaja</string>
+    <string name="sign_in_failed">Prijava ni uspela</string>
+    <string name="registration_failed">Registracija ni uspela</string>
 </resources>

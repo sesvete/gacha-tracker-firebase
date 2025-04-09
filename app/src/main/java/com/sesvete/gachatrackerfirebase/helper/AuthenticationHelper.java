@@ -36,6 +36,7 @@ import com.sesvete.gachatrackerfirebase.SignInActivity;
 import java.util.concurrent.Executors;
 
 public class AuthenticationHelper {
+
     public static void launchCredentialManager(Resources resources, CredentialManager credentialManager, FirebaseAuth mAuth, Activity activity){
         // Instantiate a Google sign-in request
         GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
@@ -142,13 +143,17 @@ public class AuthenticationHelper {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("SignInPassword", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(activity, resources.getString(R.string.create_user_error), Toast.LENGTH_SHORT).show();
+                            if (task.getException() != null && task.getException().getMessage().contains("The email address is already in use by another account")) {
+                                Toast.makeText(activity, resources.getString(R.string.email_used), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, resources.getString(R.string.registration_failed), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
     }
 
-    public static void signInWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, String email, String password){
+    public static void signInWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -163,8 +168,11 @@ public class AuthenticationHelper {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("SignInPassword", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(activity, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            if (task.getException() != null && task.getException().getMessage().contains("The supplied auth credential is incorrect")) {
+                                Toast.makeText(activity, resources.getString(R.string.user_not_exist), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, resources.getString(R.string.sign_in_failed), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
