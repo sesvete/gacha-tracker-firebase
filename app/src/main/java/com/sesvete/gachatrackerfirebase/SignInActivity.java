@@ -44,7 +44,7 @@ public class SignInActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.language_fragment_container, LanguageSettingsFragment.class, null).setReorderingAllowed(true).commit();
 
-        btnSignIn = findViewById(R.id.btn_sign_in);
+        btnSignIn = findViewById(R.id.btn_sign_in_google);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

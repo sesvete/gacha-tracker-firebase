@@ -60,4 +60,15 @@
     <string name="logout_confirmation">Ali ste prepričani?</string>
     <string name="yes">DA</string>
     <string name="no">NE</string>
+    <string name="username">Uporabniško ime</string>
+    <string name="password">Geslo</string>
+    <string name="enter_username">Vnesi uporabniško ime</string>
+    <string name="enter_password">Vnesi geslo</string>
+    <string name="re_enter_password">Ponovno vnesi geslo</string>
+    <string name="sign_in_google">Prijava z Googlom</string>
+    <string name="new_user">Nov uporabnik</string>
+    <string name="back">Nazaj</string>
+    <string name="or">ALI</string>
+    <string name="register">Registracija</string>
+    <string name="sign_in_username">Prijava z uporabniškim imenom</string>
 </resources>
