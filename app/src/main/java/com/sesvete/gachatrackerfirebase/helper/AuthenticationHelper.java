@@ -141,8 +141,30 @@ public class AuthenticationHelper {
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.d("SignInPassword", "createUserWithEmail:success");
+                            Log.w("SignInPassword", "createUserWithEmail:failure", task.getException());
                             Toast.makeText(activity, resources.getString(R.string.create_user_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public static void signInWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("SignInPassword", "signInWithEmail:success");
+                            Intent intent = new Intent(activity, MainActivity.class);
+                            activity.startActivity(intent);
+                            activity.finish();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("SignInPassword", "signInWithEmail:failure", task.getException());
+                            Toast.makeText(activity, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
