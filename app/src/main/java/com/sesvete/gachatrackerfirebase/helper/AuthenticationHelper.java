@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.credentials.ClearCredentialStateRequest;
@@ -20,9 +21,12 @@ import androidx.credentials.GetCredentialResponse;
 import androidx.credentials.exceptions.ClearCredentialException;
 import androidx.credentials.exceptions.GetCredentialException;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
 import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.sesvete.gachatrackerfirebase.MainActivity;
@@ -32,6 +36,7 @@ import com.sesvete.gachatrackerfirebase.SignInActivity;
 import java.util.concurrent.Executors;
 
 public class AuthenticationHelper {
+
     public static void launchCredentialManager(Resources resources, CredentialManager credentialManager, FirebaseAuth mAuth, Activity activity){
         // Instantiate a Google sign-in request
         GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
@@ -88,10 +93,10 @@ public class AuthenticationHelper {
                         activity.startActivity(intent);
                         activity.finish();
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d("SignIn", "signInWithCredential:success");
+                        Log.d("SignInGoogle", "signInWithCredential:success");
                     } else {
                         // If sign in fails, display a message to the user
-                        Log.w("SignIn", "signInWithCredential:failure", task.getException());
+                        Log.w("SignInGoogle", "signInWithCredential:failure", task.getException());
                     }
                 });
 
@@ -120,6 +125,57 @@ public class AuthenticationHelper {
                     }
                 }
         );
-
     }
+
+    public static void createUserWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Intent intent = new Intent(activity, MainActivity.class);
+                            activity.startActivity(intent);
+                            activity.finish();
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("SignInPassword", "createUserWithEmail:success");
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("SignInPassword", "createUserWithEmail:failure", task.getException());
+                            if (task.getException() != null && task.getException().getMessage().contains("The email address is already in use by another account")) {
+                                Toast.makeText(activity, resources.getString(R.string.email_used), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, resources.getString(R.string.registration_failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
+
+    public static void signInWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("SignInPassword", "signInWithEmail:success");
+                            Intent intent = new Intent(activity, MainActivity.class);
+                            activity.startActivity(intent);
+                            activity.finish();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("SignInPassword", "signInWithEmail:failure", task.getException());
+                            if (task.getException() != null && task.getException().getMessage().contains("The supplied auth credential is incorrect")) {
+                                Toast.makeText(activity, resources.getString(R.string.user_not_exist), Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(activity, resources.getString(R.string.sign_in_failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+    }
+
 }

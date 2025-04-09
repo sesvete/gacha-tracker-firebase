@@ -81,4 +81,25 @@
     <string name="polychrome" translatable="false">Polychrome</string>
     <string name="enigma_entity" translatable="false">Enigma entity</string>
 
+    <string name="email">Email:</string>
+    <string name="password">Password:</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="re_enter_password">Reenter password</string>
+    <string name="sign_in_google">Sign in with Google</string>
+    <string name="new_user">New user</string>
+    <string name="back">Back</string>
+    <string name="or">OR</string>
+    <string name="register">Register</string>
+    <string name="sign_in_email">Sign in with email</string>
+    <string name="create_account">Create Account</string>
+    <string name="create_user_error">An error occurred while trying to create a new account </string>
+    <string name="fill_all_forms">Please fill all forms</string>
+    <string name="mismatch_password">Passwords do not match</string>
+    <string name="short_password">Password needs to be at least 6 characters long</string>
+    <string name="email_used">Email is already in use</string>
+    <string name="user_not_exist">User does not exist</string>
+    <string name="sign_in_failed">Sign in failed</string>
+    <string name="registration_failed">Registration failed</string>
+
 </resources>
