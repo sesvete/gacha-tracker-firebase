@@ -1,6 +1,7 @@
 package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,7 +24,8 @@ import com.sesvete.gachatrackerfirebase.helper.LocaleHelper;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private MaterialButton btnSignIn;
+    private MaterialButton btnSignInWithGoogle;
+    private MaterialButton btnSignInWithUsername;
     private FirebaseAuth mAuth;
     private CredentialManager credentialManager;
 
@@ -44,9 +46,22 @@ public class SignInActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.language_fragment_container, LanguageSettingsFragment.class, null).setReorderingAllowed(true).commit();
 
-        btnSignIn = findViewById(R.id.btn_sign_in_google);
+        btnSignInWithUsername = findViewById(R.id.btn_sign_in_password);
+        // basically se bo to delalo na novem activity
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        btnSignInWithGoogle = findViewById(R.id.btn_sign_in_google);
+
+
+        btnSignInWithUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, SignInWithPasswordActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AuthenticationHelper.launchCredentialManager(getResources(), credentialManager, mAuth, SignInActivity.this);
