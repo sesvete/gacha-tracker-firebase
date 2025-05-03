@@ -102,4 +102,7 @@
     <string name="sign_in_failed">Sign in failed</string>
     <string name="registration_failed">Registration failed</string>
 
+    <string name="chronicled_wish" translatable="false">Chronicled Wish</string>
+    <string name="collaboration" translatable="false">Collaboration</string>
+
 </resources>

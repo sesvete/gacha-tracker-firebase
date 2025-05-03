@@ -96,8 +96,8 @@ public class DatabaseHelper {
 
         String[] games = {"genshin_impact", "honkai_star_rail", "zenless_zone_zero", "tribe_nine"};
         String[][] bannerTypes = {
-                {"limited", "weapon", "standard"},
-                {"limited", "light_cone", "standard"},
+                {"limited", "weapon", "chronicled_wish", "standard"},
+                {"limited", "light_cone", "collaboration", "standard"},
                 {"limited", "w_engine", "standard", "bangboo"},
                 {"limited", "tension_card", "standard"}
         };

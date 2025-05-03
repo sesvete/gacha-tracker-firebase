@@ -28,24 +28,28 @@
     <string-array name="genshin_impact_banner_entries">
         <item>Limited</item>
         <item>Weapon</item>
+        <item>Chronicled Wish</item>
         <item>Standard</item>
     </string-array>
 
     <string-array name="genshin_impact_banner_values">
         <item>limited</item>
         <item>weapon</item>
+        <item>chronicled_wish</item>
         <item>standard</item>
     </string-array>
 
     <string-array name="honkai_star_rail_banner_entries">
         <item>Limited</item>
         <item>Light Cone</item>
+        <item>Collaboration</item>
         <item>Standard</item>
     </string-array>
 
     <string-array name="honkai_star_rail_banner_values">
         <item>limited</item>
         <item>light_cone</item>
+        <item>collaboration</item>
         <item>standard</item>
     </string-array>
 
