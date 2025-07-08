@@ -104,5 +104,7 @@
 
     <string name="chronicled_wish" translatable="false">Chronicled Wish</string>
     <string name="collaboration" translatable="false">Collaboration</string>
+    <string name="collaboration_character" translatable="false">Collaboration: Character</string>
+    <string name="collaboration_light_cone" translatable="false">Collaboration: Light Cone</string>
 
 </resources>
