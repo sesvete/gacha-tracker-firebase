@@ -120,6 +120,8 @@ public class StatsFragment extends Fragment {
             public void onPersonalStatsRetrieved(ArrayList<Integer> numOfPullsList, ArrayList<Boolean> fiftyFiftyOutcomes) {
                 wonAndLost5050 = fiftyFiftyOutcomes;
                 pullsForFiveStar = numOfPullsList;
+                // for number of pulled five stars het length of pullsForFiveStar
+                int numOfFiveStars = pullsForFiveStar.size();
                 if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
                     int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(wonAndLost5050);
                     int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(wonAndLost5050);
@@ -140,6 +142,7 @@ public class StatsFragment extends Fragment {
                     currencyValue = 160;
                 }
                 statisticList.add(new Statistic(getString(R.string.avg_for_five_star), doubleAvgNumPulls));
+                statisticList.add(new Statistic(getString(R.string.total_five_stars), numOfFiveStars));
                 statisticList.add(new Statistic(getString(R.string.total_num_pulls), intTotalNumPulls));
                 statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), Math.round((doubleAvgNumPulls * currencyValue) * 100.0) / 100.0));
                 statisticList.add(new Statistic(getString(R.string.total_currency_five_star), intTotalNumPulls * currencyValue));

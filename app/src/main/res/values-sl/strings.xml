@@ -31,7 +31,8 @@
     <string name="percentage_fifty_fifty">Delež zmaganih 50/60</string>
     <string name="total_won_fifty_fifty">Skupno zmaganih 50/50</string>
     <string name="total_lost_fifty_fifty">Skupno izgubljenih 50/50</string>
-    <string name="avg_for_five_star">Povprečno št. vloekov za 5 star</string>
+    <string name="avg_for_five_star">Povprečno št. vlekov za 5 star</string>
+    <string name="total_five_stars">Skupno število enot 5 zvezdic</string>
     <string name="total_num_pulls">Skupno število vlekov</string>
     <string name="avg_currency_five_star">Povprečna poraba igralne valute</string>
     <string name="total_currency_five_star">Skupna poraba igralne valute</string>
