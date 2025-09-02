@@ -14,6 +14,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.sesvete.gachatrackerfirebase.model.CounterProgress;
 import com.sesvete.gachatrackerfirebase.model.PulledUnit;
+import com.sesvete.gachatrackerfirebase.model.UserStats;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +64,9 @@ public class DatabaseHelper {
         void onPersonalStatsRetrieved(ArrayList<Integer> numOfPullsList, ArrayList<Boolean> fiftyFiftyOutcomes);
     }
 
+    public interface OnRetrieveGlobalStatsCallback {
+        void onGlobalStatsRetrieved(ArrayList<UserStats> allUserStats);
+    }
 
     public void checkIfUserExists(String uid, OnCheckExistingUser check){
         DatabaseReference usernameReference = usersReference.child(uid);
@@ -318,5 +322,64 @@ public class DatabaseHelper {
             }
         });
     }
+
+    public void retrieveGlobalStats(String game, String banner, OnRetrieveGlobalStatsCallback callback){
+        usersReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // List to store stats for each user
+                ArrayList<UserStats> allUserStats = new ArrayList<>();
+
+                // Iterate through all users in the database
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    DataSnapshot pulledUnitsSnapshot = userSnapshot.child("games").child(game).child(banner).child("pulled_units");
+
+                    // Check if the pulled_units path exists for the user and banner
+                    if (pulledUnitsSnapshot.exists()) {
+                        ArrayList<Integer> numOfPullsList = new ArrayList<>();
+                        ArrayList<Boolean> fiftyFiftyOutcomes = new ArrayList<>();
+                        ArrayList<Boolean> fromBannerList = new ArrayList<>();
+
+                        // Iterate through each pulled unit for the user
+                        for (DataSnapshot unitSnapshot : pulledUnitsSnapshot.getChildren()) {
+                            Long numOfPullsLong = unitSnapshot.child("numOfPulls").getValue(Long.class);
+                            if (numOfPullsLong != null) {
+                                numOfPullsList.add(numOfPullsLong.intValue());
+                            }
+                            Boolean fromBanner = unitSnapshot.child("fromBanner").getValue(Boolean.class);
+                            if (fromBanner != null) {
+                                fromBannerList.add(fromBanner);
+                            }
+                        }
+
+                        // Apply the fifty-fifty logic for this user's data
+                        boolean lost5050 = false;
+                        for (Boolean isFromBanner : fromBannerList) {
+                            if (isFromBanner) {
+                                if (!lost5050) {
+                                    fiftyFiftyOutcomes.add(true);
+                                }
+                                lost5050 = false;
+                            } else {
+                                fiftyFiftyOutcomes.add(false);
+                                lost5050 = true;
+                            }
+                        }
+
+                        UserStats userStats = new UserStats(numOfPullsList, fiftyFiftyOutcomes);
+                        allUserStats.add(userStats);
+                    }
+                }
+                callback.onGlobalStatsRetrieved(allUserStats);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Database Retrieval", "Failed to retrieve global stats: " + error.getMessage());
+                callback.onGlobalStatsRetrieved(null);
+            }
+        });
+    }
+
 
 }

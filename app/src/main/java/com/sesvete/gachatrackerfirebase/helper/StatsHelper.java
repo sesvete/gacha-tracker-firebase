@@ -1,5 +1,6 @@
 package com.sesvete.gachatrackerfirebase.helper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StatsHelper {
@@ -53,5 +54,26 @@ public class StatsHelper {
             sum += number;
         }
         return sum;
+    }
+
+    public static int sumArrayIntegerList(ArrayList<Integer> numbers) {
+        int sum = 0;
+        for (int number : numbers) {
+            sum += number;
+        }
+        return sum;
+    }
+
+    public static double sumArrayDoubleList(ArrayList<Double> numbers) {
+        double sum = 0;
+        for (double number : numbers) {
+            sum += number;
+        }
+        return sum;
+    }
+
+    public static double calculateListAvg(double number, int listSize) {
+        double result = number/listSize;
+        return Math.round(result * 100.0) / 100.0;
     }
 }
