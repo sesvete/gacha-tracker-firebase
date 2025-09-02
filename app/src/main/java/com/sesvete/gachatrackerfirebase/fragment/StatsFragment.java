@@ -20,10 +20,12 @@ import com.sesvete.gachatrackerfirebase.helper.DatabaseHelper;
 import com.sesvete.gachatrackerfirebase.helper.StatsHelper;
 import com.sesvete.gachatrackerfirebase.helper.StatsRecViewAdapter;
 import com.sesvete.gachatrackerfirebase.model.Statistic;
+import com.sesvete.gachatrackerfirebase.model.UserStats;
 
 import java.util.ArrayList;
 
-// TODO: global stats
+// TODO: fix formating for global stats - only two decimals
+// TODO: test global stats with more users
 
 public class StatsFragment extends Fragment {
 
@@ -39,8 +41,6 @@ public class StatsFragment extends Fragment {
     private String game;
     private String bannerType;
 
-    private ArrayList<Integer> pullsForFiveStar;
-    private ArrayList<Boolean> wonAndLost5050;
     private ArrayList<Statistic> statisticList;
     private StatsRecViewAdapter adapter;
 
@@ -91,10 +91,7 @@ public class StatsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onGlobalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
-                statisticList.clear();
-                statisticList.add(new Statistic("Total of pulled units", 3));
-                statisticList.add(new Statistic("Total of pulled units", 3));
-                adapter.setStatisticList(statisticList);
+                getGlobalStats(statisticList, game, bannerType);
             }
         });
         return view;
@@ -118,21 +115,19 @@ public class StatsFragment extends Fragment {
         databaseHelper.retrievePersonalStats(uid, game, bannerType, new DatabaseHelper.OnRetrievePersonalStatsCallback() {
             @Override
             public void onPersonalStatsRetrieved(ArrayList<Integer> numOfPullsList, ArrayList<Boolean> fiftyFiftyOutcomes) {
-                wonAndLost5050 = fiftyFiftyOutcomes;
-                pullsForFiveStar = numOfPullsList;
                 // for number of pulled five stars het length of pullsForFiveStar
-                int numOfFiveStars = pullsForFiveStar.size();
+                int numOfFiveStars = numOfPullsList.size();
                 if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
-                    int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(wonAndLost5050);
-                    int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(wonAndLost5050);
+                    int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(fiftyFiftyOutcomes);
+                    int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(fiftyFiftyOutcomes);
                     double doublePercentageFiftyFifty = StatsHelper.percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
 
                     statisticList.add(new Statistic(getString(R.string.percentage_fifty_fifty), doublePercentageFiftyFifty));
                     statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), intNumWonFiftyFifty));
                     statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), intNumLostFiftyFifty));
                 }
-                double doubleAvgNumPulls = StatsHelper.avgNumPulls(pullsForFiveStar);
-                int intTotalNumPulls = StatsHelper.totalNumPulls(pullsForFiveStar);
+                double doubleAvgNumPulls = StatsHelper.avgNumPulls(numOfPullsList);
+                int intTotalNumPulls = StatsHelper.totalNumPulls(numOfPullsList);
                 int currencyValue;
 
                 if (game.equals("tribe_nine")){
@@ -148,6 +143,67 @@ public class StatsFragment extends Fragment {
                 statisticList.add(new Statistic(getString(R.string.total_currency_five_star), intTotalNumPulls * currencyValue));
 
                 adapter.setStatisticList(statisticList);
+            }
+        });
+    }
+
+    private void getGlobalStats(ArrayList<Statistic> statisticList, String game, String bannerType){
+        statisticList.clear();
+        DatabaseHelper databaseHelper = new DatabaseHelper();
+        ArrayList<Integer> listNumOfFiveStars = new ArrayList<>();
+        ArrayList<Integer> listIntNumWonFiftyFifty = new ArrayList<>();
+        ArrayList<Integer> listIntNumLostFiftyFifty = new ArrayList<>();
+        ArrayList<Double> listDoublePercentageFiftyFifty = new ArrayList<>();
+        ArrayList<Double> listDoubleAvgNumPulls = new ArrayList<>();
+        ArrayList<Integer> listIntTotalNumPulls = new ArrayList<>();
+
+        databaseHelper.retrieveGlobalStats(game, bannerType, new DatabaseHelper.OnRetrieveGlobalStatsCallback() {
+            @Override
+            public void onGlobalStatsRetrieved(ArrayList<UserStats> allUserStats) {
+                for (UserStats userStats : allUserStats) {
+                    ArrayList<Boolean> wonAndLost5050 = userStats.getFiftyFiftyOutcomes();
+                    ArrayList<Integer> pullsForFiveStar = userStats.getNumOfPullsList();
+                    if (!pullsForFiveStar.isEmpty() && !wonAndLost5050.isEmpty()){
+                        int numOfFiveStars = pullsForFiveStar.size();
+                        listNumOfFiveStars.add(numOfFiveStars);
+                        int intNumWonFiftyFifty = StatsHelper.numWonFiftyFifty(wonAndLost5050);
+                        listIntNumWonFiftyFifty.add(intNumWonFiftyFifty);
+                        int intNumLostFiftyFifty = StatsHelper.numLostFiftyFifty(wonAndLost5050);
+                        listIntNumLostFiftyFifty.add(intNumLostFiftyFifty);
+                        double doublePercentageFiftyFifty = StatsHelper.percentageFiftyFifty(intNumWonFiftyFifty, intNumLostFiftyFifty);
+                        listDoublePercentageFiftyFifty.add(doublePercentageFiftyFifty);
+                        double doubleAvgNumPulls = StatsHelper.avgNumPulls(pullsForFiveStar);
+                        listDoubleAvgNumPulls.add(doubleAvgNumPulls);
+                        int intTotalNumPulls = StatsHelper.totalNumPulls(pullsForFiveStar);
+                        listIntTotalNumPulls.add(intTotalNumPulls);
+                    }
+                }
+                if (!listNumOfFiveStars.isEmpty()){
+                    if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
+                        statisticList.add(new Statistic(getString(R.string.percentage_fifty_fifty), (StatsHelper.sumArrayDoubleList(listDoublePercentageFiftyFifty)/listDoublePercentageFiftyFifty.size())));
+                        statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), (double) StatsHelper.sumArrayIntegerList(listIntNumWonFiftyFifty) /listIntNumWonFiftyFifty.size()));
+                        statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), (double) StatsHelper.sumArrayIntegerList(listIntNumLostFiftyFifty) /listIntNumLostFiftyFifty.size()));
+                    }
+                    int currencyValue;
+                    if (game.equals("tribe_nine")){
+                        currencyValue = 120;
+                    }
+                    else {
+                        currencyValue = 160;
+                    }
+                    double sumAvgNumPulls = StatsHelper.sumArrayDoubleList(listDoubleAvgNumPulls)/listDoubleAvgNumPulls.size();
+                    double sumAvgTotalNumPulls = (double) StatsHelper.sumArrayIntegerList(listIntTotalNumPulls) /listIntTotalNumPulls.size();
+
+
+                    statisticList.add(new Statistic(getString(R.string.avg_for_five_star), sumAvgNumPulls));
+                    statisticList.add(new Statistic(getString(R.string.total_five_stars), (double) StatsHelper.sumArrayIntegerList(listNumOfFiveStars) /listNumOfFiveStars.size()));
+                    statisticList.add(new Statistic(getString(R.string.total_num_pulls), sumAvgTotalNumPulls));
+                    statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), Math.round((sumAvgNumPulls * currencyValue) * 100.0) / 100.0));
+                    statisticList.add(new Statistic(getString(R.string.total_currency_five_star), sumAvgTotalNumPulls * currencyValue));
+
+                    adapter.setStatisticList(statisticList);
+                }
+
             }
         });
     }
