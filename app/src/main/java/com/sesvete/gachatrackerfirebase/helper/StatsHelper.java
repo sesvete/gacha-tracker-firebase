@@ -71,4 +71,9 @@ public class StatsHelper {
         }
         return sum;
     }
+
+    public static double calculateListAvg(double number, int listSize) {
+        double result = number/listSize;
+        return Math.round(result * 100.0) / 100.0;
+    }
 }

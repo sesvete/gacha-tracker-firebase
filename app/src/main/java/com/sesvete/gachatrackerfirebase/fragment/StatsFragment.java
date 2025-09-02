@@ -24,8 +24,6 @@ import com.sesvete.gachatrackerfirebase.model.UserStats;
 
 import java.util.ArrayList;
 
-// TODO: fix formating for global stats - only two decimals
-// TODO: test global stats with more users
 
 public class StatsFragment extends Fragment {
 
@@ -180,9 +178,14 @@ public class StatsFragment extends Fragment {
                 }
                 if (!listNumOfFiveStars.isEmpty()){
                     if (!bannerType.equals("standard") && !bannerType.equals("bangboo")){
-                        statisticList.add(new Statistic(getString(R.string.percentage_fifty_fifty), (StatsHelper.sumArrayDoubleList(listDoublePercentageFiftyFifty)/listDoublePercentageFiftyFifty.size())));
-                        statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), (double) StatsHelper.sumArrayIntegerList(listIntNumWonFiftyFifty) /listIntNumWonFiftyFifty.size()));
-                        statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), (double) StatsHelper.sumArrayIntegerList(listIntNumLostFiftyFifty) /listIntNumLostFiftyFifty.size()));
+
+                        double roundGlobalPercentageFifty = StatsHelper.calculateListAvg(StatsHelper.sumArrayDoubleList(listDoublePercentageFiftyFifty), listDoublePercentageFiftyFifty.size());
+                        double roundGlobalTotalWonFifty = StatsHelper.calculateListAvg(StatsHelper.sumArrayIntegerList(listIntNumWonFiftyFifty), listIntNumWonFiftyFifty.size());
+                        double roundGlobalTotalLostFifty = StatsHelper.calculateListAvg(StatsHelper.sumArrayIntegerList(listIntNumLostFiftyFifty), listIntNumLostFiftyFifty.size());
+
+                        statisticList.add(new Statistic(getString(R.string.percentage_fifty_fifty), roundGlobalPercentageFifty));
+                        statisticList.add(new Statistic(getString(R.string.total_won_fifty_fifty), roundGlobalTotalWonFifty));
+                        statisticList.add(new Statistic(getString(R.string.total_lost_fifty_fifty), roundGlobalTotalLostFifty));
                     }
                     int currencyValue;
                     if (game.equals("tribe_nine")){
@@ -192,14 +195,16 @@ public class StatsFragment extends Fragment {
                         currencyValue = 160;
                     }
                     double sumAvgNumPulls = StatsHelper.sumArrayDoubleList(listDoubleAvgNumPulls)/listDoubleAvgNumPulls.size();
-                    double sumAvgTotalNumPulls = (double) StatsHelper.sumArrayIntegerList(listIntTotalNumPulls) /listIntTotalNumPulls.size();
 
+                    double roundSumAvgNumPulls = StatsHelper.calculateListAvg(StatsHelper.sumArrayDoubleList(listDoubleAvgNumPulls), listDoubleAvgNumPulls.size());
+                    double roundSumAvgTotalNumPulls = StatsHelper.calculateListAvg(StatsHelper.sumArrayIntegerList(listIntTotalNumPulls), listIntTotalNumPulls.size());
+                    double roundAvgTotalFiveStars = StatsHelper.calculateListAvg(StatsHelper.sumArrayIntegerList(listNumOfFiveStars), listNumOfFiveStars.size());
 
-                    statisticList.add(new Statistic(getString(R.string.avg_for_five_star), sumAvgNumPulls));
-                    statisticList.add(new Statistic(getString(R.string.total_five_stars), (double) StatsHelper.sumArrayIntegerList(listNumOfFiveStars) /listNumOfFiveStars.size()));
-                    statisticList.add(new Statistic(getString(R.string.total_num_pulls), sumAvgTotalNumPulls));
+                    statisticList.add(new Statistic(getString(R.string.avg_for_five_star), roundSumAvgNumPulls));
+                    statisticList.add(new Statistic(getString(R.string.total_five_stars), roundAvgTotalFiveStars));
+                    statisticList.add(new Statistic(getString(R.string.total_num_pulls), roundSumAvgTotalNumPulls));
                     statisticList.add(new Statistic(getString(R.string.avg_currency_five_star), Math.round((sumAvgNumPulls * currencyValue) * 100.0) / 100.0));
-                    statisticList.add(new Statistic(getString(R.string.total_currency_five_star), sumAvgTotalNumPulls * currencyValue));
+                    statisticList.add(new Statistic(getString(R.string.total_currency_five_star), roundSumAvgTotalNumPulls * currencyValue));
 
                     adapter.setStatisticList(statisticList);
                 }
