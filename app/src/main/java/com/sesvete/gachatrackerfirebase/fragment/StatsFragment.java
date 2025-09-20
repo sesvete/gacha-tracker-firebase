@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,8 @@ public class StatsFragment extends Fragment {
     private ArrayList<Statistic> statisticList;
     private StatsRecViewAdapter adapter;
 
-
+    private long timerPersonalStatsStart;
+    private long timerGlobalStatsStart;
 
     public StatsFragment() {
         // Required empty public constructor
@@ -53,6 +55,8 @@ public class StatsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_stats, container, false);
+
+        timerPersonalStatsStart = System.nanoTime();
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -75,21 +79,23 @@ public class StatsFragment extends Fragment {
 
         //initial Load Personal stats
         onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
-        getPersonalStats(statisticList, uid, game, bannerType);
+        getPersonalStats(statisticList, uid, game, bannerType, timerPersonalStatsStart);
 
         recyclerViewStats.setLayoutManager(new LinearLayoutManager(getContext()));
         btnStatsPersonal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timerPersonalStatsStart = System.nanoTime();
                 onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
-                getPersonalStats(statisticList, uid, game, bannerType);
+                getPersonalStats(statisticList, uid, game, bannerType, timerPersonalStatsStart);
             }
         });
         btnStatsGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timerGlobalStatsStart = System.nanoTime();
                 onGlobalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
-                getGlobalStats(statisticList, game, bannerType);
+                getGlobalStats(statisticList, game, bannerType, timerGlobalStatsStart);
             }
         });
         return view;
@@ -106,7 +112,7 @@ public class StatsFragment extends Fragment {
         btnStatsGlobal.setEnabled(false);
     }
 
-    private void getPersonalStats(ArrayList<Statistic> statisticList, String uid, String game, String bannerType){
+    private void getPersonalStats(ArrayList<Statistic> statisticList, String uid, String game, String bannerType, long timerPersonalStatsStart){
         statisticList.clear();
         DatabaseHelper databaseHelper = new DatabaseHelper();
 
@@ -141,11 +147,15 @@ public class StatsFragment extends Fragment {
                 statisticList.add(new Statistic(getString(R.string.total_currency_five_star), intTotalNumPulls * currencyValue));
 
                 adapter.setStatisticList(statisticList);
+
+                long timerPersonalStatsEnd = System.nanoTime();
+                long timerPersonalStatsResult= (timerPersonalStatsEnd - timerPersonalStatsStart)/1000000;
+                Log.i("Timer Personal Stats", Long.toString(timerPersonalStatsResult) + " " + "ms");
             }
         });
     }
 
-    private void getGlobalStats(ArrayList<Statistic> statisticList, String game, String bannerType){
+    private void getGlobalStats(ArrayList<Statistic> statisticList, String game, String bannerType, long timerGlobalStatsStart){
         statisticList.clear();
         DatabaseHelper databaseHelper = new DatabaseHelper();
         ArrayList<Integer> listNumOfFiveStars = new ArrayList<>();
@@ -207,6 +217,10 @@ public class StatsFragment extends Fragment {
                     statisticList.add(new Statistic(getString(R.string.total_currency_five_star), roundSumAvgTotalNumPulls * currencyValue));
 
                     adapter.setStatisticList(statisticList);
+
+                    long timerGlobalStatsEnd = System.nanoTime();
+                    long timerGlobalStatsResult= (timerGlobalStatsEnd - timerGlobalStatsStart)/1000000;
+                    Log.i("Timer Global Stats", Long.toString(timerGlobalStatsResult) + " " + "ms");
                 }
 
             }
