@@ -84,6 +84,8 @@ public class CounterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        long timerStartInitialCounterLoad = System.nanoTime();
+
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
 
         mAuth = FirebaseAuth.getInstance();
@@ -172,10 +174,14 @@ public class CounterFragment extends Fragment {
                 setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
             }
         });
+        long timerEndInitialCounterLoad = System.nanoTime();
+        long timerInitialCounterResult = (timerEndInitialCounterLoad - timerStartInitialCounterLoad)/1000000;
+        Log.i("Timer counter initialization", Long.toString(timerInitialCounterResult) + " " + "ms");
 
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long timerBtnPlusOneStart= System.nanoTime();
                 disableButtons();
                 CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, 1, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
                 counterNumber = counterNumber + 1;
@@ -184,6 +190,9 @@ public class CounterFragment extends Fragment {
                     public void onCounterUpdated(boolean success) {
                         if (success){
                             Log.d("btnPlusOne", "updated successfully");
+                            long timerBtnPlusOneEnd = System.nanoTime();
+                            long timerBtnPlusOneResult = (timerBtnPlusOneEnd - timerBtnPlusOneStart)/1000000;
+                            Log.i("Timer btn +1", Long.toString(timerBtnPlusOneResult) + " " + "ms");
                         } else {
                             Log.d("btnPlusOne", "update failed");
                             Toast.makeText(getContext(), "Failed adding +1", Toast.LENGTH_SHORT).show();
@@ -196,6 +205,7 @@ public class CounterFragment extends Fragment {
         btnCounterPlusTen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long timerBtnPlusTenStart= System.nanoTime();
                 disableButtons();
                 CounterHelper.updateCounter(getResources(), txtCounterProgressNumber, 10, softPity, wishValue, currencyType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotDescription, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotal, txtCounterSpentTillJackpotTotalDescription);
                 counterNumber = counterNumber + 10;
@@ -203,6 +213,9 @@ public class CounterFragment extends Fragment {
                     @Override
                     public void onCounterUpdated(boolean success) {
                         if (success){
+                            long timerBtnPlusTenEnd = System.nanoTime();
+                            long timerBtnPlusTenResult = (timerBtnPlusTenEnd - timerBtnPlusTenStart)/1000000;
+                            Log.i("Timer btn +10", Long.toString(timerBtnPlusTenResult) + " " + "ms");
                             Log.d("btnPlusTen", "updated successfully");
                         } else {
                             Log.d("btnPlusTen", "update failed");
@@ -232,6 +245,7 @@ public class CounterFragment extends Fragment {
                 btnXConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        long timerBtnPlusXStart= System.nanoTime();
                         String inputString = inputXCounter.getText().toString();
                         if (inputString.isEmpty()){
                             Toast.makeText(getContext(), R.string.enter_a_number_error, Toast.LENGTH_SHORT).show();
@@ -248,6 +262,9 @@ public class CounterFragment extends Fragment {
                                         @Override
                                         public void onCounterUpdated(boolean success) {
                                             if (success){
+                                                long timerBtnPlusXEnd = System.nanoTime();
+                                                long timerBtnPlusXResult = (timerBtnPlusXEnd - timerBtnPlusXStart)/1000000;
+                                                Log.i("Timer btn +X", Long.toString(timerBtnPlusXResult) + " " + "ms");
                                                 Log.d("btnPlusX", "updated successfully");
                                             } else {
                                                 Log.d("btnPlusX", "update failed");
@@ -302,6 +319,7 @@ public class CounterFragment extends Fragment {
                         btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                long timerInputPullStart = System.nanoTime();
                                 String inputString = inputConfirmCounter.getText().toString();
                                 inputString = inputString.toUpperCase();
                                 if (inputString.isEmpty()){
@@ -338,6 +356,9 @@ public class CounterFragment extends Fragment {
                                         @Override
                                         public void onCounterUpdated(boolean success) {
                                             if (success){
+                                                long timerInputPullEnd = System.nanoTime();
+                                                long timerInputPullResult = (timerInputPullEnd - timerInputPullStart)/1000000;
+                                                Log.i("Timer Custom counter update", Long.toString(timerInputPullResult) + " " + "ms");
                                                 Log.d("btnCounterConfirm", "updated successfully");
                                             } else {
                                                 Log.d("btnCounterConfirm", "update failed");
@@ -399,6 +420,7 @@ public class CounterFragment extends Fragment {
                 btnConfirmConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        long timerCardStart = System.nanoTime();
                         String inputString = inputUpdateCounter.getText().toString();
                         if (inputString.isEmpty()){
                             Toast.makeText(getContext(), R.string.enter_a_number_error, Toast.LENGTH_SHORT).show();
@@ -425,6 +447,9 @@ public class CounterFragment extends Fragment {
                                         @Override
                                         public void onCounterUpdated(boolean success) {
                                             if (success){
+                                                long timerCardEnd = System.nanoTime();
+                                                long timerCardResult = (timerCardEnd - timerCardStart)/1000000;
+                                                Log.i("Timer Custom counter update", Long.toString(timerCardResult) + " " + "ms");
                                                 Log.d("btnPlusX", "updated successfully");
                                             } else {
                                                 Log.d("btnPlusX", "update failed");
