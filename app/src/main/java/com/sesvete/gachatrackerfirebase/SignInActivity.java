@@ -58,7 +58,8 @@ public class SignInActivity extends AppCompatActivity {
         btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AuthenticationHelper.launchCredentialManager(getResources(), credentialManager, mAuth, SignInActivity.this);
+                long timerCredentialStart = System.nanoTime();
+                AuthenticationHelper.launchCredentialManager(getResources(), credentialManager, mAuth, SignInActivity.this, timerCredentialStart);
             }
         });
 

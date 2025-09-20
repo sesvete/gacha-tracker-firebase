@@ -37,7 +37,7 @@ import java.util.concurrent.Executors;
 
 public class AuthenticationHelper {
 
-    public static void launchCredentialManager(Resources resources, CredentialManager credentialManager, FirebaseAuth mAuth, Activity activity){
+    public static void launchCredentialManager(Resources resources, CredentialManager credentialManager, FirebaseAuth mAuth, Activity activity, long timerCredentialStart){
         // Instantiate a Google sign-in request
         GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
                 // for some reason setFilterByAuthorizedAccounts(true) does not work
@@ -60,7 +60,7 @@ public class AuthenticationHelper {
                 new CredentialManagerCallback<>() {
                     @Override
                     public void onResult(GetCredentialResponse result) {
-                        handleSignIn(result.getCredential(), mAuth, activity);
+                        handleSignIn(result.getCredential(), mAuth, activity, timerCredentialStart);
                     }
 
                     @Override
@@ -73,22 +73,29 @@ public class AuthenticationHelper {
 
 
     }
-    private static void handleSignIn(Credential credential, FirebaseAuth mAuth, Activity activity){
+    private static void handleSignIn(Credential credential, FirebaseAuth mAuth, Activity activity, long timerCredentialStart){
         if (credential instanceof CustomCredential customCredential && credential.getType().equals(TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)){
+            // start google sign in timer
+            long timerStart = System.nanoTime();
             Bundle credentialData = customCredential.getData();
             GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credentialData);
-            firebaseAuthWithGoogle(googleIdTokenCredential.getIdToken(), mAuth, activity);
+            firebaseAuthWithGoogle(googleIdTokenCredential.getIdToken(), mAuth, activity, timerStart, timerCredentialStart);
         }
         else {
             Log.d("Sign in", "Credential is not of type Google ID!");
         }
     }
 
-    private static void firebaseAuthWithGoogle(String idToken, FirebaseAuth mAuth, Activity activity){
+    private static void firebaseAuthWithGoogle(String idToken, FirebaseAuth mAuth, Activity activity, long timerStart, long timerCredentialStart){
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()) {
+                        long timerEnd = System.nanoTime();
+                        long timerResult = (timerEnd - timerStart)/1000000;
+                        long timerCredentialResult = (timerEnd - timerCredentialStart)/1000000;
+                        Log.i("Credential Sign in timer", Long.toString(timerCredentialResult) + " " + "ms");
+                        Log.i("Google sign in timer", Long.toString(timerResult) + " " + "ms");
                         Intent intent = new Intent(activity, MainActivity.class);
                         activity.startActivity(intent);
                         activity.finish();
