@@ -31,6 +31,7 @@ public class HistoryFragment extends Fragment {
     private FirebaseUser currentUser;
     private String uid;
     private String game;
+    private long timerHistoryStart;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -40,6 +41,8 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        timerHistoryStart = System.nanoTime();
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -63,7 +66,7 @@ public class HistoryFragment extends Fragment {
         databaseHelper.retrievePullsHistory(uid, game, bannerType, new DatabaseHelper.OnRetrievePullsHistoryCallback() {
             @Override
             public void OnRetrievedPullsHistory(ArrayList<PulledUnit> pulledUnitList) {
-                adapter.setPulledUnits(pulledUnitList);
+                adapter.setPulledUnits(pulledUnitList, timerHistoryStart);
             }
         });
 

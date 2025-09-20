@@ -1,6 +1,7 @@
 package com.sesvete.gachatrackerfirebase.helper;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +71,13 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         return pulledUnits.size();
     }
 
-    public void setPulledUnits(ArrayList<PulledUnit> pulledUnits) {
+    public void setPulledUnits(ArrayList<PulledUnit> pulledUnits, long timerHistoryStart) {
         this.pulledUnits = pulledUnits;
+
+        long timerHistoryEnd = System.nanoTime();
+        long timerHistoryResult= (timerHistoryEnd - timerHistoryStart)/1000000;
+        Log.i("Timer history", Long.toString(timerHistoryResult) + " " + "ms");
+
         notifyDataSetChanged();
     }
 

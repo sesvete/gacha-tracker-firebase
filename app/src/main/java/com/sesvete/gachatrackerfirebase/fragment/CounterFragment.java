@@ -84,8 +84,6 @@ public class CounterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        long timerStartInitialCounterLoad = System.nanoTime();
-
         View view = inflater.inflate(R.layout.fragment_counter, container, false);
 
         mAuth = FirebaseAuth.getInstance();
@@ -140,6 +138,7 @@ public class CounterFragment extends Fragment {
 
         // this is the lunching fragment, so we check here whether the user and the database entry exist
         databaseHelper.checkIfUserExists(uid, new DatabaseHelper.OnCheckExistingUser() {
+            final long timerStartInitialCounterLoad = System.nanoTime();
             @Override
             public void onCreateNewUser(String uid) {
                 Log.d("Main Startup", "Created user");
@@ -154,7 +153,7 @@ public class CounterFragment extends Fragment {
                     }
                 });
                 // sets the initial state of the counter
-                setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+                setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription, timerStartInitialCounterLoad);
             }
 
             @Override
@@ -171,12 +170,9 @@ public class CounterFragment extends Fragment {
                     }
                 });
                 // sets the initial state of the counter
-                setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
+                setInitialCounter(txtCounterProgressNumber, imgCounterProgressGuaranteedDescription, uid, game, bannerType, txtCounterSpentTillJackpot, txtCounterSpentTillJackpotCurrency, txtCounterSpentTillJackpotTotal, softPity, wishValue, getResources(), txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription, timerStartInitialCounterLoad);
             }
         });
-        long timerEndInitialCounterLoad = System.nanoTime();
-        long timerInitialCounterResult = (timerEndInitialCounterLoad - timerStartInitialCounterLoad)/1000000;
-        Log.i("Timer counter initialization", Long.toString(timerInitialCounterResult) + " " + "ms");
 
         btnCounterPlusOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -502,7 +498,7 @@ public class CounterFragment extends Fragment {
     // mora se pobrati stanje trenutenga counterja
     // morajo se posodobiti tista polja
 
-    private void setInitialCounter(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, String uid, String game, String bannerType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotTotal, int softPity, int wishValue, Resources resources, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotalDescription){
+    private void setInitialCounter(TextView txtCounterProgressNumber, ImageView imgCounterProgressGuaranteedDescription, String uid, String game, String bannerType, TextView txtCounterSpentTillJackpot, TextView txtCounterSpentTillJackpotCurrency, TextView txtCounterSpentTillJackpotTotal, int softPity, int wishValue, Resources resources, TextView txtCounterSpentTillJackpotCurrencyDescription, TextView txtCounterSpentTillJackpotTotalDescription, long timerStartInitialCounterLoad){
         DatabaseHelper databaseHelper = new DatabaseHelper();
         databaseHelper.getCounterStatus(uid, game, bannerType, new DatabaseHelper.OnCounterReceivedCallback() {
             @Override
@@ -521,6 +517,9 @@ public class CounterFragment extends Fragment {
                 CounterHelper.initialTextviewAdjust(resources, game, txtCounterSpentTillJackpotCurrencyDescription, txtCounterSpentTillJackpotTotalDescription);
                 //enable buttons once the values are set
                 enableButtons();
+                long timerEndInitialCounterLoad = System.nanoTime();
+                long timerInitialCounterResult = (timerEndInitialCounterLoad - timerStartInitialCounterLoad)/1000000;
+                Log.i("Timer counter initialization", Long.toString(timerInitialCounterResult) + " " + "ms");
             }
         });
     }
