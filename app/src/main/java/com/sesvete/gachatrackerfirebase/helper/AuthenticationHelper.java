@@ -122,7 +122,7 @@ public class AuthenticationHelper {
                     public void onResult(Void unused) {
                         long timerLogoutEnd = System.nanoTime();
                         long timerLogoutResult = (timerLogoutEnd - timerLogoutStart)/1000000;
-                        Log.i("Timer Create Email account", Long.toString(timerLogoutResult) + " " + "ms");
+                        Log.i("Timer Logout", Long.toString(timerLogoutResult) + " " + "ms");
 
                         Log.e("logOut", "Cleared user credentials");
                         Intent intent = new Intent(activity, SignInActivity.class);
@@ -144,16 +144,16 @@ public class AuthenticationHelper {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            long timerCreateAccountEnd = System.nanoTime();
-                            long timerCreateAccountResult = (timerCreateAccountEnd - timerCreateAccountStart)/1000000;
-                            Log.i("Timer Create Email account", Long.toString(timerCreateAccountResult) + " " + "ms");
-
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(activity, MainActivity.class);
                             activity.startActivity(intent);
                             activity.finish();
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("SignInPassword", "createUserWithEmail:success");
+
+                            long timerCreateAccountEnd = System.nanoTime();
+                            long timerCreateAccountResult = (timerCreateAccountEnd - timerCreateAccountStart)/1000000;
+                            Log.i("Timer Create Email account", Long.toString(timerCreateAccountResult) + " " + "ms");
 
                         } else {
                             // If sign in fails, display a message to the user.
