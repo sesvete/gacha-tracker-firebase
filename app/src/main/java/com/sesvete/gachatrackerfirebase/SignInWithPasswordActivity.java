@@ -54,7 +54,8 @@ public class SignInWithPasswordActivity extends AppCompatActivity {
                 if (email.isEmpty() || password.isEmpty()){
                     Toast.makeText(SignInWithPasswordActivity.this, getString(R.string.fill_all_forms), Toast.LENGTH_SHORT).show();
                 } else {
-                    AuthenticationHelper.signInWithEmailAndPassword(mAuth, SignInWithPasswordActivity.this, getResources(), email, password);
+                    long timerSingInEmailStart = System.nanoTime();
+                    AuthenticationHelper.signInWithEmailAndPassword(mAuth, SignInWithPasswordActivity.this, getResources(), email, password, timerSingInEmailStart);
                 }
 
             }

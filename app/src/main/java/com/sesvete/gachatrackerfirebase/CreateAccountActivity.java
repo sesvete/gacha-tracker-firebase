@@ -59,7 +59,9 @@ public class CreateAccountActivity extends AppCompatActivity {
                 } else if (password.length() <= 6) {
                     Toast.makeText(CreateAccountActivity.this, getString(R.string.short_password), Toast.LENGTH_SHORT).show();
                 } else {
-                    AuthenticationHelper.createUserWithEmailAndPassword(mAuth, CreateAccountActivity.this, getResources(), email, password);
+                    // start timer
+                    long timerCreateAccountStart = System.nanoTime();
+                    AuthenticationHelper.createUserWithEmailAndPassword(mAuth, CreateAccountActivity.this, getResources(), email, password, timerCreateAccountStart);
                 }
 
             }

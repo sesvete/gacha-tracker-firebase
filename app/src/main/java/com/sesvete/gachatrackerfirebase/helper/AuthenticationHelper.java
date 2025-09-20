@@ -109,7 +109,7 @@ public class AuthenticationHelper {
 
     }
 
-    public static void logOut(FirebaseAuth mAuth, CredentialManager credentialManager, Activity activity){
+    public static void logOut(FirebaseAuth mAuth, CredentialManager credentialManager, Activity activity, long timerLogoutStart){
         mAuth.signOut();
 
         ClearCredentialStateRequest clearRequest = new ClearCredentialStateRequest();
@@ -120,6 +120,10 @@ public class AuthenticationHelper {
                 new CredentialManagerCallback<Void, ClearCredentialException>() {
                     @Override
                     public void onResult(Void unused) {
+                        long timerLogoutEnd = System.nanoTime();
+                        long timerLogoutResult = (timerLogoutEnd - timerLogoutStart)/1000000;
+                        Log.i("Timer Create Email account", Long.toString(timerLogoutResult) + " " + "ms");
+
                         Log.e("logOut", "Cleared user credentials");
                         Intent intent = new Intent(activity, SignInActivity.class);
                         activity.startActivity(intent);
@@ -134,12 +138,16 @@ public class AuthenticationHelper {
         );
     }
 
-    public static void createUserWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password){
+    public static void createUserWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password, long timerCreateAccountStart){
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            long timerCreateAccountEnd = System.nanoTime();
+                            long timerCreateAccountResult = (timerCreateAccountEnd - timerCreateAccountStart)/1000000;
+                            Log.i("Timer Create Email account", Long.toString(timerCreateAccountResult) + " " + "ms");
+
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(activity, MainActivity.class);
                             activity.startActivity(intent);
@@ -160,12 +168,17 @@ public class AuthenticationHelper {
                 });
     }
 
-    public static void signInWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password){
+    public static void signInWithEmailAndPassword(FirebaseAuth mAuth, Activity activity, Resources resources, String email, String password, long timerSingInEmailStart){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            long timerSingInEmailEnd = System.nanoTime();
+                            long timerSingInEmailResult = (timerSingInEmailEnd - timerSingInEmailStart)/1000000;
+                            Log.i("Timer sing in Email", Long.toString(timerSingInEmailResult) + " " + "ms");
+
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("SignInPassword", "signInWithEmail:success");
                             Intent intent = new Intent(activity, MainActivity.class);

@@ -118,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             // tu bo seveda najprej prišlo do odjave
                             dialog.dismiss();
-                            AuthenticationHelper.logOut(mAuth, credentialManager, MainActivity.this);
+                            long timerLogoutStart = System.nanoTime();
+                            AuthenticationHelper.logOut(mAuth, credentialManager, MainActivity.this, timerLogoutStart);
                         }
                     });
                 }
