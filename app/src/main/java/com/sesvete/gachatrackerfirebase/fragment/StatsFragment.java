@@ -73,28 +73,29 @@ public class StatsFragment extends Fragment {
         txtStatsTitle = view.findViewById(R.id.txt_stats_title);
         recyclerViewStats = view.findViewById(R.id.recycler_view_stats);
 
+        disableButtons();
+
         statisticList = new ArrayList<>();
         adapter = new StatsRecViewAdapter(getContext());
         recyclerViewStats.setAdapter(adapter);
 
         //initial Load Personal stats
-        onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
         getPersonalStats(statisticList, uid, game, bannerType, timerPersonalStatsStart);
 
         recyclerViewStats.setLayoutManager(new LinearLayoutManager(getContext()));
         btnStatsPersonal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 timerPersonalStatsStart = System.nanoTime();
-                onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
                 getPersonalStats(statisticList, uid, game, bannerType, timerPersonalStatsStart);
             }
         });
         btnStatsGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                disableButtons();
                 timerGlobalStatsStart = System.nanoTime();
-                onGlobalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
                 getGlobalStats(statisticList, game, bannerType, timerGlobalStatsStart);
             }
         });
@@ -151,6 +152,7 @@ public class StatsFragment extends Fragment {
                 long timerPersonalStatsEnd = System.nanoTime();
                 long timerPersonalStatsResult= (timerPersonalStatsEnd - timerPersonalStatsStart)/1000000;
                 Log.i("Timer Personal Stats", Long.toString(timerPersonalStatsResult) + " " + "ms");
+                onPersonalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
             }
         });
     }
@@ -221,10 +223,17 @@ public class StatsFragment extends Fragment {
                     long timerGlobalStatsEnd = System.nanoTime();
                     long timerGlobalStatsResult= (timerGlobalStatsEnd - timerGlobalStatsStart)/1000000;
                     Log.i("Timer Global Stats", Long.toString(timerGlobalStatsResult) + " " + "ms");
+                    onGlobalPress(txtStatsTitle, btnStatsPersonal, btnStatsGlobal);
                 }
 
             }
         });
     }
+
+    private void disableButtons(){
+        btnStatsPersonal.setEnabled(false);
+        btnStatsGlobal.setEnabled(false);
+    }
+
 
 }
