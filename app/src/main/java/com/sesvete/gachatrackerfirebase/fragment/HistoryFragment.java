@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,11 @@ public class HistoryFragment extends Fragment {
         databaseHelper.retrievePullsHistory(uid, game, bannerType, new DatabaseHelper.OnRetrievePullsHistoryCallback() {
             @Override
             public void OnRetrievedPullsHistory(ArrayList<PulledUnit> pulledUnitList) {
-                adapter.setPulledUnits(pulledUnitList, timerHistoryStart);
+                adapter.setPulledUnits(pulledUnitList);
+
+                long timerHistoryEnd = System.nanoTime();
+                long timerHistoryResult= (timerHistoryEnd - timerHistoryStart)/1000000;
+                Log.i("Timer history", Long.toString(timerHistoryResult) + " " + "ms");
             }
         });
 

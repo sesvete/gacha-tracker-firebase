@@ -71,13 +71,8 @@ public class HistoryRecViewAdapter extends RecyclerView.Adapter<HistoryRecViewAd
         return pulledUnits.size();
     }
 
-    public void setPulledUnits(ArrayList<PulledUnit> pulledUnits, long timerHistoryStart) {
+    public void setPulledUnits(ArrayList<PulledUnit> pulledUnits) {
         this.pulledUnits = pulledUnits;
-
-        long timerHistoryEnd = System.nanoTime();
-        long timerHistoryResult= (timerHistoryEnd - timerHistoryStart)/1000000;
-        Log.i("Timer history", Long.toString(timerHistoryResult) + " " + "ms");
-
         notifyDataSetChanged();
     }
 
