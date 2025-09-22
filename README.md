@@ -1,6 +1,7 @@
 # Gacha Tracker App Firebase
 
 A simple gacha tracker for keeping track of your pulls and pull history in your favourite Gacha games.
+
 Minimum supported Android version is Android 8 
 
 ## Supported Games
