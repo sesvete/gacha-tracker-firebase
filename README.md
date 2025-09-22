@@ -29,6 +29,3 @@ Minimum supported Android version is Android 8
 ## Download
 Head to the <a href="https://github.com/sesvete/gacha-tracker-firebase/releases" title="Releases">releases</a> page for the newest release
 Permission to install unknown apps is required for the installation of the app
-
-
-<a href="https://console.cloud.google.com/" title="google-cloud">your google cloud console</a>
