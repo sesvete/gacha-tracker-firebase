@@ -29,7 +29,9 @@ public class SplashActivity extends AppCompatActivity {
                 if (currentUser == null) {
                     intent = new Intent(SplashActivity.this, SignInActivity.class);
                 } else {
+                    long timerAutoLoginStart = System.nanoTime();
                     intent = new Intent(SplashActivity.this, MainActivity.class);
+                    intent.putExtra("timerStart", timerAutoLoginStart);
                 }
                 startActivity(intent);
                 finish();

@@ -1,7 +1,9 @@
 package com.sesvete.gachatrackerfirebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
         credentialManager = CredentialManager.create(getBaseContext());
         currentUser = mAuth.getCurrentUser();
         uid = mAuth.getUid();
+
+        Intent intent = getIntent();
+        if (intent != null && intent.getExtras() != null) {
+            long timerAutoLoginStart = intent.getExtras().getLong("timerStart", 0);
+            long timerAutoLoginEnd = System.nanoTime();
+            long timerAutologinResult = (timerAutoLoginEnd - timerAutoLoginStart)/1000000;
+            Log.i("Timer Automatic login", Long.toString(timerAutologinResult ) + " " + "ms");
+        }
 
         toolbar = findViewById(R.id.toolbar);
         if (savedInstanceState == null){
