@@ -25,9 +25,9 @@ Minimum supported Android version is Android 8
 - ### Google OAUTH
   - Create a credentials.xml file in app/src/main/res/values/credentials.xml
   - create web_client_id resource in credentials.xml
-  - add your OAuth 2.0 Client IDs Web application Id from <a href="https://console.cloud.google.com/" title="google-cloud">your google cloud console</a>
+  - add your OAuth 2.0 Client IDs Web application Id from <a href="https://console.cloud.google.com/">your google cloud console</a>
 
 ## Download
-Head to the <a href="https://github.com/sesvete/gacha-tracker-firebase/releases" title="Releases">releases</a> page for the newest release
+Head to the <a href="https://github.com/sesvete/gacha-tracker-firebase/releases">releases</a> page for the newest release
 
 Permission to install unknown apps is required for the installation of the app
