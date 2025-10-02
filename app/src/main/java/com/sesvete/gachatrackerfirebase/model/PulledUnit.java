@@ -64,12 +64,15 @@ public class PulledUnit {
     }
 
     // write to database
-    public void writePulledUnitToDatabase(String uid, String game, String banner){
+    public void writePulledUnitToDatabase(String uid, String game, String banner, long timerInputPullStart){
         DatabaseHelper databaseHelper = new DatabaseHelper();
         databaseHelper.savePulledUnit(uid, game, banner, getUnitName(), getNumOfPulls(), isFromBanner(), getDate(), new DatabaseHelper.OnSavePulledUnitCallback() {
             @Override
             public void onSavedPulledUnit(boolean success) {
                 if (success){
+                    long timerInputPullEnd = System.nanoTime();
+                    long timerInputPullResult = (timerInputPullEnd - timerInputPullStart)/1000000;
+                    Log.i("Timer write pull", Long.toString(timerInputPullResult) + " " + "ms");
                     Log.d("Pulled unit Writing", "Successfully wrote to Database");
                 } else {
                     Log.d("Pulled unit Writing", "Failed writing to Database");

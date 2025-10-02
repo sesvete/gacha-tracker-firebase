@@ -346,7 +346,7 @@ public class CounterFragment extends Fragment {
                                         imgCounterHistoryFeaturedUnitStatus.setImageResource(R.drawable.ic_block_red);
                                     }
                                     PulledUnit pulledUnit = new PulledUnit(numOfPulls, inputString, wonFiftyFifty, formatedDate);
-                                    pulledUnit.writePulledUnitToDatabase(uid, game, bannerType);
+                                    pulledUnit.writePulledUnitToDatabase(uid, game, bannerType, timerInputPullStart);
                                     counterNumber = 0;
                                     databaseHelper.updateCounter(uid, game, bannerType, counterNumber, guaranteed, new DatabaseHelper.OnCounterUpdateCallback() {
                                         @Override
