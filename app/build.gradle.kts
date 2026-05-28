@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.gms.google.services)
@@ -17,8 +19,31 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // feel free to delete signingConfigs if not using keystores
+    signingConfigs {
+        //update local.properties file with your own values
+        // 1. Load local.properties
+        val properties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            properties.load(localPropertiesFile.inputStream())
+        }
+
+        create("release") {
+            storeFile = file(properties.getProperty("store_file"))
+            storePassword = properties.getProperty("store_password")
+            keyAlias = properties.getProperty("key_alias")
+            keyPassword = properties.getProperty("key_password")
+        }
+    }
+
+
     buildTypes {
         release {
+
+            //signingConfig can be deleted if not using keystores
+            signingConfig = signingConfigs.getByName("release")
+
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
