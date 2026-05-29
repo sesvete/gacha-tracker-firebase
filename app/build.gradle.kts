@@ -1,3 +1,4 @@
+import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
@@ -21,12 +22,18 @@ android {
 
     // feel free to delete signingConfigs if not using keystores
     signingConfigs {
-        //update local.properties file with your own values
-        // 1. Load local.properties
+        //update keystore.properties file with your own values
+
+        // Initialize a new Properties() object called properties.
         val properties = Properties()
-        val localPropertiesFile = rootProject.file("local.properties")
-        if (localPropertiesFile.exists()) {
-            properties.load(localPropertiesFile.inputStream())
+
+        // Create a variable called keystorePropertiesFile, and initialize it to your
+        // keystore.properties file, in the rootProject folder.
+        val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+        // Load your keystore.properties file into the keystoreProperties object.
+        if (keystorePropertiesFile.exists()) {
+            properties.load(FileInputStream(keystorePropertiesFile))
         }
 
         create("release") {
